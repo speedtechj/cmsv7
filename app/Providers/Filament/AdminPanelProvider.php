@@ -71,7 +71,11 @@ class AdminPanelProvider extends PanelProvider
                 MenuItem::make()
                 ->label('1224')
                 ->icon('heroicon-o-user')
-                ->url('/1224')
+                ->url('/1224'),
+                MenuItem::make()
+                ->label('Shipping Monitoring')
+                ->icon('heroicon-o-computer-desktop')
+                ->url('/monitoring')
             ])
             ->navigationGroups( [
                 NavigationGroup::make( 'Batch Status' )->icon('heroicon-o-document-check'),
