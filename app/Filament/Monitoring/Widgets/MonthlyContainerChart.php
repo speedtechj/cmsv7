@@ -25,8 +25,8 @@ class MonthlyContainerChart extends ChartWidget
                 [
                     'label' => 'Total Container',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
-                    'backgroundColor' => '#36A2EB',
-                'borderColor' => '#9BD0F5',
+                    'backgroundColor' => ['#90EE90','#013220'],
+                'borderColor' => '#FFFFFF',
                 ],
             ],
             'labels' => $data->map(fn (TrendValue $value) => $value->date),

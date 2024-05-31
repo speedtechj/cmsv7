@@ -16,7 +16,7 @@ class TotalContainerChart extends ChartWidget
       
         $data = Trend::model(Batch::class)
         ->between(
-            start: now()->startOfYear()->subYears(1),
+            start: now()->startOfYear()->subYears(6),
             end: now()->endOfYear(),
         )
         ->perYear()
@@ -26,8 +26,8 @@ class TotalContainerChart extends ChartWidget
                 [
                     'label' => 'Total Container',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
-                    'backgroundColor' => '#8b6000 ',
-                'borderColor' => '#9BD0F5',
+                    'backgroundColor' => ['#90EE90','#013220'],
+                'borderColor' => '#FFFFFF',
                 ],
             ],
             'labels' => $data->map(fn (TrendValue $value) => $value->date),
