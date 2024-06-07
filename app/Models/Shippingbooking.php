@@ -25,4 +25,7 @@ class Shippingbooking extends Model
     public function shippingcontainer(){
         return $this->hasMany(Shippingcontainer::class);
     }
+    public function batch(){
+        return $this->belongsTo(Batch::class);
+    }
 }

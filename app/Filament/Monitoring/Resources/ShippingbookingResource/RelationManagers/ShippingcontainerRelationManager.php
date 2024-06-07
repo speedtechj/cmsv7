@@ -4,14 +4,15 @@ namespace App\Filament\Monitoring\Resources\ShippingbookingResource\RelationMana
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Batch;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use App\Models\Skidweight;
+
 use Filament\Tables\Table;
 
 use App\Models\Skiddinginfo;
-
 use Illuminate\Support\Number;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Section;
@@ -86,18 +87,19 @@ class ShippingcontainerRelationManager extends RelationManager
                                             ->icon('heroicon-o-calculator')
                                             ->label('Recalculate weight')
                                             ->requiresConfirmation()
-                                            ->action(function (Set $set, $state, Model $record) {
-                                                $set('cargo_weight', $state + $record->cargo_weight);
+                                            ->action(function (Set $set, Get $get, $state, RelationManager $livewire) {
+                                              
+                                                $set('cargo_weight', $state + $get('cargo_weight'));
                                             })
                                     )
-                                    ->required()
+                                   
                                     ->numeric()
                                     ->dehydrated(false),
                                 Forms\Components\TextInput::make('star_total_box')
                                 ->helperText('Please click the calculator icon to recalculate the total boxes')
                                     ->label('Star Total Box')
                                     ->prefix('boxes')
-                                    ->required()
+                                   
                                     ->numeric()
                                     ->dehydrated(false)
                                     ->suffixAction(
@@ -105,15 +107,15 @@ class ShippingcontainerRelationManager extends RelationManager
                                             ->icon('heroicon-o-calculator')
                                             ->label('Recalculate Total Box')
                                             ->requiresConfirmation()
-                                            ->action(function (Set $set, $state, Model $record) {
-                                                $set('total_box', $state + $record->total_box);
+                                            ->action(function (Set $set, $state, Get $get,RelationManager $livewired) {
+                                                $set('total_box', $state + $get('total_box'));
                                             })
                                     ),
                                 Forms\Components\TextInput::make('star_total_cbm')
                                     ->label('Star Total CBM')
                                     ->helperText('Please click the calculator icon to recalculate the total cbm')
                                     ->prefix('cbm')
-                                    ->required()
+                                    
                                     ->numeric()
                                     ->dehydrated(false)
                                     ->suffixAction(
@@ -121,8 +123,8 @@ class ShippingcontainerRelationManager extends RelationManager
                                             ->icon('heroicon-o-calculator')
                                             ->label('Recalculate Total cbm')
                                             ->requiresConfirmation()
-                                            ->action(function (Set $set, $state, Model $record) {
-                                                $set('total_cbm', $state + $record->total_cbm);
+                                            ->action(function (Set $set, $state, Get $get,RelationManager $livewired) {
+                                                $set('total_cbm', $state + $get('total_cbm'));
                                             })
                                     ),
                             ])->columns(2),
