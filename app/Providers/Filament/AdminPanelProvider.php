@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Models\Companyinfo;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -75,7 +76,14 @@ class AdminPanelProvider extends PanelProvider
                 MenuItem::make()
                 ->label('Shipping Monitoring')
                 ->icon('heroicon-o-computer-desktop')
-                ->url('/monitoring')
+                ->url('/monitoring'),
+                // MenuItem::make()
+                // ->label('WSM Version 1.0')
+                // ->icon('heroicon-o-computer-desktop')
+                // ->url(function (){
+                //     $test = Companyinfo::all()->first();
+                //    return 'https://forexskidding.test/';
+                // })
             ])
             ->navigationGroups( [
                 NavigationGroup::make( 'Batch Status' )->icon('heroicon-o-document-check'),

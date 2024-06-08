@@ -59,7 +59,7 @@ class Bookingobserver
      */
     public function updated(Booking $booking): void
     {
-
+        
         if ($booking->boxtype_id == '4') {
             $length = $booking->irregular_length;
             $width = $booking->irregular_width;
