@@ -9,4 +9,5 @@ class Skiddinginfo extends Model
 {
     use HasFactory;
     protected $table = 'skiddinginfos';
+    protected $guarded = [];
 }
