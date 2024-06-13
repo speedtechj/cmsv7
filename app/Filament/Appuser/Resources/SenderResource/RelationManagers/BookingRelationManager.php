@@ -97,7 +97,7 @@ class BookingRelationManager extends RelationManager
                     ->label('Batch Number')
                     ->sortable()
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
+                    // ->toggleable(isToggledHiddenByDefault: true)
                     ->getStateUsing(function (Model $record) {
                         return $record->batch->batchno . " " . $record->batch->batch_year;
                     }),
