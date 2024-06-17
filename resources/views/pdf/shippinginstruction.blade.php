@@ -204,13 +204,13 @@
             @foreach ($containerecord as $containerecords)
     
             <tr>
-                <td with="15%">{{$containerecords->container_no}}</td>
-                <td with="15%">{{$containerecords->seal_no}}</td>
+                <td >{{$containerecords->container_no}}</td>
+                <td >{{$containerecords->seal_no}}</td>
                 <td>{{$containerecords->equipment->code}}</td>
                 <td>{{$containerecords->total_box}} boxes</td>
                 <td>Consolidated {{$record->commodity}}.<br>
                     HS CODE: {{$record->hs_code}}</td>
-                <td width="22%">{{number_format($containerecords->cargo_weight,0,",")}} lbs / {{number_format($containerecords->cargo_weight * 0.45359237,0,",") }} kgs</td>
+                <td>{{number_format($containerecords->cargo_weight,0,",")}} lbs <br> /{{number_format($containerecords->cargo_weight * 0.45359237,0,",") }} kgs</td>
                 <td>{{$containerecords->total_cbm}} cbm</td>
             </tr>
 
@@ -224,10 +224,10 @@
             <td>{{$containerecord->count()}}</td>
             <td>{{$containerecord->sum('total_box')}} boxes</td>
             <td></td>
-            <td>{{number_format($containerecord->sum('cargo_weight'),0,",")}} lbs /
+            <td>{{number_format($containerecord->sum('cargo_weight'),0,",")}} lbs / <br>
                 {{number_format($containerecord->sum('cargo_weight') * 0.45359237 ,0,",")}} kgs
             </td>
-            <td width="10%">{{$containerecord->sum('total_cbm')}} cbm</td>
+            <td>{{$containerecord->sum('total_cbm')}} cbm</td>
         </tfoot>
     </table>
 </body>
