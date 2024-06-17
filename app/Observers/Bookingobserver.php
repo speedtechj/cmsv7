@@ -78,9 +78,9 @@ class Bookingobserver
                
                 $skiddingresult->update(
                     [
-                        'boxtype_id' => $booking->boxtype_id,
+                        'boxtype_id' =>  $updatebooking->boxtype_id,
                         'is_encode' => true,
-                        'booking_id' => $booking->id,
+                        'booking_id' =>  $updatebooking->id,
                         'cbm' => $boxcbm,
                     ]
                 );
