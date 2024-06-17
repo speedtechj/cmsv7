@@ -205,7 +205,7 @@
     
             <tr>
                 <td >{{$containerecords->container_no}}</td>
-                <td >{{$containerecords->seal_no}}</td>
+                <td width="10%">{{$containerecords->seal_no}}</td>
                 <td>{{$containerecords->equipment->code}}</td>
                 <td>{{$containerecords->total_box}} boxes</td>
                 <td>Consolidated {{$record->commodity}}.<br>
