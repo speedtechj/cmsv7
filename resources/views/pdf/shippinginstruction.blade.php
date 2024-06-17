@@ -205,13 +205,13 @@
     
             <tr>
                 <td >{{$containerecords->container_no}}</td>
-                <td width="10%">{{$containerecords->seal_no}}</td>
+                <td>{{$containerecords->seal_no}}</td>
                 <td>{{$containerecords->equipment->code}}</td>
                 <td>{{$containerecords->total_box}} boxes</td>
-                <td>Consolidated {{$record->commodity}}.<br>
+                <td width="20%" >Consolidated {{$record->commodity}}.<br>
                     HS CODE: {{$record->hs_code}}</td>
                 <td>{{number_format($containerecords->cargo_weight,0,",")}} lbs  / <br> {{number_format($containerecords->cargo_weight * 0.45359237,0,",") }} kgs</td>
-                <td width="10%">{{$containerecords->total_cbm}} cbm</td>
+                <td>{{$containerecords->total_cbm}} cbm</td>
             </tr>
 
 @endforeach
