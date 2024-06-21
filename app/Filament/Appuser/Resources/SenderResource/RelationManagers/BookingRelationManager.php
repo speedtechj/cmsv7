@@ -420,6 +420,7 @@ class BookingRelationManager extends RelationManager
             ->dehydrated(false),
             Forms\Components\TextInput::make('manual_invoice')
             ->unique(ignoreRecord: true)
+            ->numeric()
                 ->label('Manual Invoice')
                 ->visible(function (Model $record): bool {
                     return $record->batch_id == 23;
