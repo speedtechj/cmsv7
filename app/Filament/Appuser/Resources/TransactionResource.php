@@ -161,6 +161,7 @@ class TransactionResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('manual_invoice')
                         ->label('Manual Invoice')
+                        ->numeric()
                         ->unique(),
                         Forms\Components\Select::make('boxtype_id')
                             ->live()
