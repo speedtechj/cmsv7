@@ -13,7 +13,9 @@ use App\Models\Agentinvoice;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\AgentinvoiceResource\Pages;
@@ -37,7 +39,7 @@ class AgentinvoiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->defaultGroup('agent.full_name')
+            ->defaultGroup('agent.full_name')
             ->columns([
                 Tables\Columns\TextColumn::make('agent.full_name')
                     ->sortable(),
@@ -66,41 +68,62 @@ class AgentinvoiceResource extends Resource
             ])
             ->headerActions([
                 Tables\Actions\Action::make('createinvoice')
-                ->label('Create Manual Invoice')
-                ->slideOver()
-                ->form([
+                    ->label('Create Manual Invoice')
+                    ->slideOver()
+                    ->form([
                         Forms\Components\Select::make('agent_id')
-                        ->relationship('agent','full_name')
-                        ->searchable()
-                        ->preload()
-                        ->required(),
+                            ->relationship('agent', 'full_name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
                         Forms\Components\DatePicker::make('date_issued')
-                        ->native(false)
-                        ->closeOnDateSelection()
-                        ->required(),
+                            ->native(false)
+                            ->closeOnDateSelection()
+                            ->required(),
                         Forms\Components\TextInput::make('start_invoice')
-                        ->label('Starting Invoice')
-                        ->required()
-                        ->numeric(),
+                            ->label('Starting Invoice')
+                            ->required()
+                            ->numeric(),
                         Forms\Components\TextInput::make('end_invoice')
-                        ->label('Ending Invoice')
-                        ->required()
-                        ->numeric(),
-                ])
-                ->action(function (array $data): void {
-                   for($i = $data['start_invoice']; $i <= $data['end_invoice']; $i++){
-                        Agentinvoice::create([
-                            'agent_id' => $data['agent_id'],
-                            'manual_invoice' => $i,
-                            'date_issued' => $data['date_issued'],
-                            'user_id' => auth()->id(),
-                        ]);
-                   }
-                })
+                            ->label('Ending Invoice')
+                            ->required()
+                            ->numeric(),
+                    ])
+                    ->action(function (array $data): void {
+                        $notify_flag = false;
+                        for ($i = $data['start_invoice']; $i <= $data['end_invoice']; $i++) {
+                            $check_invoice = Agentinvoice::where('manual_invoice', $i)->first();
+                            if (!$check_invoice) {
+                                Agentinvoice::create([
+                                    'agent_id' => $data['agent_id'],
+                                    'manual_invoice' => $i,
+                                    'date_issued' => $data['date_issued'],
+                                    'user_id' => auth()->id(),
+                                ]);
+                                $notify_flag = true;
+                            }
+
+                        }
+                        if ($notify_flag) {
+                            Notification::make()
+                                ->title('Invoice Created Successfully')
+                                ->success()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title('Invoice Already Exists')
+                                ->success()
+                                ->send();
+                        }
+                    })
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('agent_id')
+                    ->label('Agent')
+                    ->relationship('agent', 'full_name')
+                    ->searchable()
+    ])
+            
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
@@ -109,7 +132,7 @@ class AgentinvoiceResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-            
+
     }
 
     public static function getRelations(): array
@@ -127,5 +150,5 @@ class AgentinvoiceResource extends Resource
             // 'edit' => Pages\EditAgentinvoice::route('/{record}/edit'),
         ];
     }
-    
+
 }
