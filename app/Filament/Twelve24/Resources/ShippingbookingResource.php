@@ -53,6 +53,8 @@ class ShippingbookingResource extends Resource
                 ->listWithLineBreaks()
                 ->searchable(),
                 Tables\Columns\TextColumn::make('bill_of_lading'),
+                Tables\Columns\TextColumn::make('eta')
+                ->label('ETA'),
                
             ])
             ->filters([
