@@ -30,6 +30,7 @@ class PosResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->paginated([10, 25])
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                 ->searchable(isIndividual: true, isGlobal: false),
