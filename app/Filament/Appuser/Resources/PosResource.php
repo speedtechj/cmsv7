@@ -10,11 +10,17 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\PosResource\Pages;
 use App\Filament\Appuser\Resources\PosResource\RelationManagers;
+use App\Filament\Appuser\Resources\PosResource\RelationManagers\PosinvoicesRelationManager;
 
 class PosResource extends Resource
 {
@@ -26,13 +32,13 @@ class PosResource extends Resource
     {
         return $form
             ->schema([
-                
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+        
         ->paginated([10, 25])
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
@@ -49,9 +55,11 @@ class PosResource extends Resource
                 ->searchable(isIndividual: true, isGlobal: false),
                 
             ])
+            
             ->filters([
                 //
             ])
+          
             ->actions([
                
             ])
@@ -80,7 +88,7 @@ class PosResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PosinvoicesRelationManager::class,
         ];
     }
 

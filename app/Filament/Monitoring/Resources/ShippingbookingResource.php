@@ -100,8 +100,11 @@ class ShippingbookingResource extends Resource
                         ->options( [
                             'CN CALGARY' => 'CN CALGARY',
                             'CN EDMONTON' => 'CN EDMONTON',
+                            'CN MONTREAL' => 'CN MONTREAL',
                             'CP CALGARY' => 'CP CALGARY',
                             'CP EDMONTON' => 'CP EDMONTON',
+                            'CP MONTREAL' => 'CP MONTREAL'
+
                         ] )
                         ->required(),
         
@@ -110,16 +113,20 @@ class ShippingbookingResource extends Resource
                         ->options( [
                             'CALGARY' => 'CALGARY',
                             'EDMONTON' => 'EDMONTON',
+                            'MONTREAL' => 'MONTREAL',
                         ] )
                         ->label( 'Origin Terminal' )
                         ->required(),
                         ]),
                         Section::make()
                         ->schema([
-                        Forms\Components\TextInput::make( 'port_of_loading' )
+                        Forms\Components\Select::make( 'port_of_loading' )
                         ->label( 'Port of Loading' )
-                        ->required()
-                        ->default('VANCOUVER'),
+                        ->native(false)
+                        ->options( [
+                            'VANCOUVER' => 'VANCOUVER',
+                            'HALIFAX' => 'HALIFAX',
+                        ] ),
                         Forms\Components\Select::make( 'port_of_unloading' )
                         ->native(false)
                         ->label( 'Port of Unloading' )
