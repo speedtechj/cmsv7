@@ -53,7 +53,14 @@ class BoxtypeResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable()
+                    ->label('Code'),
                 Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Price'),
+                Tables\Columns\TextColumn::make('delivery_charge')
+                    ->label('Delivery Charge'),
                 Tables\Columns\TextColumn::make('lenght'),
                 Tables\Columns\TextColumn::make('width'),
                 Tables\Columns\TextColumn::make('height'),

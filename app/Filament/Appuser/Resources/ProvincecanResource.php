@@ -55,6 +55,12 @@ class ProvincecanResource extends Resource {
             ->searchable(),
             Tables\Columns\TextColumn::make( 'name' )
             ->searchable(),
+            Tables\Columns\TextColumn::make( 'gst' )
+            ->label( 'GST' ),
+            Tables\Columns\TextColumn::make( 'pst' )
+            ->label( 'PST' ),
+            Tables\Columns\TextColumn::make( 'hst' )
+            ->label( 'HST' ),
             Tables\Columns\TextColumn::make( 'created_at' )
             ->dateTime()
             ->sortable()
