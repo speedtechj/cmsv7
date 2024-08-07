@@ -4,6 +4,7 @@ namespace App\Filament\Appuser\Resources\PosResource\RelationManagers;
 
 use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
 use App\Models\Agent;
 use Filament\Forms\Get;
@@ -145,7 +146,7 @@ class PosinvoicesRelationManager extends RelationManager
                         ->form([
                             Forms\Components\Section::make('Payment Information')
                                 ->schema([
-                                    Forms\Components\Datepicker::make('payment_date')
+                                   DatePicker::make('payment_date')
                                         ->label('Payment Date')
                                         ->native(false)
                                         ->closeOnDateSelection()
