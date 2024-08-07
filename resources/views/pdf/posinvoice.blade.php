@@ -98,7 +98,7 @@
             </table>
             <br>
             <table width="100%" class="info">
-                <td width="9%"><span>Sold To:</span><br><br><br></td>
+                <td width="12%"><span>Sold To:</span><br><br><br></td>
             <td>
                 {{$record->senders->full_name}}<br>
                 {{$record->senderaddress->address}}
