@@ -32,6 +32,18 @@ class ProvincecanResource extends Resource {
                 Forms\Components\TextInput::make( 'name' )
                 ->required()
                 ->maxLength( 191 ),
+                Forms\Components\TextInput::make( 'gst' )
+                ->label( 'GST')
+                ->prefix( '%' )
+                ->numeric(),
+                Forms\Components\TextInput::make( 'pst' )
+                ->label('PST')
+                ->prefix( '%' )
+                ->numeric(),
+                Forms\Components\TextInput::make( 'hst' )
+                ->label('HST')
+                ->prefix( '%' )
+                ->numeric(),
             ] )
         ] );
     }
