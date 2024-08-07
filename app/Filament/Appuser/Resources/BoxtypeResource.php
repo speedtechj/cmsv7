@@ -27,6 +27,13 @@ class BoxtypeResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
+                    Forms\Components\TextInput::make('code')
+                    ->required()
+                    ->maxLength(255),
+                    Forms\Components\TextInput::make('price')
+                    ->numeric(),
+                    Forms\Components\TextInput::make('delivery_charge')
+                    ->numeric(),
                 Forms\Components\TextInput::make('dimension')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('lenght')
