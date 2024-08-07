@@ -2,20 +2,24 @@
 
 namespace App\Filament\Appuser\Resources;
 
+use App\Filament\Appuser\Resources\PosResource\RelationManagers\PospaymentsRelationManager;
+use App\Filament\Appuser\Resources\PosResource\RelationManagers\PurchaseitemsRelationManager;
 use App\Models\Pos;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Sender;
 use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
 ;
+use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
+
 use Filament\Infolists\Components\Section;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\PosResource\Pages;
@@ -38,7 +42,49 @@ class PosResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        
+        ->headerActions([
+            CreateAction::make()
+            ->mutateFormDataUsing(function (array $data): array {
+                $data['user_id'] = auth()->id();
+                $data['branch_id'] = auth()->user()->branch_id;
+                return $data;
+            })
+            ->slideOver()
+            ->modalHeading('Create New Customer')
+            ->label('Create New Customer')
+            ->form([
+                Forms\Components\Section::make('Personal Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('first_name')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('last_name')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('mobile_no')
+            ->live(onBlur:true)
+                ->unique(ignorable: fn($record) => $record)
+                ->mask('(999)999-9999')
+                ->stripCharacters(['(',')','-'])
+                ->required(),
+                
+            Forms\Components\TextInput::make('home_no')
+                ->mask('(999)999-9999')
+                ->stripCharacters(['(',')','-']),
+            Forms\Components\TextInput::make('email')
+                ->unique(ignorable: fn($record) => $record)
+                ->email()
+                ->required()
+                ->maxLength(255),
+                Forms\Components\MarkdownEditor::make('remark')
+                ->label('Note'),
+                    ])->columns(2) 
+                ])
+            
+            ->action(function (array $data): void {
+                Pos::create($data);
+            })
+        ])
         ->paginated([10, 25])
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
@@ -54,7 +100,7 @@ class PosResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                 ->searchable(isIndividual: true, isGlobal: false),
                 
-            ])
+            ])->defaultSort('created_at','desc')
             
             ->filters([
                 //
@@ -89,6 +135,8 @@ class PosResource extends Resource
     {
         return [
             PosinvoicesRelationManager::class,
+            PurchaseitemsRelationManager::class,
+            PospaymentsRelationManager::class,
         ];
     }
 
@@ -96,7 +144,7 @@ class PosResource extends Resource
     {
         return [
             'index' => Pages\ListPos::route('/'),
-            'create' => Pages\CreatePos::route('/create'),
+            // 'create' => Pages\CreatePos::route('/create'),
             // 'edit' => Pages\EditPos::route('/{record}/edit'),
             'view' => Pages\ViewPos::route('/{record}'),
         ];

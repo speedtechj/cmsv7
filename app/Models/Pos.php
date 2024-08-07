@@ -14,6 +14,13 @@ class Pos extends Model
     public function posinvoices(){
         return $this->hasMany(Posinvoice::class, 'sender_id');
     }
+
+    public function purchaseitems(){
+        return $this->hasMany(Purchaseitem::class, 'sender_id');
+    }
+    public function pospayments(){
+        return $this->hasMany(Pospayment::class, 'sender_id');
+    }
     
 
 }

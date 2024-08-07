@@ -27,4 +27,12 @@ class Posinvoice extends Model
     public function purchaseitems() :HasMany {
         return $this->hasMany(Purchaseitem::class);
     }
+
+    public function senderaddress() :BelongsTo {
+        return $this->belongsTo(Senderaddress::class);
+    }
+    
+    public function pospayments() :BelongsTo {
+        return $this->belongsTo(Pospayment::class);
+    }
 }

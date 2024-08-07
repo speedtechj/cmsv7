@@ -228,7 +228,7 @@ class ShippingcontainerRelationManager extends RelationManager
                         ->label('Print Rail Bill')
                         ->color('warning')
                         ->icon('heroicon-o-printer')
-                        ->url(fn(Model $record) => route('railbillinfo', $record))
+                        ->url(fn(Model $record) => route('railbillinfos', $record))
                         ->openUrlInNewTab(),
                 ])
 

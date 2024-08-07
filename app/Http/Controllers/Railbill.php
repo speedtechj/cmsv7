@@ -7,7 +7,7 @@ use App\Models\Shippingcontainer;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 class Railbill extends Controller
 {
-    public function  railbillinfo(Shippingcontainer $record)
+    public function railbillinfo(Shippingcontainer $record)
     {
         $data['record'] = $record;
         // dd($record);

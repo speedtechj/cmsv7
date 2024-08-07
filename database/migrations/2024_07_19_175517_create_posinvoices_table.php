@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('invoice_no');
             $table->foreignId('sender_id')->constrained();
+            $table->foreignId('senderaddress_id')->constrained();
             $table->timestamps();
         });
     }

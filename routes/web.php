@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PosinvoiceController;
 use App\Http\Controllers\Railbill;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarcodeController;
@@ -19,4 +20,5 @@ use App\Http\Controllers\Shippinginstruction;
 Route::get('{record}/barcode',[BarcodeController::class,'barcode'])->name('barcode1.pdf.download');
 Route::get('{record}/pdf',[InvoiceController::class,'invoice'])->name('barcode.pdf.download');
 Route::get('{record}/info',[Shippinginstruction::class,'instruction'])->name('instructionshipping');
-Route::get('{record}/data',[Railbill::class,'railbillinfo'])->name('railbillinfo');
+Route::get('{record}/railbill',[Railbill::class,'railbillinfo'])->name('railbillinfos');
+Route::get('{record}/data',[PosinvoiceController::class,'posinvoice'])->name('posinvoice');

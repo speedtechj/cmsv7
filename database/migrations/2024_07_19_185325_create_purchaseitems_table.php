@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->boolean('is_paid')->default(false);
             $table->date('delivery_date')->nullable();
-            $table->foreignId('agent_id')->constrained()->nullable();
+            $table->foreignId('agent_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

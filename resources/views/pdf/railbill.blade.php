@@ -96,15 +96,15 @@
         </tr>
         <tr>
             <td class="side">Cargo Weight:</td>
-            <td>{{number_format($record->cargo_weight),0,","}} lbs /
-                {{number_format($record->cargo_weight * 0.45359237),0,","}} kgs
+            <td>{{number_format($record->cargo_weight,0,",")}} lbs /
+                {{number_format($record->cargo_weight * 0.45359237,0,",")}} kgs
                 
             </td>
         </tr>
         <tr>
             <td class="side">Container Tare Weight:</td>
-            <td>{{number_format($record->tare_weight),0,","}} lbs /
-                {{number_format($record->tare_weight * 0.45359237),0,","}} kgs
+            <td>{{number_format($record->tare_weight,0,",")}} lbs /
+                {{number_format($record->tare_weight * 0.45359237,0,",")}} kgs
             </td>
         </tr>
 
