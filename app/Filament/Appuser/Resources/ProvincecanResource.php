@@ -56,10 +56,13 @@ class ProvincecanResource extends Resource {
             Tables\Columns\TextColumn::make( 'name' )
             ->searchable(),
             Tables\Columns\TextColumn::make( 'gst' )
+            ->prefix( '%')
             ->label( 'GST' ),
             Tables\Columns\TextColumn::make( 'pst' )
+            ->prefix( '%')
             ->label( 'PST' ),
             Tables\Columns\TextColumn::make( 'hst' )
+            ->prefix( '%')
             ->label( 'HST' ),
             Tables\Columns\TextColumn::make( 'created_at' )
             ->dateTime()
