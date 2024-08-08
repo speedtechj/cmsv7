@@ -71,9 +71,9 @@
             width: 100%;
             height: 650px;
         }
-        .footer {
+        .footer p {
             text-align: center;
-            margin-top: 0px;
+            margin-top: 10px;
         }
     </style>
 
