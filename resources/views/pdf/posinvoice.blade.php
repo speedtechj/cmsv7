@@ -71,7 +71,7 @@
             width: 100%;
             height: 650px;
         }
-        .footer p {
+        .footer_add  {
             text-align: center;
             margin-top: 10px;
         }
@@ -185,7 +185,7 @@
                 
         </table>
         
-        <p class="footer">For Direct Flight Booking Visit <span style="text-decoration: underline">WWW.FOREXTRAVELDEALS.COM<span></p>
+        <p class="footer_add">For Direct Flight Booking Visit <span style="text-decoration: underline">WWW.FOREXTRAVELDEALS.COM<span></p>
 </div>
    
        {{-- end line --}}
@@ -295,7 +295,7 @@
                 
         </table>
        
-        <p class="footer">For Direct Flight Booking Visit <span style="text-decoration: underline">WWW.FOREXTRAVELDEALS.COM<span></p>
+        <p class="footer_add">For Direct Flight Booking Visit <span style="text-decoration: underline">WWW.FOREXTRAVELDEALS.COM<span></p>
           {{-- end line --}}
 </body>
 
