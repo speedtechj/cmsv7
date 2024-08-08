@@ -184,12 +184,10 @@
             </tr>
                 
         </table>
-        <p style="text-align: center; margin-bottom:0px">Fly Now, Pay later: Book Your Ticket With Easy Monthly Instalment | Air Cargo
-        </p>
-        <p class="footer">Relocation To Philippines & Inter - Provincial Transfer</p>
+        
         <p class="footer">For Direct Flight Booking Visit <span style="text-decoration: underline">WWW.FOREXTRAVELDEALS.COM<span></p>
 </div>
-   <br><br>
+   
        {{-- end line --}}
        {{-- secodnd line --}}
       
@@ -296,9 +294,7 @@
             </tr>
                 
         </table>
-        <p style="text-align: center; margin-bottom:0px">Fly Now, Pay later: Book Your Ticket With Easy Monthly Instalment | Air Cargo
-        </p>
-        <p class="footer">Relocation To Philippines & Inter - Provincial Transfer</p>
+       
         <p class="footer">For Direct Flight Booking Visit <span style="text-decoration: underline">WWW.FOREXTRAVELDEALS.COM<span></p>
           {{-- end line --}}
 </body>
