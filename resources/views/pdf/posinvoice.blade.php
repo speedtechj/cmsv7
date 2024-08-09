@@ -141,10 +141,10 @@
                 <td>{{ $item->boxtype->description }}</td>
                 <td>{{ $item->quantity }}</td>
                 <td>{{'$'.$item->boxtype->price + $delivery_charge}}</td>
-                <td>{{'$'.($item->quantity + $delivery_charge) * $item->boxtype->price }}</td>
+                <td>{{'$'.$item->quantity  * ($delivery_charge + $item->boxtype->price) }}</td>
             </tr>
                 @php
-                     $subtotal = $subtotal + ($item->quantity + $delivery_charge) * $item->boxtype->price
+                    $subtotal = $subtotal + $item->quantity * ($delivery_charge + $item->boxtype->price)
                     
                 @endphp
             @endforeach
@@ -252,10 +252,10 @@
                 <td>{{ $item->boxtype->description }}</td>
                 <td>{{ $item->quantity }}</td>
                 <td>{{'$'.$item->boxtype->price + $delivery_charge}}</td>
-                <td>{{'$'.($item->quantity + $delivery_charge) * $item->boxtype->price }}</td>
+                <td>{{'$'.$item->quantity  * ($delivery_charge + $item->boxtype->price) }}</td>
             </tr>
                 @php
-                     $subtotal = $subtotal + ($item->quantity + $delivery_charge) * $item->boxtype->price
+                     $subtotal = $subtotal + $item->quantity * ($delivery_charge + $item->boxtype->price)
                     
                 @endphp
             @endforeach

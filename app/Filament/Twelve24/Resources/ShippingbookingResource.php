@@ -55,6 +55,8 @@ class ShippingbookingResource extends Resource
                 Tables\Columns\TextColumn::make('bill_of_lading'),
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),
+                Tables\Columns\TextColumn::make('branch.business_name')
+                ->label('Broker')
                
             ])
             ->filters([
@@ -82,7 +84,7 @@ class ShippingbookingResource extends Resource
         return [
             'index' => Pages\ListShippingbookings::route('/'),
             'create' => Pages\CreateShippingbooking::route('/create'),
-            'edit' => Pages\EditShippingbooking::route('/{record}/edit'),
+            // 'edit' => Pages\EditShippingbooking::route('/{record}/edit'),
         ];
     }
 }
