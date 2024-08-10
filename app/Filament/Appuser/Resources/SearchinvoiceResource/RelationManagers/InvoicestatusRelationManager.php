@@ -42,7 +42,7 @@ class InvoicestatusRelationManager extends RelationManager
                 ->label('Waybill'),
                 Tables\Columns\TextColumn::make('remarks')
                 ->label('Remarks'),
-            ])->defaultSort('date_update', 'desc')
+            ])->defaultSort('date_update', 'asc')
             ->filters([
                 //
             ])
