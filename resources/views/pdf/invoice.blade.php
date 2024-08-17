@@ -310,7 +310,7 @@
         @endfor
         </tr>
     @else
-        @for ($i = 0; $i < 6; $i++)
+        @for ($i = 0; $i < 5; $i++)
             <tr>
                 <td style="padding:10px"></td>
                 <td></td>
@@ -433,7 +433,7 @@
         </tr>
         <table>
             <tr>
-                <td style="font-size:12px">
+                <td style="font-size:10px">
                     I, declare, under the penalties of falsification, declare that I am the sender of all the above
                     goods/items listed on this declaration, including the additional signed packing list (if any), and
                     that I personally packed and sealed the package(s). I take full legal responsibility for any errors
@@ -455,7 +455,7 @@
     </table>
     <table width="100%">
         <tr>
-            <td align="center" style="font-size:12px">
+            <td align="center" style="font-size:10px">
                 <h4>OWNER’S/SHIPPER’S RISK FORM</h4>
             </td>
         </tr>
