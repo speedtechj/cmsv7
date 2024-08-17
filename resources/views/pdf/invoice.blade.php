@@ -240,7 +240,7 @@
 
             <td></td>
             <td width="60%" align="right"><span class="tracking">Tracking Number:
-                    {{ $record->booking_invoice }}</span></td>
+                   <span style="text-decoration: underline"> {{ $record->booking_invoice }}</span><span></td>
 
         </tr>
     </table>
