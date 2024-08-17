@@ -310,7 +310,7 @@
         @endfor
         </tr>
     @else
-        @for ($i = 0; $i < 8; $i++)
+        @for ($i = 0; $i < 6; $i++)
             <tr>
                 <td style="padding:10px"></td>
                 <td></td>
