@@ -279,7 +279,7 @@
             <td class="information">
                 <span class="infoheading">PHILIPPINES-BASED RECIPIENT:</span><br>
                 {{ $record->receiver->full_name }}<br>
-                {{ $record->receiveraddress->address . '' . $record->receiveraddress->barangayphil->name }}<br>
+                {{ $record->receiveraddress->address . ' ' . $record->receiveraddress->barangayphil->name }}<br>
                 {{ $record->receiveraddress->cityphil->name . ' ' . $record->receiveraddress->provincephil->name }}<br>
                 {{ 'Phone:' . $record->receiver->mobile_no }}<br>
             </td>
