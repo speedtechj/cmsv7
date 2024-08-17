@@ -172,6 +172,7 @@
         .tracking {
             font-size: 18px !important;
             padding: 10px;
+            font-weight: bold;
             font-family: Arial, Helvetica, sans-serif;
             border: 1px solid black;
         }
