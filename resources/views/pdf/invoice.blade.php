@@ -211,7 +211,7 @@
                     true,
                 ) !!}
             </td>
-            <td width="35%" align="right">
+            <td width="30%" align="right">
                 <p class="heading-1">{{ $companyinfo->company_name }}</p>
                 <p>{{ $companyinfo->company_address }}</p>
                 <p>Phone: {{ $companyinfo->company_phone }}</p>
@@ -277,7 +277,7 @@
             </td>
 
             <td class="information">
-                <span class="infoheading">PHILIPPINES-BASED RECEIPIENT:</span><br>
+                <span class="infoheading">PHILIPPINES-BASED RECIPIENT:</span><br>
                 {{ $record->receiver->full_name }}<br>
                 {{ $record->receiveraddress->address . '' . $record->receiveraddress->barangayphil->name }}<br>
                 {{ $record->receiveraddress->cityphil->name . ' ' . $record->receiveraddress->provincephil->name }}<br>
