@@ -20,12 +20,7 @@
             margin: 0px;
             padding: 0px;
         }
-        .clogo{
-            width: 80px;
-            height: 80px;
-            margin: 0px;
-            padding: 0px;
-        }
+
         .logo {
             width: 150px;
             height: 50px;
@@ -69,15 +64,12 @@
             margin: 0px;
             font-size: 12px;
             font-weight: bold;
-            padding:30px;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             border-collapse: collapse;
 
         }
 
         .table-4 td {
-            width: 50%;
-
             border: 1px solid black;
             padding: 5px;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -172,13 +164,14 @@
 <body>
     <table class="table-0">
         <tr>
-            <td width="100%">
+            <td width="40%">
                 <img class="logo" src="{{ public_path('storage/logo/logo.png') }}" alt="logo" />
                 <p style="font-size: 14px; text-align: left; color:#50C878">{{$companyinfo->company_slogan}}</p>
+
             </td>
-            {{-- <td width="20%">
+            <td width="20%">
                 {!! DNS2D::getBarcodeHTML("$companyinfo->company_tracking$record->booking_invoice", 'QRCODE', 3, 3, 'black', true) !!}
-            </td> --}}
+            </td>
             <td width="40%" align="right">
                 <p class="heading-1">{{$companyinfo->company_name}}</p>
                 <p>{{$companyinfo->company_address}}</p>
@@ -197,12 +190,6 @@
                 
             </td>
         </tr>
-    <tr>
-            <td> <img class="clogo" src="{{ public_path('storage/logo/clogo.png') }}" alt="logo" /></td>
-             </td><p>INFORMATION SHEET FOR CONSOLIDATED</p>
-             SHIPMENT OF "BALIKBAYAN BOXES"</td>
-            
-    </tr>
     </table>
     <table class="table-1">
         <tr>
@@ -220,7 +207,9 @@
     </table>
     <table class="table-3">
         <tr>
-           
+            <td>
+                <span>SENDER INFORMATION</span>
+            </td>
             @if ($record->servicetype_id == 1)
                 <td>
                     <span>Agent: {{$record->agent->full_name}} - {{$record->servicetype->description}}</span>
@@ -230,30 +219,39 @@
         </tr>
     </table>
     <table class="table-4" border>
-       <tr>
-            
+        <tr>
+            <td width="40%"><span class="span-text">First Name</span> <br> {{ $record->sender->first_name }}</td>
+            <td colspan="2" width="20%"><span class="span-text">Last Name</span> <br>
+                {{ $record->sender->last_name }}</td>
+            <td align="right"><span class="span-text">Mobile Number </span><br> {{ $record->sender->mobile_no }}</td>
+
+        </tr>
+        <tr>
+            <td colspan="3" width="50%"><span class="span-text">House/Unit/Apt. Number/Street Name</span> <br>
+                {{ $record->senderaddress->address }}</td>
+            <td width="25%" align="right"><span class="span-text">Phone Number</span><br>
+                {{ $record->sender->home_no }}</td>
+
+        </tr>
+        <tr>
+            <td><span class="span-text">City </span><br>{{ $record->senderaddress->citycan->name }}</td>
+            <td><span class="span-text">Province </span><br> {{ $record->senderaddress->provincecan->name }}</td>
+            <td><span class="span-text">Postal Code </span><br> {{ $record->senderaddress->postal_code }}</td>
+            <td><span class="span-text">Email {{$record->sender->email}} </span><br> </td>
+
+        </tr>
+    </table>
+    <table class="table-3">
+        <tr>
             <td>
-                <span style="text-decoration: underline">SENDER/SHIPPER:</span><br>
-                 {{ $record->sender->full_name}}<br>
-                {{ $record->senderaddress->address }}<br>
-                {{ $record->senderaddress->citycan->name .' '. 
-                $record->senderaddress->provincecan->name. ' '. 
-                $record->senderaddress->postal_code }}<br>
-                {{ 'Phone:' . $record->sender->mobile_no }}<br>
+                <span>RECEIVER INFORMATION</span>
             </td>
 
-            <td>
-                <span style="text-decoration: underline">PHILIPPINES-BASED RECEIPIENT:</span><br>
-                {{ $record->receiver->full_name}}<br>
-                {{ $record->receiveraddress->address. ''. $record->receiveraddress->barangayphil->name }}<br>
-                {{$record->receiveraddress->cityphil->name .' '.$record->receiveraddress->provincephil->name }}<br>
-                {{ 'Phone:' . $record->receiver->mobile_no }}<br>
-
-            </td>
-         
-   
-  
-            {{-- <td  ><span class="span-text">First Name </span><br>
+        </tr>
+    </table>
+    <table class="table-4" border>
+        <tr>
+            <td  ><span class="span-text">First Name </span><br>
                 {{ $record->receiver->first_name }}</td>
             <td colspan="2"><span class="span-text">Last Name </span><br>
                 {{ $record->receiver->last_name }}</td>
@@ -279,7 +277,7 @@
             </td>
             <td width="25%" align="right"><span class="span-text">Email </span><br> 
             </td>
-        </tr> --}}
+        </tr>
     </table>
 
     <table class="table-3">

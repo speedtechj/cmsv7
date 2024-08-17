@@ -21,6 +21,13 @@
             padding: 0px;
         }
 
+        .clogo {
+            width: 90px;
+            height: 90px;
+            margin: 0px;
+            padding: 0px;
+        }
+
         .logo {
             width: 150px;
             height: 50px;
@@ -64,12 +71,15 @@
             margin: 0px;
             font-size: 12px;
             font-weight: bold;
+            padding: 30px;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             border-collapse: collapse;
 
         }
 
         .table-4 td {
+            width: 50%;
+
             border: 1px solid black;
             padding: 5px;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -153,9 +163,31 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 12px;
         }
-        .quadrant{
+
+        .quadrant {
             font-size: 10px !important;
             font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .tracking {
+            font-size: 18px !important;
+            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            border: 1px solid black;
+        }
+
+        .information {
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .infoheading {
+            font-size: 18px;
+            font-style: italic;
+            text-decoration: underline;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: lighter;
+            margin-bottom: 10px;
         }
     </style>
 
@@ -164,55 +196,65 @@
 <body>
     <table class="table-0">
         <tr>
-            <td width="40%">
+            <td>
                 <img class="logo" src="{{ public_path('storage/logo/logo.png') }}" alt="logo" />
-                <p style="font-size: 14px; text-align: left; color:#50C878">{{$companyinfo->company_slogan}}</p>
-
+                <p style="font-size: 14px; text-align: left; color:#50C878">{{ $companyinfo->company_slogan }}</p>
             </td>
             <td width="20%">
-                {!! DNS2D::getBarcodeHTML("$companyinfo->company_tracking$record->booking_invoice", 'QRCODE', 3, 3, 'black', true) !!}
+                {!! DNS2D::getBarcodeHTML(
+                    "$companyinfo->company_tracking$record->booking_invoice",
+                    'QRCODE',
+                    2,
+                    2,
+                    'black',
+                    true,
+                ) !!}
             </td>
             <td width="40%" align="right">
-                <p class="heading-1">{{$companyinfo->company_name}}</p>
-                <p>{{$companyinfo->company_address}}</p>
-                <p>Phone: {{$companyinfo->company_phone}}</p>
-                <p>{{$companyinfo->company_website}}</p>
-                @if($record->servicetype_id == 1)
-                <p>Pick Up Date - {{$record->booking_date}}</p>
-                <p>Pick Up Time - {{ $record->start_time}} - {{ $record->end_time}}</p>
-                @if($record->senderaddress->quadrant != null)
-                <p class="quadrant" >{{$record->senderaddress->quadrant}}</p>
-                @endif
+                <p class="heading-1">{{ $companyinfo->company_name }}</p>
+                <p>{{ $companyinfo->company_address }}</p>
+                <p>Phone: {{ $companyinfo->company_phone }}</p>
+                <p>{{ $companyinfo->company_website }}</p>
+                @if ($record->servicetype_id == 1)
+                    <p>Pick Up Date - {{ $record->booking_date }}</p>
+                    <p>Pick Up Time - {{ $record->start_time }} - {{ $record->end_time }}</p>
+                    @if ($record->senderaddress->quadrant != null)
+                        <p class="quadrant">{{ $record->senderaddress->quadrant }}</p>
+                    @endif
                 @else
-                <p>Drop-Off Date - {{$record->booking_date}}</p>
+                    <p>Drop-Off Date - {{ $record->booking_date }}</p>
                 @endif
-               
-                
+
+
             </td>
         </tr>
+
     </table>
-    <table class="table-1">
+
+    <table style="margin:0px;">
         <tr>
-            <td align="center">
-                <p class="heading-2">Tracking Number: {{ $record->booking_invoice }}</p>
-            </td>
+            <td> <img class="clogo" src="{{ public_path('storage/logo/clogo.png') }}" alt="logo" /></td>
+            <td width="60%">INFORMATION SHEET FOR CONSOLIDATED<br>
+                SHIPMENT OF "BALIKBAYAN BOXES"</td>
+
+            <td></td>
+            <td width="60%" align="right"><span class="tracking">Tracking Number:
+                    {{ $record->booking_invoice }}</span></td>
+
         </tr>
     </table>
     <table class="table-2">
         <tr>
             <td class="align-center">
-                <p>THIS INVOICE IS SUBJECT TO THE TERMS AND CONDITIONS PRINTED ON THE REVERSE</p>
+                <span>THIS INVOICE IS SUBJECT TO THE TERMS AND CONDITIONS PRINTED ON THE REVERSE</span>
             </td>
         </tr>
     </table>
     <table class="table-3">
         <tr>
-            <td>
-                <span>SENDER INFORMATION</span>
-            </td>
             @if ($record->servicetype_id == 1)
                 <td>
-                    <span>Agent: {{$record->agent->full_name}} - {{$record->servicetype->description}}</span>
+                    <span>Agent: {{ $record->agent->full_name }} - {{ $record->servicetype->description }}</span>
                 </td>
             @endif
 
@@ -220,64 +262,26 @@
     </table>
     <table class="table-4" border>
         <tr>
-            <td width="40%"><span class="span-text">First Name</span> <br> {{ $record->sender->first_name }}</td>
-            <td colspan="2" width="20%"><span class="span-text">Last Name</span> <br>
-                {{ $record->sender->last_name }}</td>
-            <td align="right"><span class="span-text">Mobile Number </span><br> {{ $record->sender->mobile_no }}</td>
 
-        </tr>
-        <tr>
-            <td colspan="3" width="50%"><span class="span-text">House/Unit/Apt. Number/Street Name</span> <br>
-                {{ $record->senderaddress->address }}</td>
-            <td width="25%" align="right"><span class="span-text">Phone Number</span><br>
-                {{ $record->sender->home_no }}</td>
-
-        </tr>
-        <tr>
-            <td><span class="span-text">City </span><br>{{ $record->senderaddress->citycan->name }}</td>
-            <td><span class="span-text">Province </span><br> {{ $record->senderaddress->provincecan->name }}</td>
-            <td><span class="span-text">Postal Code </span><br> {{ $record->senderaddress->postal_code }}</td>
-            <td align="right"><span class="span-text">Email {{$record->sender->email}} </span><br> </td>
-
-        </tr>
-    </table>
-    <table class="table-3">
-        <tr>
-            <td>
-                <span>RECEIVER INFORMATION</span>
+            <td class="information">
+                <span class="infoheading">SENDER/SHIPPER:</span><br>
+                {{ $record->sender->full_name }}<br>
+                {{ $record->senderaddress->address }}<br>
+                {{ $record->senderaddress->citycan->name .
+                    ' ' .
+                    $record->senderaddress->provincecan->name .
+                    ' ' .
+                    $record->senderaddress->postal_code }}<br>
+                {{ 'Phone:' . $record->sender->mobile_no . ' ' . 'Email:' . $record->sender->email }}<br>
             </td>
 
-        </tr>
-    </table>
-    <table class="table-4" border>
-        <tr>
-            <td  ><span class="span-text">First Name </span><br>
-                {{ $record->receiver->first_name }}</td>
-            <td colspan="2"><span class="span-text">Last Name </span><br>
-                {{ $record->receiver->last_name }}</td>
-            <td align="right" ><span class="span-text">Mobile Number</span> <br> {{ $record->receiver->mobile_no }}
+            <td class="information">
+                <span class="infoheading">PHILIPPINES-BASED RECEIPIENT:</span><br>
+                {{ $record->receiver->full_name }}<br>
+                {{ $record->receiveraddress->address . '' . $record->receiveraddress->barangayphil->name }}<br>
+                {{ $record->receiveraddress->cityphil->name . ' ' . $record->receiveraddress->provincephil->name }}<br>
+                {{ 'Phone:' . $record->receiver->mobile_no }}<br>
             </td>
-
-        </tr>
-        <tr>
-            <td colspan="2" ><span class="span-text">House/Unit/Apt Number/Street Name</span><br>
-                {{ $record->receiveraddress->address }}</td>
-            <td ><span class="span-text">Barangay </span><br>
-                {{ $record->receiveraddress->barangayphil->name }}</td>
-            <td  align="right"><span class="span-text">Phone Number</span><br>
-                {{ $record->receiver->home_no }}</td>
-
-        </tr>
-        <tr>
-            <td width="25%"><span class="span-text">City </span><br> {{ $record->receiveraddress->cityphil->name }}
-            </td>
-            <td width="25%"><span class="span-text">Province </span><br>
-                {{ $record->receiveraddress->provincephil->name }}</td>
-            <td width="25%"><span class="span-text">Zip Code </span><br> {{ $record->receiveraddress->zip_code }}
-            </td>
-            <td width="25%" align="right"><span class="span-text">Email </span><br> 
-            </td>
-        </tr>
     </table>
 
     <table class="table-3">
@@ -296,16 +300,16 @@
         </tr>
         @if ($count !== 0)
             <tr>
-                @for ($i = 0; $i < $count; $i++) 
+                @for ($i = 0; $i < $count; $i++)
             <tr>
-                <td>{{ $packinglist[$i]['quantity']}}</td>
+                <td>{{ $packinglist[$i]['quantity'] }}</td>
                 <td>{{ $packinglist[$i]['packlistitem'] }}</td>
                 <td>{{ $packinglist[$i]['price'] }}</td>
             </tr>
         @endfor
         </tr>
     @else
-        @for ($i = 0; $i < 3; $i++)
+        @for ($i = 0; $i < 8; $i++)
             <tr>
                 <td style="padding:10px"></td>
                 <td></td>
@@ -329,28 +333,31 @@
             <th>AMOUNT</th>
         </tr>
         <tr>
-            <td>{{ $record->boxtype->description }}</td>
+            <td>{{ $record->boxtype->description }}
+                @if ($record->boxtype->id == 4)
+                    {{ $record->irregular_length . 'x' . $record->irregular_width . 'x' . $record->irregular_height }}
+                @endif
+                @if (isset($record->discount_id))
+            <td>
+                {{ '$' . $record->total_price + $record->discount->discount_amount - $record->extracharge_amount }}
+            </td>
+        @elseif(isset($record->agentdiscount_id))
+            <td>
+                {{ '$' . $record->total_price + $record->agentdiscount->discount_amount - $record->extracharge_amount }}
+            </td>
+        @else
+            <td>{{ '$' . $record->total_price - $record->extracharge_amount }}</td>
+            @endif
             @if (isset($record->discount_id))
                 <td>
                     {{ '$' . $record->total_price + $record->discount->discount_amount - $record->extracharge_amount }}
                 </td>
             @elseif(isset($record->agentdiscount_id))
                 <td>
-                    {{ '$' . $record->total_price + $record->agentdiscount->discount_amount - $record->extracharge_amount}}
+                    {{ '$' . $record->total_price + $record->agentdiscount->discount_amount - $record->extracharge_amount }}
                 </td>
             @else
                 <td>{{ '$' . $record->total_price - $record->extracharge_amount }}</td>
-            @endif
-            @if (isset($record->discount_id))
-                <td>
-                    {{ '$' . $record->total_price + $record->discount->discount_amount - $record->extracharge_amount}}
-                </td>
-            @elseif(isset($record->agentdiscount_id))
-                <td>
-                    {{ '$' . $record->total_price + $record->agentdiscount->discount_amount - $record->extracharge_amount}}
-                </td>
-            @else
-                <td>{{ '$' . $record->total_price - $record->extracharge_amount}}</td>
             @endif
         </tr>
         @if ($record->extracharge_amount > 0)
@@ -360,9 +367,8 @@
                     {{ '$' . $record->extracharge_amount }}
                 </td>
             </tr>
-            
         @endif
-       
+
         @if ($record->discount_id !== null or $record->agentdiscount_id !== null)
             <tr>
                 <td colspan="2" align="right">Discount</td>
@@ -383,14 +389,14 @@
             <td>{{ "$" . $record->payment_balance }}</td>
         </tr>
     </table>
-    
+
     <table class="table-3">
         <tr>
             <td>
                 <span>PAYMENT INFORMATION</span>
             </td>
             <td>
-                <span>E-Transfer Email: {{$companyinfo->etransfer_email}}</span>
+                <span>E-Transfer Email: {{ $companyinfo->etransfer_email }}</span>
             </td>
 
         </tr>
@@ -398,7 +404,7 @@
     <table class="table-5" border>
         <tr>
             @foreach ($paymenttype as $paymenttypes)
-            @php $paymenttypescount = 100 @endphp
+                @php $paymenttypescount = 100 @endphp
                 @foreach ($record->bookingpayment as $typepayments)
                     @if ($typepayments->paymenttype_id == $paymenttypes->id)
                         @php $paymenttypescount = $paymenttypes->id @endphp
@@ -406,18 +412,14 @@
                             <label>{{ $paymenttypes->name }}</label>
                         </td>
                     @else
-                     
                     @endif
                 @endforeach
-                    
-                    @if ($paymenttypes->id != $paymenttypescount)
-                    <td> <input type="checkbox"  />
+
+                @if ($paymenttypes->id != $paymenttypescount)
+                    <td> <input type="checkbox" />
                         <label>{{ $paymenttypes->name }}</label>
                     </td>
                 @endif
-                 
-                  
-               
             @endforeach
         </tr>
     </table>
@@ -430,15 +432,22 @@
         </tr>
         <table>
             <tr>
-                <td style="font-size:10px">
-                    I HERE BY CERTIFY AND DECLARE that the contents of the above sealed package(s) are goods without
-                    commercial value or purpose whatsoever. I FURTHER CERTIFY that are no contraband goods as defined by
-                    the laws of Canada and the Republic of the Philippines: I take full legal responsibility for any
-                    erroneous declaration or omission in the packing list attached to this document. I FINALLY CERTIFY
-                    that I am endorsing this
-                    Invoice to Forex Cargo Travel and Tours or door-delivery of my package(s) to
-                    my consignee at the address herein; that I have read, understood and agree to the terms and
-                    conditions printed on the reverse.
+                <td style="font-size:12px">
+                    I, declare, under the penalties of falsification, declare that I am the sender of all the above
+                    goods/items listed on this declaration, including the additional signed packing list (if any), and
+                    that I personally packed and sealed the package(s). I take full legal responsibility for any errors
+                    or omissions in the declaration of goods/items. I HEREBY CERTIFY AND DECLARE that the contents of
+                    the above sealed package(s) are goods without commercial value or purpose whatsoever, and that there
+                    are no undeclared, restricted, illegal or banned items; including firearms, ammunition, illegal
+                    drugs and any combustible good or items in the box as defined by the laws of Canada and the Republic
+                    of the Philippines.
+                    I FURTHER CERTIFY AND DECLARE that I am endorsing the package under this Invoice/Information Sheet
+                    to {{ $companyinfo->company_name }}., for D2D
+                    delivery to my receiver/consignee at the address indicated herein; that I have read, understood, and
+                    agree to the terms and conditions printed on the reverse.
+                    I FINALLY CERTIFY AND DECLARE, under the penalties of falsification, that this Information Sheet has
+                    been accomplished in good faith and to the best of my knowledge and belief, is true and correct
+                    pursuant to the provision
                 </td>
             <tr>
         </table>
@@ -452,51 +461,37 @@
     </table>
     <table width="100%">
         <tr>
-            <td width="50%" align="left" style="font-size:10px">
-                <span style="font-family: Arial, Helvetica, sans-serif;"> <span style="font-weight: bold;">Please be
-                        advised that BREAKABLE ITEMS, LIQUID ITEMS OR
-                        ELECTRONIC ITEMS inside the box per above reference Tracking/Invoice
-                        Number are accepted for transport under OWNER/SHIPPER’S risk.</span><br><br>
-                    Notwithstanding the Terms and Conditions of the covering Sea Waybill or Bill of
-                    Lading, shipper and/or shipper’s representative, by signing on this form, Shipper
-                    agreed and understood that <span style="font-weight: bold;">FOREX CARGO TRAVEL &amp; TOURS INC.,
-                        WILL
-                        NOT BE LIABLE FOR ANY SPILLAGE, BREAKEAGE AND/OR
-                        DAMAGES, RELATED TO THIS TRANSACTION, HOWEVER CAUSED.</span><br>
-                    I/WE FURTHER, declared that my box(es) has no commercial goods (more
-                    than a dozen in any kind) No currency, No Firearms/Ammunition/Explosives
-                    and Toy Guns, No Precious Metals /Stones, No Money Order and Travelers’
-                    Check, No Drugs and Perishable goods, and other prohibited items.<br>
-                    Shipper, as stated at the face of this Owner’s/Shipper’s Risk Form who is of legal
-                    age, with address stated as the corresponding FOREX CARGO TRAVEL &amp;
-                    TOURS INC., reference do hereby remise, release, acquit and forever discharge
-                    and agree to hold harmless FOREX CARGO TRAVEL &amp; TOURS. INC., its
-                    parent, affiliate or subsidiary companies, their stockholders, officers, directors,
-                    claims for sum of money, demands, complaints, liabilities, obligations, suits,</span>
+            <td width="100%">
+                <span style="font-size:12px;">
+                    Please be advised that BREAKABLE ITEMS, LIQUID ITEMS OR ELECTRONIC ITEMS inside the box per
+                    above Invoice/Information Sheet are accepted for transport under OWNER/SHIPPER’S risk.
+                    Notwithstanding the Terms and Conditions of the covering Sea Waybill or Bill of Lading, the
+                    shipper and/or shipper’s representative, by signing on this form, agree and understood that
+                    FOREX CARGO TRAVEL & TOURS INC., WILL NOT BE LIABLE FOR ANY LIQUID SPILL, BREAKEAGE AND/OR
+                    DAMAGES OF ITEMS INSIDE THE BOX(ES) , RELATED TO THIS TRANSACTION, HOWEVER CAUSED.<br>
+
+                    The shipper, as stated at the face of this Owner’s/Shipper’s Risk Form, who is of legal age,
+                    with address stated above, do hereby remise, release, acquit and forever discharge and agree to
+                    hold harmless FOREX CARGO TRAVEL & TOURS INC., its parent, affiliate or subsidiary companies,
+                    their stockholders, officers, directors, agents or employees and their successors-in-interest
+                    from any and all actions, claims for sum of money, demands, complaints, liabilities,
+                    obligations, suits, rights or causes of actions whatsoever (for indemnity, damages or otherwise)
+                    at law or in equity that now exists or may hereafter exists (collectively, the “Claims”),
+                    arising out of or in connection with the non-perishable shipment covered under the corresponding
+                    INVOICE . The shipper acknowledges that no action will be instituted whether civil, criminal, or
+                    administrative against {{ $companyinfo->company_name }}.
+                    It is agreed that Shipper have read this entire document, the contents of which have been explained
+                    in a language that is known and which the Shipper acknowledge to have signed, and the entire form,
+                    release, waiver and quitclaim hereby given is made by Shipper willingly, voluntary and with full
+                    knowledge of the rights under the law and is binding upon Shipper and its successors and assigns.
+                </span>
 
             </td>
-            <td width="50%" align="left" style="font-size:10px;">
-                <span style="font-family: Arial, Helvetica, sans-serif;">agents or employees and their
-                    successors-in-interest from any and all actions,
-                    rights or causes of actions whatsoever (for indemnity, damages or otherwise) at
-                    law or in equity that now exists or may hereafter exists (collectively, the
-                    “Claims”), arising out of or in connection with the non-perishable shipment
-                    covered under the corresponding INVOICE which, considering such spillage,
-                    breakable or fragile in nature of the shipment, is accepted under
-                    shipper/owner’s risk.</span>
-                Shipper acknowledges that no action will be instituted whether civil, criminal, or
-                administrative against <span style="font-weight: bold;">FOREX CARGO TRAVEL &amp; TOURS INC.</span>, This
-                Form
-                may be pleaded in bar or any suit or proceeding which Shipper may have taken or
-                may take in connection with the non-perishable breakable shipment. Suits arising
-                from or in relation to this document or the shipment, including violations of the
-                waiver herein, shall be brought before the courts.<br>
-                It is agreed that Shipper have read this entire document, the contents of which have
-                been explained in a language that is known and which the Shipper acknowledge to
-                have signed, and the entire form, release, waiver and quitclaim hereby given is made
-                by Shipper willingly, voluntary and with full knowledge of the rights under the law
-                and is binding upon Shipper and its successors and assigns.</p><span>
-            </td>
+            {{-- <td width="50%" align="left" style="font-size:10px;">
+                <span style="font-family: Arial, Helvetica, sans-serif;">
+                    It is agreed that Shipper have read this entire document, the contents of which have been explained in a language that is known and which the Shipper acknowledge to have signed, and the entire form, release, waiver and quitclaim hereby given is made by Shipper willingly, voluntary and with full knowledge of the rights under the law and is binding upon Shipper and its successors and assigns.
+                </span>
+            </td> --}}
         </tr>
     </table>
     <table width="100%" style="margin-top:10px">
@@ -520,13 +515,13 @@
     <table width="100%">
         <tr>
             <td width="50%" style="vertical-align:top; font-size:10px">
-                <span>By tendering goods and personal effects for shipment via Forex Cargo Travel
-                    Tours (“Company”). The shipper agrees to the terms and conditions stated
+                <span>By tendering goods and personal effects for shipment via {{ $companyinfo->company_name }}
+                    (“Company”). The shipper agrees to the terms and conditions stated
                     herein and the declaration of the shipper made in the invoice which are
                     incorporated herein by reference. No agent or employee of “company” or the
                     shipper may alter these terms and condition.</span><br>
                 <ol>
-                    <li class="li-1"> THE INVOICE</li>
+                    <li class="li-1">THE INVOICE/INFORMATION SHEET/DECLARATION/PACKING LIST</li>
                     <span class="sub-span">The “Company” invoice is non-negotiable, and the shipper acknowledges
                         that it has been prepared by the shipper or by the “Company” goods
                         transported hereunder, or it is the authorized agent of the owner of the goods,
@@ -560,12 +555,12 @@
                     <span class="sub-span">The liability of the “Company” for lost shipment(s), under this invoice, is
                         limited to:</span>
                     <ol type="a">
-                        <li> CDN $100 per package (for regular box, TV (regardless of size),
+                        <li> CDN $200 per package (for regular box, TV (regardless of size),
                             irregular box/shipment which dimension is equivalent to or bigger
                             than regular box).</li>
-                        <li>CDN $75 per package (for bagahe box or irregular box/shipment
+                        <li>CDN $150 per package (for bagahe box or irregular box/shipment
                             which dimension is equivalent to bagahe box).</li>
-                        <li>CDN $50 per package (for bulilit box) excluding those which are
+                        <li>CDN $100 per package (for bulilit box) excluding those which are
                             shipped under “Company” promotions or deals.</li>
                     </ol>
 
@@ -576,8 +571,6 @@
                         not limited to, loss of income, profits interest, utility or loss of market.</span>
 
                 </ol>
-            </td>
-            <td width="50%" vertical-align: top;>
                 <ol start="7">
                     <li class="li-1">LIABILITIES NOT ASSUMED</li>
                     <span class="sub-span">While the “Company” endeavors to exercise its best efforts to provide
@@ -610,7 +603,9 @@
                             leakage of items inside the box. It is the responsibility of the
                             shipper to pack the items properly and securely.</li>
                     </ol>
-
+            </td>
+            <td width="50%">
+                <ol start="8">
                     <li class="li-1">CLAIMS</li>
                     <ol class="sub-span">
                         <li>Claims or complaint should be advised by the sender within 24 to
@@ -655,12 +650,23 @@
                         shipper upon submission by the “Company” of proper proof or evidence for
                         such expenses. In such event, the company is entitled to hold, retain or
                         impound the shipment as surely for payment until said refund or
-                        reimbursement is fully satisfied.</li>
+                        reimbursement is fully satisfied.</li><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br><br>
+
                     </p>
-                    <ol>
+                </ol>
+                </ol>
             </td>
+
         </tr>
     </table>
+    <p style="text-align: center">“ DISCOVER YOUR DREAM DESTINATIONS TODAY ! ENJOY FRIENDLY SERVICE AND EASY INSTALLMENT PLAN…" <br>
+        BOOK DIRECT TO OUR WEBSITE : WWW.FOREXTRAVELDEALS.COM
+        WANT TO SHIP VIA AIR CARGO CALL US FOR A QOUTE
+        WANT TO RELOCATE TO THE PHILIPPINES OR WITHIN CANADA ?
+        CALL US: 1.888.315.5172
+        FOR FOREX TRAVEL INQUIRIES : INFO.FOREXTRAVEL@GMAIL.COM
+        FOR AIR CARGO INQURIES:CALGARY@FOREXCARGODEALS.COM</p>
 
 </body>
 
