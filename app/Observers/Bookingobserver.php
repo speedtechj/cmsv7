@@ -68,8 +68,7 @@ class Bookingobserver
             $height = $booking->boxtype->height ?? 0;
             $boxcbm = round($length * $width * $height / 61024, 2);
         }
-        // $skiddingbatch = Skiddinginfo::where('virtual_invoice', $booking->booking_invoice)
-        // ->orWhere('virtual_invoice', $booking->manual_invoice)->first();
+       
         $updatebooking = Booking::find($booking->id);
       $skiddingresult = Skiddinginfo::where('virtual_invoice', $booking->booking_invoice)
             ->orWhere('virtual_invoice', $booking->manual_invoice)->first();
