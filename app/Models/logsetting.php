@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class logsetting extends Model
+class Logsetting extends Model
 {
     use HasFactory;
     protected $guarded = [];
