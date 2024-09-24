@@ -76,8 +76,8 @@ class CustomerloginfoResource extends Resource
                     ->icon('heroicon-o-phone')
                     ->color('primary')
                     ->visible(function (Model $record) {
-                        $date_range = logsetting::where('is_active', 1)->first();
-                        return $result = $record->callLogs->whereBetween('calldate', [$date_range->start_date, $date_range->end_date])->isEmpty();
+                        // $date_range = logsetting::where('is_active', 1)->first();
+                        // return $result = $record->callLogs->whereBetween('calldate', [$date_range->start_date, $date_range->end_date])->isEmpty();
                       
                         // 30';Post::whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])->get();
                         // dd($test);
@@ -85,6 +85,7 @@ class CustomerloginfoResource extends Resource
                         // return $test;
                         // return $record->callLogs->isEmpty();
                         // dd($record->id);
+                        return true;
                     }),
             ])
             ->bulkActions([
