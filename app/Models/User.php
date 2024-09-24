@@ -99,6 +99,8 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         return $this->belongsTo(Provincecan::class);
     }
+
+    
     // public function sender(){
     //     return $this->hasMany(Sender::class);
     // }

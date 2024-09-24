@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
+use App\Models\Companyinfo;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
@@ -33,6 +34,10 @@ class AppuserPanelProvider extends PanelProvider {
         ->maxContentWidth(MaxWidth::Full)
         ->databaseNotifications()
         ->brandName('Forex CMSv4')
+        // ->brandName(function(){
+        //     $company_name = Companyinfo::all()->first();
+        //     return $company_name->company_name;
+        // })
         ->profile(EditProfile::class )
         ->login()
         ->readOnlyRelationManagersOnResourceViewPagesByDefault(false)
@@ -70,6 +75,7 @@ class AppuserPanelProvider extends PanelProvider {
             ->visible( fn (): bool => auth()->user()->isAdmin() )
         ] )
         ->navigationGroups( [
+            NavigationGroup::make( 'Call Log')->icon( 'heroicon-o-phone-arrow-up-right'),
             NavigationGroup::make( 'Canada Location' )->icon( 'heroicon-o-map-pin' ),
             NavigationGroup::make( 'Philippines Location' )->icon( 'heroicon-o-map-pin' ),
             NavigationGroup::make( 'App Settings')->icon( 'heroicon-o-cog-6-tooth' )

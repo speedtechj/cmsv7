@@ -29,8 +29,8 @@
         }
 
         .logo {
-            width: 150px;
-            height: 50px;
+            width: 200px;
+            height: 80px;
             margin: 0px;
             padding: 0px;
         }
@@ -201,19 +201,19 @@
                 <img class="logo" src="{{ public_path('storage/logo/logo.png') }}" alt="logo" />
                 <p style="font-size: 14px; text-align: left; color:#50C878">{{ $companyinfo->company_slogan }}</p>
             </td>
-            <td width="20%">
+            <td width="30%">
                 {!! DNS2D::getBarcodeHTML(
                     "$companyinfo->company_tracking$record->booking_invoice",
                     'QRCODE',
-                    2,
-                    2,
+                    3,
+                    3,
                     'black',
                     true,
                 ) !!}
             </td>
-            <td width="30%" align="right">
+            <td width="20%" align="right">
                 <p class="heading-1">{{ $companyinfo->company_name }}</p>
-                <p>{{ $companyinfo->company_address }}</p>
+                <p style="font-size: 12px;">{{ $companyinfo->company_address }}</p>
                 <p>Phone: {{ $companyinfo->company_phone }}</p>
                 <p>{{ $companyinfo->company_website }}</p>
                 @if ($record->servicetype_id == 1)

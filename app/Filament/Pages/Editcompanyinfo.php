@@ -60,7 +60,7 @@ class Editcompanyinfo extends Page implements HasForms
                             ->required(),
                         TextInput::make('barcode_label')
                             ->required(),
-                        TextInput::make('company_email')
+                        TextInput::make('etransfer_email')
                             ->required(),
                         TextInput::make('company_slogan')
                             ->required(),
