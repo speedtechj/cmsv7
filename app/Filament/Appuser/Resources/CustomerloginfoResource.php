@@ -78,7 +78,12 @@ class CustomerloginfoResource extends Resource
                     ->color('primary')
                     ->visible(function (Model $record) {
                         $date_range = Logcallsetting::where('is_active', 1)->first();
-                        return $record->callLogs->whereBetween('calldate', [$date_range->start_date, $date_range->end_date])->isEmpty();
+                        if ($date_range == null) {
+                            return false;
+                        }else{
+                            return $record->callLogs->whereBetween('calldate', [$date_range->start_date, $date_range->end_date])->isEmpty();
+                        }
+                       
                       
                         // 30';Post::whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])->get();
                         // dd($test);
