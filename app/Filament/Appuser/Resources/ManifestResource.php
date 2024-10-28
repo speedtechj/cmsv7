@@ -3,6 +3,7 @@
 namespace App\Filament\Appuser\Resources;
 
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Batch;
 use App\Models\Sender;
@@ -111,6 +112,9 @@ class ManifestResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('Assign New Batch')
+                ->visible(function (){
+                    return auth()->user()->getRoleNames()->contains('super_admin');
+                })
                 ->color('danger')
                 ->icon('heroicon-o-chevron-up-down')
                 ->form([
