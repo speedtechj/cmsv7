@@ -341,6 +341,7 @@ class TransactionResource extends Resource
                         Forms\Components\MarkdownEditor::make('note')
                             ->columnSpanFull(),
                         Forms\Components\Toggle::make('is_pickup')
+                            ->label('Picked Up')
                             ->required(),
                         Forms\Components\Toggle::make('box_replacement')
                             ->required(),
