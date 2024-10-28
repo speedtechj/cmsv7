@@ -468,12 +468,12 @@
                     above Invoice/Information Sheet are accepted for transport under OWNER/SHIPPER’S risk.
                     Notwithstanding the Terms and Conditions of the covering Sea Waybill or Bill of Lading, the
                     shipper and/or shipper’s representative, by signing on this form, agree and understood that
-                    FOREX CARGO TRAVEL & TOURS INC., WILL NOT BE LIABLE FOR ANY LIQUID SPILL, BREAKEAGE AND/OR
+                    {{ $companyinfo->company_name }}., WILL NOT BE LIABLE FOR ANY LIQUID SPILL, BREAKEAGE AND/OR
                     DAMAGES OF ITEMS INSIDE THE BOX(ES) , RELATED TO THIS TRANSACTION, HOWEVER CAUSED.<br>
 
                     The shipper, as stated at the face of this Owner’s/Shipper’s Risk Form, who is of legal age,
                     with address stated above, do hereby remise, release, acquit and forever discharge and agree to
-                    hold harmless FOREX CARGO TRAVEL & TOURS INC., its parent, affiliate or subsidiary companies,
+                    hold harmless {{ $companyinfo->company_name }}., its parent, affiliate or subsidiary companies,
                     their stockholders, officers, directors, agents or employees and their successors-in-interest
                     from any and all actions, claims for sum of money, demands, complaints, liabilities,
                     obligations, suits, rights or causes of actions whatsoever (for indemnity, damages or otherwise)
