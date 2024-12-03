@@ -171,6 +171,8 @@ return [
         App\Providers\Filament\AppuserPanelProvider::class,
         App\Providers\Filament\Twelve24PanelProvider::class,
         App\Providers\Filament\MonitoringPanelProvider::class,
+        App\Providers\Filament\WillxpressPanelProvider::class,
+        App\Providers\Filament\AllportPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
 

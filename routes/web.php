@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\PosinvoiceController;
 use App\Http\Controllers\Railbill;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\Shippinginstruction;
+use App\Http\Controllers\PosinvoiceController;
+use App\Http\Controllers\PackinglistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::get('{record}/pdf',[InvoiceController::class,'invoice'])->name('barcode.p
 Route::get('{record}/info',[Shippinginstruction::class,'instruction'])->name('instructionshipping');
 Route::get('{record}/railbill',[Railbill::class,'railbillinfo'])->name('railbillinfos');
 Route::get('{record}/data',[PosinvoiceController::class,'posinvoice'])->name('posinvoice');
+Route::get('{record}/packlistpdf',[PackinglistController::class,'index'])->name('packlistdownload');

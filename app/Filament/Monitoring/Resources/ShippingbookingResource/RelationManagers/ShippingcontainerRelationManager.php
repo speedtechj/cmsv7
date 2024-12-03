@@ -5,6 +5,7 @@ namespace App\Filament\Monitoring\Resources\ShippingbookingResource\RelationMana
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Batch;
+use App\Models\Shippingbooking;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
@@ -210,9 +211,15 @@ class ShippingcontainerRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
+                    ->after(function (Model $record){
+                    //   dd($this->getOwnerRecord()->branch_id);
+                      $record->batch->update(['branch_id' => $this->getOwnerRecord()->branch_id]);
+                   
+                    })
                     ->slideOver()
                     ->modalWidth(MaxWidth::SevenExtraLarge)
                     ->mutateFormDataUsing(function (array $data): array {
+                        
                         $data['user_id'] = auth()->id();
 
                         return $data;
@@ -222,6 +229,12 @@ class ShippingcontainerRelationManager extends RelationManager
 
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
+                    ->after(function (Model $record){
+                       
+                          $record->batch->update(['branch_id' => $this->getOwnerRecord()->branch_id]);
+                       
+                       
+                        })
                         ->slideOver(),
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('print')

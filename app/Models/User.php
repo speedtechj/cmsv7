@@ -75,7 +75,25 @@ class User extends Authenticatable implements FilamentUser, HasName
             } else {
                 return false;
             }
-        } else {
+        
+        } 
+        else if ($panel->getId() === 'allport') {
+            if ($user_role->contains('super_admin') || $user_role->contains('allport')) {
+                return str_ends_with($this->is_active, 1);
+            } else {
+                return false;
+            }
+        }
+        else if ($panel->getId() === 'willxpress') {
+            
+            if ($user_role->contains('super_admin') || $user_role->contains('willxpress')) {
+                return str_ends_with($this->is_active, 1);
+            } else {
+                return false;
+            }
+           
+        }
+        else {
 
             return false;
         }
