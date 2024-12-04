@@ -13,6 +13,7 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class CallWidget extends BaseWidget
 {
+    
     protected function getStats(): array
     {
        $callid = Logcallsetting::where('is_active',1)->first()->calltype_id ?? 0;
