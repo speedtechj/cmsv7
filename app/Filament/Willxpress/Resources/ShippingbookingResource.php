@@ -33,9 +33,9 @@ class ShippingbookingResource extends Resource
         return $table
         ->query(Shippingbooking::query()->where('branch_id', 6))
             ->columns([
-                // Tables\Columns\TextColumn::make( 'booking_no' )
-                // ->label( 'Booking Number' )
-                // ->searchable(),
+                Tables\Columns\TextColumn::make( 'booking_no' )
+                ->label( 'Booking Number' )
+                ->searchable(),
                 Tables\Columns\TextColumn::make( 'shippingcontainer.container_no' )
                 ->label( 'Container Number' )
                 ->listWithLineBreaks()
