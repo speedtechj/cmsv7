@@ -23,7 +23,9 @@ class CallWidget extends BaseWidget
         ->send();
         }
         return [
-            Stat::make(Auth::User()->full_name, Calllog::where('calltype_id',$callid)->count())
+            Stat::make(Auth::User()->full_name, Calllog::where('calltype_id',$callid)
+            ->where('user_id',Auth::User()->id)
+            ->count())
             ->description('Total Calls')
             ->descriptionIcon('heroicon-m-arrow-trending-up', IconPosition::Before)
             ->color('success'),
