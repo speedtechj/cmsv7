@@ -3,6 +3,7 @@
 namespace App\Filament\Appuser\Resources\CustomerloginfoResource\Pages;
 
 use App\Filament\Appuser\Resources\CustomerloginfoResource;
+use App\Filament\Appuser\Resources\CustomerloginfoResource\Widgets\CallWidget;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -18,8 +19,11 @@ class ListCustomerloginfos extends ListRecords
             // Actions\CreateAction::make(),
         ];
     }
-//     protected function paginateTableQuery(Builder $query): Paginator
-// {
-//     return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
-// }
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            CallWidget::class,
+        ];
+    }
+
 }
