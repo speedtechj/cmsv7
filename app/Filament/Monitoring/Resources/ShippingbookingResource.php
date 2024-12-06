@@ -209,6 +209,13 @@ class ShippingbookingResource extends Resource
                        $record->update(['is_complete' => true]);
                     }
                 }),
+                Tables\Columns\TextColumn::make('branch.business_name')
+                ->label('Broker')
+                ->toggleable( isToggledHiddenByDefault: true ),
+                Tables\Columns\TextColumn::make('shippingcontainer.batch.batchno')
+                ->label('Batch No')
+                ->listWithLineBreaks()
+                ->searchable(),
                 Tables\Columns\TextColumn::make( 'created_at' )
                 ->dateTime()
                 ->sortable()
