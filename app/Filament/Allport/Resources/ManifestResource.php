@@ -9,6 +9,7 @@ use App\Models\Manifest;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use App\Models\Shippingcontainer;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -50,13 +51,13 @@ class ManifestResource extends Resource
                 ->label('Box Type')
                 ->searchable()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('batch.id')
-                ->label('Batch No')
-                ->sortable()
-                ->searchable()
-                ->getStateUsing(function (Model $record) {
-                    return $record->batch->batchno . "-" . $record->batch->batch_year;
-                }),
+            // Tables\Columns\TextColumn::make('batch.id')
+            //     ->label('Batch No')
+            //     ->sortable()
+            //     ->searchable()
+            //     ->getStateUsing(function (Model $record) {
+            //         return $record->batch->batchno . "-" . $record->batch->batch_year;
+            //     }),
             Tables\Columns\TextColumn::make('sender.full_name')
                 ->label('Sender Name')
                 ->searchable()
@@ -75,10 +76,9 @@ class ManifestResource extends Resource
             ->filters([
                 SelectFilter::make('batch_id')
                 // ->multiple()
-                ->label('Batch Number')
-                ->options(function (Batch $record) {
-                  return $record->all()->where('is_active',1)->where('branch_id', 7)->pluck('batchno', 'id');
-                  
+                ->label('Container Number')
+                ->options(function (Shippingcontainer $record) {
+                    return $record->all()->where('is_active',1)->where('branch_id', 7)->pluck('container_no', 'batch_id');
                 })
                 ->default()
           

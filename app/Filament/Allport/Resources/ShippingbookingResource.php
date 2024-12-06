@@ -47,10 +47,6 @@ class ShippingbookingResource extends Resource
                 Tables\Columns\TextColumn::make( 'carrier.name' )
                 ->label( 'Carrier' )
                 ->numeric(),
-                Tables\Columns\TextColumn::make('shippingcontainer.batch.batchno')
-                ->label('Batch No')
-                ->listWithLineBreaks()
-                ->searchable(),
                 Tables\Columns\TextColumn::make('bill_of_lading'),
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),

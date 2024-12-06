@@ -221,8 +221,10 @@ class ShippingcontainerRelationManager extends RelationManager
                     ->mutateFormDataUsing(function (array $data): array {
                         
                         $data['user_id'] = auth()->id();
+                        $data['branch_id'] = $this->getOwnerRecord()->branch_id;
 
                         return $data;
+                       
                     }),
             ])
             ->actions([
@@ -230,8 +232,8 @@ class ShippingcontainerRelationManager extends RelationManager
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
                     ->after(function (Model $record){
-                       
-                          $record->batch->update(['branch_id' => $this->getOwnerRecord()->branch_id]);
+                        
+                        $record->update(['branch_id' => $this->getOwnerRecord()->branch_id]);
                        
                        
                         })

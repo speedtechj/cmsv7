@@ -38,12 +38,12 @@ class ReceiverRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\TextInput::make('mobile_no')
                     ->mask('+63(999)999-9999')
-                    ->required()
-                    ->maxLength(255),
+                    ->required(),
+                   
                 Forms\Components\TextInput::make('home_no')
                     ->mask('+63(999)999-9999')
-                    ->required()
-                    ->maxLength(255),
+                    ->required(),
+                    
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(255),

@@ -12,7 +12,7 @@ class TotalCallChartWidget extends ChartWidget
 {
     protected static ?string $heading = 'Call Log Chart';
     protected static ?string $maxHeight = '200px';
-    protected function getData(): array
+        protected function getData(): array
     {
         $callid = Logcallsetting::where('is_active',1)->first() ?? 0;
         

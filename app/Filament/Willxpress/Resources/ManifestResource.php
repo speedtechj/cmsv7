@@ -52,13 +52,13 @@ class ManifestResource extends Resource
                 ->label('Box Type')
                 ->searchable()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('batch.id')
-                ->label('Batch No')
-                ->sortable()
-                ->searchable()
-                ->getStateUsing(function (Model $record) {
-                    return $record->batch->batchno . "-" . $record->batch->batch_year;
-                }),
+            // Tables\Columns\TextColumn::make('batch.id')
+            //     ->label('Batch No')
+            //     ->sortable()
+            //     ->searchable()
+            //     ->getStateUsing(function (Model $record) {
+            //         return $record->batch->batchno . "-" . $record->batch->batch_year;
+            //     }),
             Tables\Columns\TextColumn::make('sender.full_name')
                 ->label('Sender Name')
                 ->searchable()
@@ -86,14 +86,14 @@ class ManifestResource extends Resource
             //     ->label('Mobile No')
             //     ->searchable()->sortable(),
             // Tables\Columns\TextColumn::make('receiver.home_no')
-            //     ->label('Home No')
+            //     ->label('Home No')h
             //     ->searchable()->sortable(),
             ])
             ->filters([
                 SelectFilter::make('batch_id')
-                ->label('Batch Number')
-                ->options(function (Batch $record) {
-                    return $record->all()->where('is_active',1)->where('branch_id', 6)->pluck('batchno', 'id');
+                ->label('Container Number')
+                ->options(function (Shippingcontainer $record) {
+                    return $record->all()->where('is_active',1)->where('branch_id', 6)->pluck('container_no', 'batch_id');
                 })
                 ->default()
             ],layout: FiltersLayout::AboveContent)
