@@ -31,7 +31,7 @@ class ShippingbookingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->query(Shippingbooking::query()->where('branch_id', 6))
+        ->query(Shippingbooking::query()->where('branch_id', 4))
             ->columns([
                 Tables\Columns\TextColumn::make( 'booking_no' )
                 ->label( 'Booking Number' )

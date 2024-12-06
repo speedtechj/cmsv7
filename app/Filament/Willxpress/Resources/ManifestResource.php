@@ -93,7 +93,7 @@ class ManifestResource extends Resource
                 SelectFilter::make('batch_id')
                 ->label('Container Number')
                 ->options(function (Shippingcontainer $record) {
-                    return $record->all()->where('is_active',1)->where('branch_id', 6)->pluck('container_no', 'batch_id');
+                    return $record->all()->where('is_active',1)->where('branch_id', 4)->pluck('container_no', 'batch_id');
                 })
                 ->default()
             ],layout: FiltersLayout::AboveContent)

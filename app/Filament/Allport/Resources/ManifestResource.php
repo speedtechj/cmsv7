@@ -78,7 +78,7 @@ class ManifestResource extends Resource
                 // ->multiple()
                 ->label('Container Number')
                 ->options(function (Shippingcontainer $record) {
-                    return $record->all()->where('is_active',1)->where('branch_id', 7)->pluck('container_no', 'batch_id');
+                    return $record->all()->where('is_active',1)->where('branch_id', 3)->pluck('container_no', 'batch_id');
                 })
                 ->default()
           
