@@ -2,16 +2,17 @@
 
 namespace App\Filament\Willxpress\Resources;
 
-use App\Filament\Willxpress\Resources\ShippingbookingResource\Pages;
-use App\Filament\Willxpress\Resources\ShippingbookingResource\RelationManagers;
-use App\Models\Shippingbooking;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Shippingbooking;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Willxpress\Resources\ShippingbookingResource\Pages;
+use App\Filament\Willxpress\Resources\ShippingbookingResource\RelationManagers;
 
 class ShippingbookingResource extends Resource
 {
@@ -31,7 +32,7 @@ class ShippingbookingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->query(Shippingbooking::query()->where('branch_id', 4))
+        ->query(Shippingbooking::query()->where('branch_id', Auth::user()->branch_id))
             ->columns([
                 Tables\Columns\TextColumn::make( 'booking_no' )
                 ->label( 'Booking Number' )

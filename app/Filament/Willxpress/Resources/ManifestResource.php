@@ -8,7 +8,10 @@ use App\Models\Batch;
 use App\Models\Manifest;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Shippingbooking;
 use Filament\Resources\Resource;
+use App\Models\Shippingcontainer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -16,8 +19,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Willxpress\Resources\ManifestResource\Pages;
 use App\Filament\Willxpress\Resources\ManifestResource\RelationManagers;
-use App\Models\Shippingbooking;
-use App\Models\Shippingcontainer;
 
 class ManifestResource extends Resource
 {
@@ -93,7 +94,7 @@ class ManifestResource extends Resource
                 SelectFilter::make('batch_id')
                 ->label('Container Number')
                 ->options(function (Shippingcontainer $record) {
-                    return $record->all()->where('is_active',1)->where('branch_id', 4)->pluck('container_no', 'batch_id');
+                    return $record->all()->where('is_active',1)->where('branch_id', Auth::user()->branch_id)->pluck('container_no', 'batch_id');
                 })
                 ->default()
             ],layout: FiltersLayout::AboveContent)

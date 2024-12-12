@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Models\Shippingcontainer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -78,7 +79,8 @@ class ManifestResource extends Resource
                 // ->multiple()
                 ->label('Container Number')
                 ->options(function (Shippingcontainer $record) {
-                    return $record->all()->where('is_active',1)->where('branch_id', 3)->pluck('container_no', 'batch_id');
+                   
+                    return $record->all()->where('is_active',1)->where('branch_id', Auth::user()->branch_id)->pluck('container_no', 'batch_id');
                 })
                 ->default()
           
