@@ -2,9 +2,10 @@
 
 namespace App\Filament\Exports;
 
+use App\Models\Booking;
 use App\Models\Manifest;
-use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
+use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Models\Export;
 
 class ManifestExporter extends Exporter
@@ -14,10 +15,17 @@ class ManifestExporter extends Exporter
     public static function getColumns(): array
     {
         return [
-            ExportColumn::make('booking_invoice')
-            ->label('Invoice'),
-            ExportColumn::make('manual_invoice')
-            ->label('Manual Invoice'),
+            ExportColumn::make('invoice')
+            ->label('Invoice')
+            ->state(function ($record) {
+                if($record->manual_invoice != null){
+                    return $record->manual_invoice;
+                }else{
+                    return $record->booking_invoice;
+                }
+            }),
+            // ExportColumn::make('manual_invoice')
+            // ->label('Manual Invoice'),
             ExportColumn::make('batch.batchno')
             ->label('Batch No'),
             ExportColumn::make('boxtype.description')

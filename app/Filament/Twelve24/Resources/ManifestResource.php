@@ -8,6 +8,7 @@ use App\Models\Batch;
 use App\Models\Manifest;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Skiddinginfo;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
@@ -40,14 +41,21 @@ class ManifestResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('booking_invoice')
+                Tables\Columns\TextColumn::make('invoice')
                 ->label('Invoice')
-                ->searchable()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('manual_invoice')
-                ->label('Manual Invoice')
-                ->searchable()
-                ->sortable(),
+                ->searchable(['manual_invoice','booking_invoice'])
+                ->sortable()
+                ->getStateUsing(function (Model $record){
+                    if($record->manual_invoice != null){
+                        return $record->manual_invoice;
+                    }else{
+                        return $record->booking_invoice;
+                    }
+                }),
+            // Tables\Columns\TextColumn::make('manual_invoice')
+            //     ->label('Manual Invoice')
+            //     ->searchable()
+            //     ->sortable(),
             Tables\Columns\TextColumn::make('Quantity')
                 ->label('Quantity')
                 ->default('1'),
@@ -111,7 +119,7 @@ class ManifestResource extends Resource
                     ->icon('heroicon-o-folder-arrow-down')
                     ->color('primary')
                     ->exporter(ManifestExporter::class)
-                    ->fileName(fn (Export $export): string => "Manifest.xlsx")
+                    ->fileName(fn (Export $export): string => "Manifest")
                 ]),
             ]);
     }

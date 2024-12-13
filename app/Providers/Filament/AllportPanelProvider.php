@@ -25,6 +25,7 @@ class AllportPanelProvider extends PanelProvider
         return $panel
             ->id('allport')
             ->path('/allport')
+            ->databaseNotifications()
             ->brandName('Allport')
             ->login()
             ->colors([

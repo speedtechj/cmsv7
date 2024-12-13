@@ -49,6 +49,10 @@ class Booking extends Model
     {
         return $this->belongsTo(Boxtype::class);
     }
+    public function skiddinginfo()
+    {
+        return $this->belongsTo(Skiddinginfo::class, 'booking_id');
+    }
     public function servicetype()
     {
         return $this->belongsTo(Servicetype::class);

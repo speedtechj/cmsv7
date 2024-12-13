@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Exports\ManifestExporter;
+use Filament\Actions\Exports\Models\Export;
+use Filament\Tables\Actions\ExportBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Allport\Resources\ManifestResource\Pages;
 use App\Filament\Allport\Resources\ManifestResource\RelationManagers;
@@ -37,14 +40,21 @@ class ManifestResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('booking_invoice')
+                Tables\Columns\TextColumn::make('invoice')
                 ->label('Invoice')
-                ->searchable()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('manual_invoice')
-                ->label('Manual Invoice')
-                ->searchable()
-                ->sortable(),
+                ->searchable(['manual_invoice','booking_invoice'])
+                ->sortable()
+                ->getStateUsing(function (Model $record){
+                    if($record->manual_invoice != null){
+                        return $record->manual_invoice;
+                    }else{
+                        return $record->booking_invoice;
+                    }
+                }),
+            // Tables\Columns\TextColumn::make('manual_invoice')
+            //     ->label('Manual Invoice')
+            //     ->searchable()
+            //     ->sortable(),
             Tables\Columns\TextColumn::make('Quantity')
                 ->label('Quantity')
                 ->default('1'),
@@ -96,9 +106,14 @@ class ManifestResource extends Resource
                 ->openUrlInNewTab(),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                Tables\Actions\BulkActionGroup::make([
+                    ExportBulkAction::make()
+                    ->label('Export Manifest')
+                    ->icon('heroicon-o-folder-arrow-down')
+                    ->color('primary')
+                    ->exporter(ManifestExporter::class)
+                    ->fileName(fn (Export $export): string => "Manifest")
+                ]),
             ]);
     }
 

@@ -25,6 +25,7 @@ class WillxpressPanelProvider extends PanelProvider
         return $panel
             ->id('willxpress')
             ->path('/willxpress')
+            ->databaseNotifications()
             ->brandName('Willxpress')
             ->login()
             ->colors([
