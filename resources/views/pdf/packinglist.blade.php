@@ -56,7 +56,14 @@
         <table width="100%" class="heading1">
             <tr >
                 <td width="50%"  style="border:none; padding:none; padding:0px">SENDER INFORMATION</td>
-                <td width="50%" align="right" style="border:none; padding:0px;">INVOICE NUMBER:<span style="margin-left:10px">{{$record->booking_invoice}}</span></td>
+                <td width="50%" align="right" style="border:none; padding:0px;">INVOICE NUMBER:<span style="margin-left:10px">
+                    @if($record->manual_invoice)
+                    {{$record->manual_invoice}}
+                    @else
+                    {{$record->booking_invoice}}
+                    @endif
+                   </span>
+                </td>
             </tr>
         </table>
         <table width="100%" class="table1">
