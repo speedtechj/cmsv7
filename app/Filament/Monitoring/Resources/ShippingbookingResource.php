@@ -171,6 +171,14 @@ class ShippingbookingResource extends Resource
                 Tables\Columns\TextColumn::make( 'booking_no' )
                 ->label( 'Booking Number' )
                 ->searchable(),
+                Tables\Columns\TextColumn::make( 'shippingcontainer.container_no' )
+                ->label( 'Container Number' )
+                ->listWithLineBreaks()
+                ->searchable(),
+                Tables\Columns\TextColumn::make( 'shippingcontainer.seal_no' )
+                ->label( 'Seal Number' )
+                ->listWithLineBreaks()
+                ->searchable(),
                 Tables\Columns\TextColumn::make( 'carrier.name' )
                 ->label( 'Carrier' )
                 ->numeric()
