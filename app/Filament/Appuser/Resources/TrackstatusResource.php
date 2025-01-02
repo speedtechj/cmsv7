@@ -34,9 +34,14 @@ class TrackstatusResource extends Resource
                 ->label('Location')
                 ->options(Branch::all()->pluck('business_name', 'id'))
                 ->required(),
+                Forms\Components\Toggle::make('is_broker')
+                ->label('Is Broker'),
             Forms\Components\Toggle::make('is_active')
                 ->required(),
-            ]);
+                Forms\Components\Toggle::make('is_edit')
+                ->label('Is Edit')
+                ->required(),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

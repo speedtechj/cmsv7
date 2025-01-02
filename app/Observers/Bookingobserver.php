@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Batch;
 use App\Models\Booking;
+use App\Models\Boxtype;
 use App\Models\Skiddinginfo;
 use Filament\Notifications\Notification;
 
@@ -56,6 +57,7 @@ class Bookingobserver
     public function updated(Booking $booking): void
     {
         
+        
         if ($booking->boxtype_id == '4') {
             $length = $booking->irregular_length;
             $width = $booking->irregular_width;
@@ -63,9 +65,11 @@ class Bookingobserver
             $boxcbm = round($length * $width * $height / 61024, 2);
 
         } else {
-            $length = $booking->boxtype->lenght ?? 0;
-            $width = $booking->boxtype->width ?? 0;
-            $height = $booking->boxtype->height ?? 0;
+            $boxtype = Boxtype::find($booking->boxtype_id);
+          
+            $length = $boxtype->lenght ?? 0;
+            $width = $boxtype->width ?? 0;
+            $height = $boxtype->height ?? 0;
             $boxcbm = round($length * $width * $height / 61024, 2);
         }
        
@@ -74,7 +78,7 @@ class Bookingobserver
             ->orWhere('virtual_invoice', $booking->manual_invoice)->first();
 
             if ($skiddingresult) {
-               
+              
                 $skiddingresult->update(
                     [
                         'boxtype_id' =>  $updatebooking->boxtype_id,
