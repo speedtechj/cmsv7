@@ -26,7 +26,7 @@ class Batch extends Model
 
     public function scopeCurrentyear($query)
     {
-        return $query->where('batch_year', date('Y'))->get()->pluck('batchno', 'id');
+        return $query->where('batch_year', '2024')->get()->pluck('batchno', 'id');
         
     }
 }
