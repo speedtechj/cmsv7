@@ -14,6 +14,7 @@ use App\Models\Addbatchstatus;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TagsColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\DatePicker;
@@ -48,6 +49,10 @@ class AddbatchstatusResource extends Resource
                     ->label('Batch Number')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('batch.batch_year')
+                    ->label('Batch Year')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('booking_invoice')
                     ->label('Invoice')
                     ->searchable()
@@ -56,7 +61,6 @@ class AddbatchstatusResource extends Resource
                     ->label('Manual Invoice')
                     ->searchable()
                     ->sortable(),
-                TagsColumn::make('invoicestatus.trackstatus.description'),
                 Tables\Columns\TextColumn::make('boxtype.description')
                     ->label('Box Type')
                     ->searchable()
@@ -83,10 +87,10 @@ class AddbatchstatusResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('batch_id')
-                    ->multiple()
                     ->options(Batch::Currentyear())
                     ->label('Batch Number')
-                    ->default(array('Select Batch Number')),
+                    ->searchable()
+                    ->default(),
 
             ], layout: FiltersLayout::AboveContent)
             ->actions([

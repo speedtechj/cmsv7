@@ -9,6 +9,7 @@ class Invoicestatus extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    
     public function batch()
     {
         return $this->belongsTo(Batch::class);
