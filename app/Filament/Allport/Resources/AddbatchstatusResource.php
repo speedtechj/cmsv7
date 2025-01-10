@@ -27,6 +27,8 @@ class AddbatchstatusResource extends Resource
 {
     protected static ?string $model = Addbatchstatus::class;
 
+    static ?string $navigationLabel = 'Add Container Status';
+    public static ?string $label = 'Add Container Status';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

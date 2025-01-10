@@ -27,8 +27,8 @@ use App\Filament\Willxpress\Resources\AddbatchstatusResource\RelationManagers;
 class AddbatchstatusResource extends Resource
 {
     protected static ?string $model = Addbatchstatus::class;
-    protected static ?string $navigationLabel = 'Add Batch Status';
-    public static ?string $label = 'Add Batch Status';
+    protected static ?string $navigationLabel = 'Add Container Status';
+    public static ?string $label = 'Add Container Status';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

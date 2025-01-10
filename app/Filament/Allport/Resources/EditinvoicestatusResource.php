@@ -26,8 +26,8 @@ use App\Filament\Allport\Resources\EditinvoicestatusResource\RelationManagers;
 class EditinvoicestatusResource extends Resource
 {
     protected static ?string $model = Editinvoicestatus::class;
-    static ?string $navigationLabel = 'Edit/Delete Batch Status';
-    public static ?string $label = 'Edit/Delete Batch Status';
+    static ?string $navigationLabel = 'Update Container Status';
+    public static ?string $label = 'Update Container Status';
 
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
