@@ -2,6 +2,7 @@
 
 namespace App\Filament\Allport\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -48,11 +49,40 @@ class ShippingbookingResource extends Resource
                 Tables\Columns\TextColumn::make( 'carrier.name' )
                 ->label( 'Carrier' )
                 ->numeric(),
-                Tables\Columns\TextColumn::make('bill_of_lading'),
+                Tables\Columns\TextColumn::make('bill_of_lading')
+                ->label('Bill of Lading')
+                ->numeric(),
+                Tables\Columns\TextColumn::make('Bill_status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Request for Bill of Lading' => 'danger',
+                    'Waiting for Bill of Lading' => 'warning',
+                    'Completed' => 'success',
+                })
+                ->label('Bill of Lading Status')
+                ->getStateUsing(function ($record) {
+                    if($record->bill_of_lading != null){
+                        return 'Completed';
+
+                    }else {
+                        $etd_date = Carbon::parse($record->etd);
+                    $now = Carbon::now();
+                    $diff = $etd_date->diffInDays($now, false);
+                    if($diff > 14){
+                        return'Request for Bill of Lading';
+                    }else{
+                        return 'Waiting for Bill of Lading';
+                    }
+                    };
+                    
+                }),
+               
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),
-                Tables\Columns\TextColumn::make('branch.business_name')
-                ->label('Broker')
+                Tables\Columns\TextColumn::make('etd')
+                ->label('ETD'),
+                // Tables\Columns\TextColumn::make('branch.business_name')
+                // ->label('Broker')
             ])
             ->filters([
                 //
