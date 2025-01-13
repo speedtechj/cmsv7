@@ -80,8 +80,8 @@ class ShippingbookingResource extends Resource
                 }),
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),
-                Tables\Columns\TextColumn::make('branch.business_name')
-                ->label('Broker')
+                // Tables\Columns\TextColumn::make('branch.business_name')
+                // ->label('Broker')
             ])
             ->filters([
                 //
