@@ -70,7 +70,7 @@ class ShippingbookingResource extends Resource
                         $etd_date = Carbon::parse($record->etd);
                     $now = Carbon::now();
                     $diff = $etd_date->diffInDays($now, false);
-                    if($diff > 7){
+                    if($diff > 14){
                         return'Request for Bill of Lading';
                     }else{
                         return 'Waiting for Bill of Lading';
