@@ -78,6 +78,30 @@ class ShippingbookingResource extends Resource
                     };
                     
                 }),
+                Tables\Columns\TextColumn::make('Telex Staus')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Request for Telex' => 'danger',
+                    'Waiting for Telex' => 'warning',
+                    'Completed' => 'success',
+                })
+                ->label('Telex Status')
+                ->getStateUsing(function ($record) {
+                    if($record->bill_of_lading != null){
+                        return 'Completed';
+
+                    }else {
+                        $etd_date = Carbon::parse($record->etd);
+                    $now = Carbon::now();
+                    $diff = $etd_date->diffInDays($now, false);
+                    if($diff > 14){
+                        return'Request for Telex';
+                    }else{
+                        return 'Waiting for Telext';
+                    }
+                    };
+                    
+                }),
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),
                 // Tables\Columns\TextColumn::make('branch.business_name')
