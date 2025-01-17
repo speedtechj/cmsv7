@@ -10,6 +10,8 @@ use Filament\Tables\Table;
 use App\Models\Shippingbooking;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Section;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Allport\Resources\ShippingbookingResource\Pages;
@@ -89,6 +91,61 @@ class ShippingbookingResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('bldownload')
+                ->disabled(function ($record){
+                    return $record->bl_attachments ? false : true;
+                    })
+                ->label('BL')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('primary')
+                ->modalSubmitAction(false)            //Remove Submit Button
+                        ->modalCancelAction(false)    
+                ->mountUsing(fn (Forms\ComponentContainer $form, Model $record) => $form->fill([
+                  
+                    'blattachments' => $record->bl_attachments,
+                    
+                ]))
+                ->form([
+                    Section::make('Bill of Lading Attachments')
+                       ->schema([
+                        Forms\Components\FileUpload::make('blattachments')
+                            ->label('Bill of Lading Attachments')
+                            ->openable()
+                            ->deletable(false)
+                            ->disk('public')
+                            // ->directory('skidgallery')
+                            ->visibility('private')
+                            ->acceptedFileTypes(['image/*', 'application/pdf'])
+                       ])
+                    
+                ]),
+                Tables\Actions\Action::make('telexdownload')
+                ->label('Telex')
+                ->disabled(function ($record){
+                return $record->telex_attachments ? false : true;
+                })
+                ->icon('heroicon-o-arrow-down-tray')
+                ->modalSubmitAction(false)            //Remove Submit Button
+                        ->modalCancelAction(false)    
+                ->mountUsing(fn (Forms\ComponentContainer $form, Model $record) => $form->fill([
+                  
+                    'tlattachments' => $record->telex_attachments,
+                    
+                ]))
+                ->form([
+                    Section::make('Bill of Lading Attachments')
+                       ->schema([
+                        Forms\Components\FileUpload::make('tlattachments')
+                            ->label('Telex Attachments')
+                            ->openable()
+                            ->deletable(false)
+                            ->disk('public')
+                            // ->directory('skidgallery')
+                            ->visibility('private')
+                            ->acceptedFileTypes(['image/*', 'application/pdf'])
+                       ])
+                    
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -85,6 +85,28 @@ class ShippingbookingResource extends Resource
                         }),
                         Forms\Components\Toggle::make('is_complete')
                         ->label('Is Complete'),
+                        Forms\Components\FileUpload::make('bl_attachments')
+                            ->label('BL Attachments')
+                            ->uploadingMessage('Uploading attachment...')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->openable()
+                            ->disk('public')
+                            ->directory('blattachments')
+                            ->visibility('private')
+                            ->removeUploadedFileButtonPosition('right'),
+                           
+                    
+                    Forms\Components\FileUpload::make('telex_attachments')
+                            ->label('Telex Attachments')
+                            ->uploadingMessage('Uploading attachment...')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->openable()
+                            ->disk('public')
+                            ->directory('telexattachments')
+                            ->visibility('private')
+                            ->removeUploadedFileButtonPosition('right'),
+
+                
                         Forms\Components\MarkdownEditor::make( 'notes' )
                         ->label( 'Notes' )
                         ->columnSpanFull(),

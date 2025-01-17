@@ -27,19 +27,21 @@ class PackinglistRelationManager extends RelationManager
                         FileUpload::make('packlistdoc')
                             ->label('Packing List')
                             ->multiple()
-                            ->enableDownload()
+                            ->panelLayout('grid')
                             ->disk('public')
                             ->directory('packinglist')
                             ->visibility('private')
-                            ->enableOpen(),
+                            ->openable()
+                            ->removeUploadedFileButtonPosition('right'),
                         FileUpload::make('waiverdoc')
                             ->label('Waiver Document')
                             ->multiple()
-                            ->enableDownload()
+                            ->panelLayout('grid')
                             ->disk('public')
                             ->directory('waiver')
                             ->visibility('private')
-                            ->enableOpen(),
+                            ->openable()
+                            ->removeUploadedFileButtonPosition('right'),
                     ])->columns(2),
                 Section::make('Details Packing List')
                     ->schema([

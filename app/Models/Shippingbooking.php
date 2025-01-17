@@ -10,6 +10,10 @@ class Shippingbooking extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'bl_attachments' => 'array',
+        'telex_attachments' => 'array',
+    ];
     public function carrier()
     {
         return $this->belongsTo(Carrier::class);
