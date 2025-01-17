@@ -273,7 +273,8 @@ class ShippingbookingResource extends Resource
                 })
                 ->label('Telex Status')
                 ->getStateUsing(function ($record) {
-                    if($record->bill_of_lading != null){
+                    // return $record->telex_attachments != null ? 'Completed' : 'Waiting for Telex';
+                    if($record->telex_attachments != null){
                         return 'Completed';
 
                     }else {
