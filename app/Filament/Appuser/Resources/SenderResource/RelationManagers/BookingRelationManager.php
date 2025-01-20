@@ -711,6 +711,7 @@ class BookingRelationManager extends RelationManager
                             ->prefix('$')
                             ->columnSpan('1'),
                                 ])->columns(3)
+                                ->defaultItems(0)
                                 ->minItems(1)
                                 ->maxItems(3),
                                 
