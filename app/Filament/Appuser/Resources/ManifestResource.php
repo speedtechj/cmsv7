@@ -50,6 +50,7 @@ class ManifestResource extends Resource
                 ->sortable(),
                 Tables\Columns\TextColumn::make('booking_date')
                 ->label('Booking Date')
+                ->toggleable(isToggledHiddenByDefault: true)
                 ->searchable()->sortable(),
             Tables\Columns\TextColumn::make('Quantity')
                 ->label('Quantity')
@@ -61,6 +62,7 @@ class ManifestResource extends Resource
             Tables\Columns\TextColumn::make('batch.id')
                 ->label('Batch No')
                 ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true)
                 ->searchable()
                 ->getStateUsing(function (Model $record) {
                     return $record->batch->batchno . "-" . $record->batch->batch_year;
@@ -77,24 +79,32 @@ class ManifestResource extends Resource
                 ->url(fn (Model $record) => ReceiverResource::getUrl('edit', ['record' => $record->receiver])),
             Tables\Columns\TextColumn::make('receiveraddress.address')
                 ->label('Address')
+                ->wrap()
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('receiveraddress.barangayphil.name')
                 ->label('Barangay')
+                ->toggleable(isToggledHiddenByDefault: true)
                 ->searchable()->sortable(),
             Tables\Columns\TextColumn::make('receiveraddress.provincephil.name')
                 ->label('Province')
+                ->toggleable(isToggledHiddenByDefault: true)
                 ->searchable()->sortable(),
             Tables\Columns\TextColumn::make('receiveraddress.cityphil.name')
                 ->label('City')
+                ->toggleable(isToggledHiddenByDefault: true)
                 ->searchable()->sortable(),
             Tables\Columns\TextColumn::make('receiver.mobile_no')
                 ->label('Mobile No')
-                ->searchable()->sortable(),
+                ->searchable()->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\TextColumn::make('receiver.home_no')
                 ->label('Home No')
-                ->searchable()->sortable(),
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             
+                
             ])
             ->filters([
                 SelectFilter::make('batch_id')
@@ -108,6 +118,30 @@ class ManifestResource extends Resource
         )
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('pl')
+                ->label('Packing List')
+                ->url(fn (Model $record) => SenderResource::getUrl('edit', ['record' => $record->sender_id]))
+                ->visible(function (Model $record){
+                   $plcount  = $record->packinglist->first()->packlistitem ?? 0;
+                     if($plcount != 0){
+                          return false;
+                     }else {
+                            return true;
+                     }
+                }),
+                Tables\Actions\Action::make('pl')
+                ->label('PL Attachment')
+                ->url(fn (Model $record) => SenderResource::getUrl('edit', ['record' => $record->sender_id]))
+                ->color('info')
+                ->visible(function (Model $record){
+                    $plattachment  = $record->packinglist->first()->packlistdoc ?? null;
+                    // dd($plattachment);
+                      if($plattachment != null){
+                           return false;
+                      }else {
+                             return true;
+                      }
+                 }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
