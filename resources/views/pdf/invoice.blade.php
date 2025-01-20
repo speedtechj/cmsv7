@@ -320,6 +320,98 @@
         @endif
     </table>
 
+ 
+    <table class="table-3" width="100%">
+        <tr>
+            <td align="center">
+                <span>DECLARATION</span>
+            </td>
+
+        </tr>
+        <table>
+            <tr>
+                <td style="font-size:10px">
+                    I, declare, under the penalties of falsification, declare that I am the sender of all the above
+                    goods/items listed on this declaration, including the additional signed packing list (if any), and
+                    that I personally packed and sealed the package(s). I take full legal responsibility for any errors
+                    or omissions in the declaration of goods/items. I HEREBY CERTIFY AND DECLARE that the contents of
+                    the above sealed package(s) are goods without commercial value or purpose whatsoever, and that there
+                    are no undeclared, restricted, illegal or banned items; including firearms, ammunition, illegal
+                    drugs and any combustible good or items in the box as defined by the laws of Canada and the Republic
+                    of the Philippines.
+                    I FURTHER CERTIFY AND DECLARE that I am endorsing the package under this Invoice/Information Sheet
+                    to {{ $companyinfo->company_name }}., for D2D
+                    delivery to my receiver/consignee at the address indicated herein; that I have read, understood, and
+                    agree to the terms and conditions printed on the reverse.
+                    I FINALLY CERTIFY AND DECLARE, under the penalties of falsification, that this Information Sheet has
+                    been accomplished in good faith and to the best of my knowledge and belief, is true and correct
+                    pursuant to the provision
+                </td>
+            <tr>
+        </table>
+    </table>
+    <table width="100%">
+        <tr>
+            <td align="center" style="font-size:10px">
+                <span style="font-size: 15px;
+            font-weight: bold;">OWNER’S/SHIPPER’S RISK FORM</span>
+            </td>
+        </tr>
+    </table>
+    <table width="100%">
+        <tr>
+            <td width="100%">
+                <span style="font-size:12px;">
+                    Please be advised that BREAKABLE ITEMS, LIQUID ITEMS OR ELECTRONIC ITEMS inside the box per
+                    above Invoice/Information Sheet are accepted for transport under OWNER/SHIPPER’S risk.
+                    Notwithstanding the Terms and Conditions of the covering Sea Waybill or Bill of Lading, the
+                    shipper and/or shipper’s representative, by signing on this form, agree and understood that
+                    {{ $companyinfo->company_name }}., WILL NOT BE LIABLE FOR ANY LIQUID SPILL, BREAKEAGE AND/OR
+                    DAMAGES OF ITEMS INSIDE THE BOX(ES) , RELATED TO THIS TRANSACTION, HOWEVER CAUSED.<br>
+
+                    The shipper, as stated at the face of this Owner’s/Shipper’s Risk Form, who is of legal age,
+                    with address stated above, do hereby remise, release, acquit and forever discharge and agree to
+                    hold harmless {{ $companyinfo->company_name }}., its parent, affiliate or subsidiary companies,
+                    their stockholders, officers, directors, agents or employees and their successors-in-interest
+                    from any and all actions, claims for sum of money, demands, complaints, liabilities,
+                    obligations, suits, rights or causes of actions whatsoever (for indemnity, damages or otherwise)
+                    at law or in equity that now exists or may hereafter exists (collectively, the “Claims”),
+                    arising out of or in connection with the non-perishable shipment covered under the corresponding
+                    INVOICE . The shipper acknowledges that no action will be instituted whether civil, criminal, or
+                    administrative against {{ $companyinfo->company_name }}.
+                    It is agreed that Shipper have read this entire document, the contents of which have been explained
+                    in a language that is known and which the Shipper acknowledge to have signed, and the entire form,
+                    release, waiver and quitclaim hereby given is made by Shipper willingly, voluntary and with full
+                    knowledge of the rights under the law and is binding upon Shipper and its successors and assigns.
+                </span>
+
+            </td>
+            {{-- <td width="50%" align="left" style="font-size:10px;">
+                <span style="font-family: Arial, Helvetica, sans-serif;">
+                    It is agreed that Shipper have read this entire document, the contents of which have been explained in a language that is known and which the Shipper acknowledge to have signed, and the entire form, release, waiver and quitclaim hereby given is made by Shipper willingly, voluntary and with full knowledge of the rights under the law and is binding upon Shipper and its successors and assigns.
+                </span>
+            </td> --}}
+        </tr>
+    </table>
+    <table width="100%" style="margin-top:10px">
+        <tr>
+            <td>_________________________</td>
+            <td>_________________________</td>
+        </tr>
+        <tr>
+            <td>Signature</td>
+            <td>Date</td>
+        </tr>
+    </table>
+    <br>
+    <table class="table-3">
+        <tr>
+            <td>
+                <span>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+            </td>
+        </tr>
+    </table>
+    
     <table class="table-3">
         <tr>
             <td>
@@ -422,87 +514,6 @@
                     </td>
                 @endif
             @endforeach
-        </tr>
-    </table>
-    <table class="table-3" width="100%">
-        <tr>
-            <td align="center">
-                <span>DECLARATION</span>
-            </td>
-
-        </tr>
-        <table>
-            <tr>
-                <td style="font-size:10px">
-                    I, declare, under the penalties of falsification, declare that I am the sender of all the above
-                    goods/items listed on this declaration, including the additional signed packing list (if any), and
-                    that I personally packed and sealed the package(s). I take full legal responsibility for any errors
-                    or omissions in the declaration of goods/items. I HEREBY CERTIFY AND DECLARE that the contents of
-                    the above sealed package(s) are goods without commercial value or purpose whatsoever, and that there
-                    are no undeclared, restricted, illegal or banned items; including firearms, ammunition, illegal
-                    drugs and any combustible good or items in the box as defined by the laws of Canada and the Republic
-                    of the Philippines.
-                    I FURTHER CERTIFY AND DECLARE that I am endorsing the package under this Invoice/Information Sheet
-                    to {{ $companyinfo->company_name }}., for D2D
-                    delivery to my receiver/consignee at the address indicated herein; that I have read, understood, and
-                    agree to the terms and conditions printed on the reverse.
-                    I FINALLY CERTIFY AND DECLARE, under the penalties of falsification, that this Information Sheet has
-                    been accomplished in good faith and to the best of my knowledge and belief, is true and correct
-                    pursuant to the provision
-                </td>
-            <tr>
-        </table>
-    </table>
-    <table width="100%">
-        <tr>
-            <td align="center" style="font-size:10px">
-                <h4>OWNER’S/SHIPPER’S RISK FORM</h4>
-            </td>
-        </tr>
-    </table>
-    <table width="100%">
-        <tr>
-            <td width="100%">
-                <span style="font-size:12px;">
-                    Please be advised that BREAKABLE ITEMS, LIQUID ITEMS OR ELECTRONIC ITEMS inside the box per
-                    above Invoice/Information Sheet are accepted for transport under OWNER/SHIPPER’S risk.
-                    Notwithstanding the Terms and Conditions of the covering Sea Waybill or Bill of Lading, the
-                    shipper and/or shipper’s representative, by signing on this form, agree and understood that
-                    {{ $companyinfo->company_name }}., WILL NOT BE LIABLE FOR ANY LIQUID SPILL, BREAKEAGE AND/OR
-                    DAMAGES OF ITEMS INSIDE THE BOX(ES) , RELATED TO THIS TRANSACTION, HOWEVER CAUSED.<br>
-
-                    The shipper, as stated at the face of this Owner’s/Shipper’s Risk Form, who is of legal age,
-                    with address stated above, do hereby remise, release, acquit and forever discharge and agree to
-                    hold harmless {{ $companyinfo->company_name }}., its parent, affiliate or subsidiary companies,
-                    their stockholders, officers, directors, agents or employees and their successors-in-interest
-                    from any and all actions, claims for sum of money, demands, complaints, liabilities,
-                    obligations, suits, rights or causes of actions whatsoever (for indemnity, damages or otherwise)
-                    at law or in equity that now exists or may hereafter exists (collectively, the “Claims”),
-                    arising out of or in connection with the non-perishable shipment covered under the corresponding
-                    INVOICE . The shipper acknowledges that no action will be instituted whether civil, criminal, or
-                    administrative against {{ $companyinfo->company_name }}.
-                    It is agreed that Shipper have read this entire document, the contents of which have been explained
-                    in a language that is known and which the Shipper acknowledge to have signed, and the entire form,
-                    release, waiver and quitclaim hereby given is made by Shipper willingly, voluntary and with full
-                    knowledge of the rights under the law and is binding upon Shipper and its successors and assigns.
-                </span>
-
-            </td>
-            {{-- <td width="50%" align="left" style="font-size:10px;">
-                <span style="font-family: Arial, Helvetica, sans-serif;">
-                    It is agreed that Shipper have read this entire document, the contents of which have been explained in a language that is known and which the Shipper acknowledge to have signed, and the entire form, release, waiver and quitclaim hereby given is made by Shipper willingly, voluntary and with full knowledge of the rights under the law and is binding upon Shipper and its successors and assigns.
-                </span>
-            </td> --}}
-        </tr>
-    </table>
-    <table width="100%" style="margin-top:10px">
-        <tr>
-            <td>_________________________</td>
-            <td>_________________________</td>
-        </tr>
-        <tr>
-            <td>Signature</td>
-            <td>Date</td>
         </tr>
     </table>
     <div class="page-break"></div>
