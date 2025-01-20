@@ -123,7 +123,7 @@ class ManifestResource extends Resource
                 ->url(fn (Model $record) => SenderResource::getUrl('edit', ['record' => $record->sender_id]))
                 ->visible(function (Model $record){
                    $plcount  = $record->packinglist->first()->packlistitem ?? 0;
-                     if($plcount != 0){
+                     if($plcount != null){
                           return false;
                      }else {
                             return true;
