@@ -60,7 +60,7 @@ class PackinglistRelationManager extends RelationManager
                                     ->prefix('$')
                                     ->columnSpan('1'),
                             ])->columns(3)
-                            ->maxItems(3),
+                            ->maxItems(4),
 
                     ]),
             ]);

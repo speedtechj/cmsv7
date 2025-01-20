@@ -712,7 +712,7 @@ class BookingRelationManager extends RelationManager
                             ->columnSpan('1'),
                                 ])->columns(3)
                                 ->defaultItems(0)
-                                ->maxItems(3),
+                                ->maxItems(4),
                                 
                                 ]),
 
