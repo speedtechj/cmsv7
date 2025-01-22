@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MarkdownEditor;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
 use App\Filament\Appuser\Resources\ReceiverResource\Pages;
 use App\Filament\Appuser\Resources\ReceiverResource\RelationManagers;
 use App\Filament\Appuser\Resources\ReceiverResource\RelationManagers\ReceiveraddressRelationManager;
@@ -42,9 +43,13 @@ class ReceiverResource extends Resource
                         ->required()
                         ->maxLength(255),
                         PhoneInput::make('mobile_no')
+                        ->autoPlaceholder('aggressive')
                         ->required()
+                        ->initialCountry('ph')
                         ->defaultCountry('PH'),
                     PhoneInput::make('home_no')
+                    ->autoPlaceholder('aggressive')
+                        ->initialCountry('ph')
                     ->defaultCountry('PH'),
                     Forms\Components\TextInput::make('email')
                         ->email()

@@ -45,6 +45,8 @@ class SenderResource extends Resource
                     ->maxLength(255),
                     PhoneInput::make('mobile_no')
                     ->required()
+                    ->autoPlaceholder('aggressive')
+                    ->initialCountry('ca')
                     ->defaultCountry('CA'),
                 // Forms\Components\TextInput::make('mobile_no')
                 // ->live(onBlur:true)
@@ -53,7 +55,8 @@ class SenderResource extends Resource
                 //     ->stripCharacters(['(',')','-'])
                 //     ->required(),
                 PhoneInput::make('home_no')
-                ->required()
+                ->autoPlaceholder('aggressive')
+                ->initialCountry('ca')
                 ->defaultCountry('CA'),
                 // Forms\Components\TextInput::make('home_no')
                 //     ->mask('(999)999-9999')

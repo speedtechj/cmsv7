@@ -40,10 +40,10 @@ class ReceiverRelationManager extends RelationManager
                     PhoneInput::make('mobile_no')
                     ->required()
                     ->initialCountry('ph')
+                    ->autoPlaceholder('aggressive')
                     ->defaultCountry('PH'),
-                   
                     PhoneInput::make('home_no')
-                    
+                    ->autoPlaceholder('aggressive')
                     ->initialCountry('ph')
                     ->defaultCountry('PH'),
                     
