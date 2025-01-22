@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('senders', function (Blueprint $table) {
-            $table->longText('sender_picture')->nullable();
+            $table->longtext('picture')->nullable();
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    // public function down(): void
-    // {
-    //     Schema::table('senders', function (Blueprint $table) {
-    //         $table->dropColumn('picture');
-    //     });
-    // }
+    public function down(): void
+    {
+        Schema::table('senders', function (Blueprint $table) {
+            $table->dropColumn('picture');
+        });
+    }
 };
