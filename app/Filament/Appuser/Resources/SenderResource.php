@@ -62,13 +62,24 @@ class SenderResource extends Resource
                 // Forms\Components\TextInput::make('home_no')
                 //     ->mask('(999)999-9999')
                 //     ->stripCharacters(['(',')','-']),
+                Forms\Components\FileUpload::make('picture')
+                    ->label('Identification')
+                    ->multiple()
+                    ->panelLayout('grid')
+                    ->uploadingMessage('Uploading attachment...')
+                    ->openable()
+                    ->disk('public')
+                    ->directory('senderpictures')
+                    ->visibility('private')
+                    ->removeUploadedFileButtonPosition('right'),
                 Forms\Components\TextInput::make('email')
                     ->unique(ignorable: fn($record) => $record)
                     ->email()
                     ->required()
                     ->maxLength(255),
                 MarkdownEditor::make('remark')
-                    ->label('Note'),
+                    ->label('Note')
+                    ->columnSpanFull()
             ]);
     }
 

@@ -9,6 +9,12 @@ class Sender extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    protected $casts = [
+       
+        'picture' => 'array',
+        
+    ];
     public function User(){
         return $this->belongsTo(User::class);
     }
