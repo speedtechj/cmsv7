@@ -39,10 +39,12 @@ class ReceiverRelationManager extends RelationManager
                     ->maxLength(255),
                     PhoneInput::make('mobile_no')
                     ->required()
+                    ->initialCountry('ph')
                     ->defaultCountry('PH'),
                    
                     PhoneInput::make('home_no')
                     ->required()
+                    ->initialCountry('ph')
                     ->defaultCountry('PH'),
                     
                 Forms\Components\TextInput::make('email')
