@@ -19,10 +19,10 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::table('senders', function (Blueprint $table) {
-            $table->dropColumn('picture');
-        });
-    }
+    // public function down(): void
+    // {
+    //     Schema::table('senders', function (Blueprint $table) {
+    //         $table->dropColumn('picture');
+    //     });
+    // }
 };
