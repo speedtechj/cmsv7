@@ -2,7 +2,6 @@
 
 namespace App\Filament\Appuser\Resources;
 
-use App\Filament\Appuser\Resources\ReceiverResource\RelationManagers\ReceiveraddressRelationManager;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Receiver;
@@ -12,9 +11,11 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MarkdownEditor;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ReceiverResource\Pages;
 use App\Filament\Appuser\Resources\ReceiverResource\RelationManagers;
+use App\Filament\Appuser\Resources\ReceiverResource\RelationManagers\ReceiveraddressRelationManager;
 
 class ReceiverResource extends Resource
 {
@@ -40,15 +41,12 @@ class ReceiverResource extends Resource
                     Forms\Components\TextInput::make('last_name')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('mobile_no')
-                    ->mask('+63(9999)999-9999')
-                    ->stripCharacters([',','+','(',')','-','63'])
+                        PhoneInput::make('mobile_no')
                         ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('home_no')
-                    ->mask('+63(9999)999-9999')
-                    ->stripCharacters([',','+','(',')','-','63'])
-                        ->maxLength(255),
+                        ->defaultCountry('PH'),
+                    PhoneInput::make('home_no')
+                    ->required()
+                    ->defaultCountry('PH'),
                     Forms\Components\TextInput::make('email')
                         ->email()
                         ->maxLength(255),

@@ -23,6 +23,7 @@ use App\Filament\Appuser\Resources\SenderResource\RelationManagers\ReceiverRelat
 use App\Filament\Appuser\Resources\SenderResource\RelationManagers\PackinglistRelationManager;
 use App\Filament\Appuser\Resources\SenderResource\RelationManagers\SenderaddressRelationManager;
 use App\Filament\Appuser\Resources\SenderResource\RelationManagers\BookingpaymentRelationManager;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 
 class SenderResource extends Resource
 {
@@ -42,16 +43,21 @@ class SenderResource extends Resource
                 Forms\Components\TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('mobile_no')
-                ->live(onBlur:true)
-                    ->unique(ignorable: fn($record) => $record)
-                    ->mask('(999)999-9999')
-                    ->stripCharacters(['(',')','-'])
-                    ->required(),
-                    
-                Forms\Components\TextInput::make('home_no')
-                    ->mask('(999)999-9999')
-                    ->stripCharacters(['(',')','-']),
+                    PhoneInput::make('mobile_no')
+                    ->required()
+                    ->defaultCountry('CA'),
+                // Forms\Components\TextInput::make('mobile_no')
+                // ->live(onBlur:true)
+                //     ->unique(ignorable: fn($record) => $record)
+                //     ->mask('(999)999-9999')
+                //     ->stripCharacters(['(',')','-'])
+                //     ->required(),
+                PhoneInput::make('home_no')
+                ->required()
+                ->defaultCountry('CA'),
+                // Forms\Components\TextInput::make('home_no')
+                //     ->mask('(999)999-9999')
+                //     ->stripCharacters(['(',')','-']),
                 Forms\Components\TextInput::make('email')
                     ->unique(ignorable: fn($record) => $record)
                     ->email()

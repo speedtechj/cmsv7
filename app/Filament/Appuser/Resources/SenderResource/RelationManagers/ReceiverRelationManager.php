@@ -17,6 +17,7 @@ use App\Models\Receiveraddress;
 use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MarkdownEditor;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ReceiverResource;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -36,13 +37,13 @@ class ReceiverRelationManager extends RelationManager
                 Forms\Components\TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('mobile_no')
-                    ->mask('+63(999)999-9999')
-                    ->required(),
+                    PhoneInput::make('mobile_no')
+                    ->required()
+                    ->defaultCountry('PH'),
                    
-                Forms\Components\TextInput::make('home_no')
-                    ->mask('+63(999)999-9999')
-                    ->required(),
+                    PhoneInput::make('home_no')
+                    ->required()
+                    ->defaultCountry('PH'),
                     
                 Forms\Components\TextInput::make('email')
                     ->email()
