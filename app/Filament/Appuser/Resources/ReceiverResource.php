@@ -45,7 +45,6 @@ class ReceiverResource extends Resource
                         ->required()
                         ->defaultCountry('PH'),
                     PhoneInput::make('home_no')
-                    ->required()
                     ->defaultCountry('PH'),
                     Forms\Components\TextInput::make('email')
                         ->email()

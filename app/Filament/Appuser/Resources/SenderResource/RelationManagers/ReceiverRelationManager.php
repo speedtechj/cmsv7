@@ -43,7 +43,7 @@ class ReceiverRelationManager extends RelationManager
                     ->defaultCountry('PH'),
                    
                     PhoneInput::make('home_no')
-                    ->required()
+                    
                     ->initialCountry('ph')
                     ->defaultCountry('PH'),
                     
