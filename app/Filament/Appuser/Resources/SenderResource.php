@@ -45,7 +45,6 @@ class SenderResource extends Resource
                     ->maxLength(255),
                     PhoneInput::make('mobile_no')
                     ->required()
-                    ->placeholderNumberType('FIXED_LINE')
                     ->autoPlaceholder('aggressive')
                     ->initialCountry('ca')
                     ->defaultCountry('CA'),
