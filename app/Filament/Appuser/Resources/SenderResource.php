@@ -149,9 +149,10 @@ class SenderResource extends Resource
             BookingRelationManager::class,
             SenderaddressRelationManager::class,
             ReceiverRelationManager::class,
+            CustomerhistoryRelationManager::class,
             BookingpaymentRelationManager::class,
             PackinglistRelationManager::class,
-            CustomerhistoryRelationManager::class,
+           
            
            
         ];
