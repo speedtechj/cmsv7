@@ -37,6 +37,7 @@ class CustomerhistoryRelationManager extends RelationManager
                 ->label('Invoice')
                 ->searchable(['manual_invoice','booking_invoice'])
                 ->sortable()
+                ->url(fn (Model $record) => SearchinvoiceResource::getUrl('view', ['record' => $record->id]))
                 ->getStateUsing(function (Model $record){
                     if($record->manual_invoice != null){
                         return $record->manual_invoice;
