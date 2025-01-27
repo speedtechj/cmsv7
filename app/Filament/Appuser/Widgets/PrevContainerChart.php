@@ -7,21 +7,21 @@ use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 use Filament\Widgets\ChartWidget;
 
-class ContainerChart extends ChartWidget
+class PrevContainerChart extends ChartWidget
 {
-    protected static ?string $heading = 'Current Year Container';
+    protected static ?string $heading = 'Previous Year Container';
 
     protected function getData(): array
     {
         $data = Trend::model(Batch::class)
         ->between(
-            start: now()->startOfYear(),
+            start: now()->startOfYear()->subYear(1),
             end: now()->endOfYear(),
         )
         ->perMonth()
         ->count();
         return [
-            'datasets' => [
+           'datasets' => [
                 [
                     'label' => 'Total Container',
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
