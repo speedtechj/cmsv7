@@ -33,16 +33,17 @@ class CustomerhistoryRelationManager extends RelationManager
             ->recordTitleAttribute('booking_id')
             ->defaultSort('booking_date', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('booking_invoice')
+                Tables\Columns\TextColumn::make('invoice')
                 ->label('Invoice')
+                ->searchable(['manual_invoice','booking_invoice'])
                 ->sortable()
-                ->searchable()
-                ->color('primary')
-                ->url(fn (Model $record) => SearchinvoiceResource::getUrl('view', ['record' => $record->id])),
-                Tables\Columns\TextColumn::make('manual_invoice')
-                    ->label('Manual Invoice')
-                    ->sortable()
-                    ->searchable(),
+                ->getStateUsing(function (Model $record){
+                    if($record->manual_invoice != null){
+                        return $record->manual_invoice;
+                    }else{
+                        return $record->booking_invoice;
+                    }
+                }),
                 Tables\Columns\TextColumn::make('batch.id')
                 ->label('Batch No')
                 ->sortable()
@@ -54,6 +55,7 @@ class CustomerhistoryRelationManager extends RelationManager
                     ->sortable()
                     ->searchable(),
                     Tables\Columns\TextColumn::make('receiveraddress.address')->label('Address')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->searchable(),
                     Tables\Columns\TextColumn::make('receiveraddress.provincephil.name')->label('Province')
@@ -68,7 +70,8 @@ class CustomerhistoryRelationManager extends RelationManager
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->searchable(),
-                    Tables\Columns\BadgeColumn::make('servicetype.description')->label('Type of Service')
+                    Tables\Columns\TextColumn::make('servicetype.description')->label('Type of Service')
+                    ->badge()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->color(static function ($state): string {
