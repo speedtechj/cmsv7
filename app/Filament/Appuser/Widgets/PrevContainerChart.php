@@ -11,6 +11,7 @@ class PrevContainerChart extends ChartWidget
 {
     protected static ?string $heading = 'Previous Year Container';
     protected static ?string $maxHeight = '200px';
+
     protected function getData(): array
     {
         $data = Trend::model(Batch::class)
