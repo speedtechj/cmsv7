@@ -43,6 +43,13 @@ class CustomerhistoryRelationManager extends RelationManager
                     ->label('Manual Invoice')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('batch.id')
+                ->label('Batch No')
+                ->sortable()
+                ->formatStateUsing(function (Model $records){
+                
+                    return $records->batch->batchno. '-' .$records->batch->batch_year;
+                }),
                     Tables\Columns\TextColumn::make('receiver.full_name')->label('Receiver')
                     ->sortable()
                     ->searchable(),
@@ -50,15 +57,19 @@ class CustomerhistoryRelationManager extends RelationManager
                     ->sortable()
                     ->searchable(),
                     Tables\Columns\TextColumn::make('receiveraddress.provincephil.name')->label('Province')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->searchable(),
                     Tables\Columns\TextColumn::make('receiveraddress.cityphil.name')->label('City')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->searchable(),
                     Tables\Columns\TextColumn::make('receiveraddress.barangayphil.name')->label('Barangay')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->searchable(),
                     Tables\Columns\BadgeColumn::make('servicetype.description')->label('Type of Service')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->color(static function ($state): string {
                         if ($state === 'Pickup') {
@@ -70,12 +81,18 @@ class CustomerhistoryRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('boxtype.description')->sortable(),
                 Tables\Columns\TextColumn::make('booking_date')->label('Pickup/Dropoff Date')->sortable(),
                 Tables\Columns\IconColumn::make('is_paid')
+                ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->label('Paid')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-            ])
+                    ->falseIcon('heroicon-o-x-circle'),
+                Tables\Columns\TextColumn::make('created_at')->sortable(),
+            
+            ])->defaultSort('created_at', 'desc')
+            ->searchOnBlur()
+            ->persistSearchInSession()
+        ->persistColumnSearchesInSession()
             ->filters([
                 //
             ])
