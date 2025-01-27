@@ -16,7 +16,7 @@ class PrevContainerChart extends ChartWidget
         $data = Trend::model(Batch::class)
         ->between(
             start: now()->startOfYear()->subYear(1),
-            end: now()->endOfYear(),
+            end: now()->endOfYear()->subYear(1),
         )
         ->perMonth()
         ->count();
