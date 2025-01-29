@@ -34,6 +34,15 @@ class ManifestExporter extends Exporter
             ->label('Quantity'),
             ExportColumn::make('sender.full_name')
             ->label('Sender'),
+            ExportColumn::make('sender.first_name')
+            ->label('First Name')
+            ->enabledByDefault(false),
+            ExportColumn::make('sender.last_name')
+            ->label('Last Name')
+            ->enabledByDefault(false),
+            ExportColumn::make('sender.email')
+            ->label('Email')
+            ->enabledByDefault(false),
             ExportColumn::make('receiver.full_name')
             ->label('Receiver'),
             ExportColumn::make('receiveraddress.address')

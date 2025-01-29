@@ -17,7 +17,10 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Exports\ManifestExporter;
+use Filament\Actions\Exports\Models\Export;
 use Illuminate\Database\Eloquent\Collection;
+use Filament\Tables\Actions\ExportBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ManifestResource\Pages;
 use App\Filament\Appuser\Resources\ManifestResource\RelationManagers;
@@ -149,6 +152,13 @@ class ManifestResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    
+                        ExportBulkAction::make()
+                        ->label('Export Manifest')
+                        ->icon('heroicon-o-folder-arrow-down')
+                        ->color('primary')
+                        ->exporter(ManifestExporter::class)
+                        ->fileName(fn (Export $export): string => "Manifest"),
                     Tables\Actions\BulkAction::make('Assign New Batch')
                 ->visible(function (){
                     return auth()->user()->getRoleNames()->contains('super_admin');
