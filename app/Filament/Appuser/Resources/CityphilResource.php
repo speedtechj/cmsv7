@@ -64,7 +64,8 @@ class CityphilResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Area'),
+                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Location Zone'),
+                SelectFilter::make('provincephil_id')->relationship('provincephil', 'name')->label('Province Name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

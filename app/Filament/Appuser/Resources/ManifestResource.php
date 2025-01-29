@@ -104,7 +104,11 @@ class ManifestResource extends Resource
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
             
-                
+                Tables\Columns\TextColumn::make('sender.email')
+                ->label('Home No')
+                ->searchable()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('batch_id')
