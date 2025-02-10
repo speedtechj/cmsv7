@@ -26,6 +26,9 @@ class TrackstatusResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('code')
+                ->label('Code')
+                ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('description')
                 ->label('Status Description')
                 ->required()
@@ -50,6 +53,7 @@ class TrackstatusResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('branch.business_name'),
                 Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('code'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                     Tables\Columns\TextColumn::make('user_id')

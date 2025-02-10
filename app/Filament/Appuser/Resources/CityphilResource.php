@@ -2,7 +2,6 @@
 
 namespace App\Filament\Appuser\Resources;
 
-use App\Filament\Appuser\Resources\CityphilResource\RelationManagers\BarangayphilRelationManager;
 use Filament\Forms;
 use App\Models\Zone;
 use Filament\Tables;
@@ -11,11 +10,15 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\CityphilResource\Pages;
 use App\Filament\Appuser\Resources\CityphilResource\RelationManagers;
+use App\Filament\Appuser\Resources\CityphilResource\RelationManagers\BarangayphilRelationManager;
+use Filament\Notifications\Notification;
 
 class CityphilResource extends Resource
 {
@@ -58,21 +61,50 @@ class CityphilResource extends Resource
                 ->searchable()
                 ->toggleable()
                 ->sortable(),
+                Tables\Columns\TextColumn::make('no_days')->label('No of Days')
+                ->searchable()
+                ->toggleable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
             ->filters([
-                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Location Zone'),
-                SelectFilter::make('provincephil_id')->relationship('provincephil', 'name')->label('Province Name'),
+                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Location Zone')->searchable(),
+                SelectFilter::make('provincephil_id')->relationship('provincephil', 'name')->label('Province Name')->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Set days')
+                    // ->slideOver()
+                    ->label('Update No of Days')
+                    ->icon('heroicon-o-calendar-days')
+                    ->color('primary')
+                   
+                    ->form([
+                        Forms\Components\TextInput::make('no_days')
+                            ->label('No of Days')
+                            ->required()
+                    ])
+                    ->action(function (Collection $records, array $data): void {
+                       
+                        foreach ($records as $record) {
+                            $record->update([
+    
+                                'no_days' => $data['no_days'],
+                            ]);
+                        }
+                        Notification::make()
+                        ->title('Saved successfully')
+                        ->success()
+                        ->send();
+                    })
+                     ->requiresConfirmation(),
                 ]),
             ]);
     }

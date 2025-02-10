@@ -37,6 +37,8 @@ class BranchResource extends Resource
                             ->label('Company/Business Name')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('code')
+                            ->label('Code'),
                         TextInput::make('first_name')
                             ->label('First Name')
                             ->required()
