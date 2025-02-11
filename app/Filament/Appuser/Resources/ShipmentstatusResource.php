@@ -7,25 +7,29 @@ use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Batch;
+use App\Models\Cityphil;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Trackstatus;
+use App\Models\Provincephil;
+use App\Models\Invoicestatus;
 use App\Models\Shipmentstatus;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use function PHPUnit\Framework\returnSelf;
+
+use Filament\Actions\Exports\Models\Export;
+use App\Filament\Exports\ShipmentstatusExporter;
+
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ShipmentstatusResource\Pages;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers;
-use App\Models\Cityphil;
-use App\Models\Invoicestatus;
-use App\Models\Provincephil;
-
-use function PHPUnit\Framework\returnSelf;
 
 class ShipmentstatusResource extends Resource
 {
@@ -45,6 +49,15 @@ class ShipmentstatusResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->headerActions([
+                    ExportAction::make()
+                    ->modifyQueryUsing(fn (Builder $query) => $query->where('is_deliver', false))
+                    ->label('Export Shipmentstatus')
+                    ->icon('heroicon-o-folder-arrow-down')
+                    ->color('primary')
+                    ->exporter(ShipmentstatusExporter::class)
+                    ->fileName(fn (Export $export): string => "Shipmentstatus")
+        ])
             ->columns([
                 Tables\Columns\TextColumn::make('invoice')
                     ->label('Invoice')
@@ -214,6 +227,8 @@ class ShipmentstatusResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    
+                    
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
