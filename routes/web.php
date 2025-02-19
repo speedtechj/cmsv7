@@ -7,6 +7,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\Shippinginstruction;
 use App\Http\Controllers\PosinvoiceController;
 use App\Http\Controllers\PackinglistController;
+use App\Http\Controllers\ShipmentstatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,4 @@ Route::get('{record}/info',[Shippinginstruction::class,'instruction'])->name('in
 Route::get('{record}/railbill',[Railbill::class,'railbillinfo'])->name('railbillinfos');
 Route::get('{record}/data',[PosinvoiceController::class,'posinvoice'])->name('posinvoice');
 Route::get('{record}/packlistpdf',[PackinglistController::class,'index'])->name('packlistdownload');
+Route::get('{record}/mail',[ShipmentstatController::class,'statmail'])->name('shipmentmail');

@@ -12,6 +12,11 @@ class Shipmentstatus extends Model
     use HasFactory;
     protected $table = 'bookings';
     protected $guarded = [];
+
+    public function emailstatus()
+    {
+        return $this->HasMany(EmailStatus::class, 'booking_id');
+    }
     public function boxtype()
     {
         return $this->belongsTo(Boxtype::class);

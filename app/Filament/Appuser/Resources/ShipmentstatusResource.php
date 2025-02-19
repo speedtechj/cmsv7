@@ -9,27 +9,39 @@ use Filament\Tables;
 use App\Models\Batch;
 use App\Models\Cityphil;
 use Filament\Forms\Form;
+use App\Mail\ShipmentMail;
 use Filament\Tables\Table;
+use App\Models\EmailStatus;
 use App\Models\Trackstatus;
+use App\Models\EmailSetting;
 use App\Models\Provincephil;
 use App\Models\Invoicestatus;
 use App\Models\Shipmentstatus;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
+use Illuminate\Support\Facades\Mail;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
+
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use function PHPUnit\Framework\returnSelf;
-
 use Filament\Actions\Exports\Models\Export;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Exports\ShipmentstatusExporter;
-
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ShipmentstatusResource\Pages;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers;
+use App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers\EmailstatusRelationManager;
 
 class ShipmentstatusResource extends Resource
 {
@@ -223,7 +235,58 @@ class ShipmentstatusResource extends Resource
 
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->disabled(function (Model $record){
+                    return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
+                })
+                ->color('primary')
+                ->label('Email History'),
+                Tables\Actions\Action::make('sendmail')
+                        ->disabled(function (Model $record){
+                            return $record->is_deliver == true ? true : false;
+                        })
+                        ->label('Send Mail')
+                        ->color('info')
+                        ->icon('heroicon-o-envelope')
+                        ->form([
+                            Select::make('recipient')
+                                ->multiple()
+                                ->searchable()
+                                ->preload()
+                                ->native(false)
+                                ->label('Email')
+                                ->options(EmailSetting::all()->pluck('email', 'email'))
+                                ->required(),
+                            TextInput::make('subject')
+                                ->label('Subject')
+                                ->required()
+                                ->maxLength(255),
+                            MarkdownEditor::make('message')
+                                ->label('Message')
+                                ->required()
+                        ])
+                        ->action(function (Model $record, array $data): void {
+                            
+                            EmailStatus::create([
+                                'subject' => $data['subject'],
+                                'message' => $data['message'],
+                                'booking_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                            ]);
+
+                            $recipients = $data['recipient'];
+                            foreach ($recipients as $recipient) {
+                                Mail::to($recipient)->send(new ShipmentMail($data,$record));
+                            }
+                            Notification::make()
+                             ->title('Email Successfully Send')
+                             ->success()
+                             ->send();
+
+                            
+                        })
+                        // ->url(fn (Model $record) => route('shipmentmail', $record))
+                        // ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -233,18 +296,27 @@ class ShipmentstatusResource extends Resource
                 ]),
             ]);
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('booking_invoice'),
+                TextEntry::make('sender.full_name'),
+                TextEntry::make('receiver.full_name'),
+            ])->columns(3);
+    }
     public static function getRelations(): array
     {
         return [
-        
+            EmailstatusRelationManager::class,
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListShipmentstatuses::route('/'),
+            'view' => Pages\ViewShipmentstatus::route('/{record}'),
             // 'create' => Pages\CreateShipmentstatus::route('/create'),
             // 'edit' => Pages\EditShipmentstatus::route('/{record}/edit'),
         ];
