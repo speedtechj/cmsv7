@@ -14,7 +14,7 @@ use App\Filament\Appuser\Resources\ShipmentstatusResource;
 class InvoicestatusesRelationManager extends RelationManager
 {
     protected static string $relationship = 'invoicestatuses';
-
+    public static ?string $title = 'Invoice Status';
     public function form(Form $form): Form
     {
         return $form
