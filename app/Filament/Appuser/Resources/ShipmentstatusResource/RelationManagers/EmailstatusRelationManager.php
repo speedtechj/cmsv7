@@ -3,12 +3,13 @@
 namespace App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
+use App\Filament\Appuser\Resources\ShipmentstatusResource;
 
 class EmailstatusRelationManager extends RelationManager
 {
@@ -40,7 +41,9 @@ class EmailstatusRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                // Tables\Actions\CreateAction::make(),
+                Tables\Actions\Action::make('Back')
+                ->url(fn($livewire) => ShipmentstatusResource::getUrl('index'))
+                ->icon('heroicon-o-arrow-left')
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
