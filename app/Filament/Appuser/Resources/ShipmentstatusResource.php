@@ -209,7 +209,7 @@ class ShipmentstatusResource extends Resource
                     })
             ])->paginationPageOptions([10, 25, 50])
             ->filters([
-                Filter::make('is_deliver')
+                Filter::make('is_deliver')->label('Not Delivered')
     ->query(fn (Builder $query): Builder => $query->where('is_deliver', false))->default(true),
                 SelectFilter::make('batch_id')
                     // ->multiple()
