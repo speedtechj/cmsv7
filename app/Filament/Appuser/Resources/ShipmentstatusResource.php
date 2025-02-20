@@ -248,12 +248,12 @@ class ShipmentstatusResource extends Resource
                 //     return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
                 // })
                 ->color('primary')
-                ->label('Email History'),
+                ->label('History'),
                 Tables\Actions\Action::make('sendmail')
                         ->disabled(function (Model $record){
                             return $record->is_deliver == true ? true : false;
                         })
-                        ->label('Send Mail')
+                        ->label('Email')
                         ->color('info')
                         ->icon('heroicon-o-envelope')
                         ->form([
