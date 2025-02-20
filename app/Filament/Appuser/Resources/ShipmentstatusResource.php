@@ -207,8 +207,10 @@ class ShipmentstatusResource extends Resource
                             return 'Delivered';
                         }
                     })
-            ])
+            ])->paginationPageOptions([10, 25, 50])
             ->filters([
+                Filter::make('is_deliver')
+    ->query(fn (Builder $query): Builder => $query->where('is_deliver', false))->default(true),
                 SelectFilter::make('batch_id')
                     // ->multiple()
                     ->label('Batch Number')
