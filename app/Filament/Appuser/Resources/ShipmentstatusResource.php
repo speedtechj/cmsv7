@@ -209,11 +209,12 @@ class ShipmentstatusResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('batch_id')
-                    ->multiple()
+                    // ->multiple()
                     ->label('Batch Number')
                     ->options(Batch::Batchmanifest())
                     // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
-                    ->default(array('Select Batch Number')),
+                    // ->default(array('Select Batch Number')),
+                    ->default(),
                 SelectFilter::make('provincephil_id')
                     ->searchable()
                     ->label('Province')
@@ -239,12 +240,12 @@ class ShipmentstatusResource extends Resource
                         }
                     })
 
-            ])
+            ])->persistFiltersInSession()
             ->actions([
                 Tables\Actions\ViewAction::make()
-                ->disabled(function (Model $record){
-                    return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
-                })
+                // ->disabled(function (Model $record){
+                //     return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
+                // })
                 ->color('primary')
                 ->label('Email History'),
                 Tables\Actions\Action::make('sendmail')
