@@ -125,6 +125,7 @@ class ShipmentstatusResource extends Resource
                     ->label('Province'),
                 Tables\Columns\TextColumn::make('receiveraddress.cityphil.name')
                     ->label('City')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('Unloaded')
