@@ -214,10 +214,10 @@ class ShipmentstatusResource extends Resource
                 SelectFilter::make('batch_id')
                     // ->multiple()
                     ->label('Batch Number')
-                    ->options(Batch::Batchmanifest())
+                    ->options(Batch::Batchmanifest())->default(),
                     // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
                     // ->default(array('Select Batch Number')),
-                    ->default(),
+                    
                 SelectFilter::make('provincephil_id')
                     ->searchable()
                     ->label('Province')
