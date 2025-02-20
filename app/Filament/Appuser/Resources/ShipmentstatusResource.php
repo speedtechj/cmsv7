@@ -41,7 +41,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ShipmentstatusResource\Pages;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers;
+
 use App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers\EmailstatusRelationManager;
+use App\Filament\Appuser\Resources\ShipmentstatusResource\RelationManagers\InvoicestatusesRelationManager;
+
 
 class ShipmentstatusResource extends Resource
 {
@@ -49,7 +52,10 @@ class ShipmentstatusResource extends Resource
     protected static ?string $navigationLabel = 'Shipment Status';
     public static ?string $label = 'Shipment Status';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    public static function getNavigationBadge(): ?string
+{
+    return "New";
+}
     public static function form(Form $form): Form
     {
         return $form
@@ -308,7 +314,9 @@ class ShipmentstatusResource extends Resource
     public static function getRelations(): array
     {
         return [
+            InvoicestatusesRelationManager::class,
             EmailstatusRelationManager::class,
+            
         ];
     }
     

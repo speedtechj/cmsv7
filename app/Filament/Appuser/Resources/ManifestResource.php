@@ -114,6 +114,7 @@ class ManifestResource extends Resource
                 ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Location Zone'),
                 SelectFilter::make('batch_id')
                 ->multiple()
                 ->label('Batch Number')
