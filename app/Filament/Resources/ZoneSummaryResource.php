@@ -41,7 +41,9 @@ class ZoneSummaryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('batch.batchno')
-                    ->numeric()
+                    ->getStateUsing(function (Model $record) {
+                        return $record->batch->batchno . " " . $record->batch->batch_year;
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('booking_invoice')
                     ->searchable(),
@@ -57,6 +59,7 @@ class ZoneSummaryResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('zone.description')
+                    ->searchable()
                     ->label('Zone')
                     ->sortable(),
                
