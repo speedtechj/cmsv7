@@ -24,7 +24,10 @@ class ZoneSummaryResource extends Resource
     protected static ?string $navigationLabel = 'Zone Box Summary';
     public static ?string $label = 'Zone Box Summary';
    
-    
+    public static function getNavigationBadge(): ?string
+{
+    return "New";
+}
     public static function form(Form $form): Form
     {
         return $form
