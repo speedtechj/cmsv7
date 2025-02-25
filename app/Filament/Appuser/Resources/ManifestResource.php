@@ -118,12 +118,13 @@ class ManifestResource extends Resource
                 ->searchable()
                 ->preload()
                 ->label('Batch Number')
+                // ->options(Batch::all()->pluck('batchno', 'id'))
                 ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
                 ->getOptionLabelFromRecordUsing(function (Model $record) {
                     return "{$record->batchno} {$record->batch_year}";
                 })
                 // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
-                ->default(),
+                ->default('Select Batch Number'),
             ],
             layout: FiltersLayout::AboveContent
         )

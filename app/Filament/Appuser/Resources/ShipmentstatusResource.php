@@ -219,7 +219,7 @@ class ShipmentstatusResource extends Resource
                 ->getOptionLabelFromRecordUsing(function (Model $record) {
                     return "{$record->batchno} {$record->batch_year}";
                 })
-                ->default(),
+                ->default('Select Batch Number'),
                     // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
                     // ->default(array('Select Batch Number')),
                     
