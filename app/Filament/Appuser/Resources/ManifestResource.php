@@ -114,13 +114,16 @@ class ManifestResource extends Resource
                 ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Location Zone'),
                 SelectFilter::make('batch_id')
-                ->multiple()
+                ->searchable()
+                ->preload()
                 ->label('Batch Number')
-                ->options(Batch::Batchmanifest())
+                ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
+                ->getOptionLabelFromRecordUsing(function (Model $record) {
+                    return "{$record->batchno} {$record->batch_year}";
+                })
                 // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
-                ->default(array('Select Batch Number')),
+                ->default(),
             ],
             layout: FiltersLayout::AboveContent
         )

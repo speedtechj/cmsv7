@@ -212,9 +212,14 @@ class ShipmentstatusResource extends Resource
                 Filter::make('is_deliver')->label('Not Delivered')
     ->query(fn (Builder $query): Builder => $query->where('is_deliver', false))->default(true),
                 SelectFilter::make('batch_id')
-                    // ->multiple()
+                   ->searchable()
+                   ->preload()
                     ->label('Batch Number')
-                    ->options(Batch::Batchmanifest())->default(),
+                    ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
+                ->getOptionLabelFromRecordUsing(function (Model $record) {
+                    return "{$record->batchno} {$record->batch_year}";
+                })
+                ->default(),
                     // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
                     // ->default(array('Select Batch Number')),
                     
