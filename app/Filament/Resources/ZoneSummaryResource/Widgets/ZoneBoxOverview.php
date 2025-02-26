@@ -45,10 +45,9 @@ public function getColumns(): int
         foreach ($zones as $zone) {
             $stats[] = Stat::make('Total Boxes ', ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count())
                 ->description($zone->description)
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('primary');
-            // $stats[] = Stat::make($zone->description, 'test')
-            //     ->description('Total boxes in zone')
-            //     ->color('primary');
+           
         }
        
            return  $stats;
