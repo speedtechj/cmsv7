@@ -74,11 +74,11 @@ class ZoneSummaryResource extends Resource
                         return "{$record->batchno} {$record->batch_year}";
                     })
                     ->default(Batch::where('is_current',1)->first()->id),
-                    // SelectFilter::make('boxtype_id')
-                    // ->searchable()
-                    // ->preload()
-                    // ->relationship('boxtype', 'description')
-                    // ->label('Box Type'),
+                    SelectFilter::make('zone_id')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('zone', 'description')
+                    ->label('Zone'),
                     
             ])
             ->actions([

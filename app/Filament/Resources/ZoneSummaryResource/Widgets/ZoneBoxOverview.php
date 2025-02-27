@@ -40,17 +40,28 @@ public function getColumns(): int
         $zonecnt = Zone::count();
         $currentbatch = Batch::where('is_current',1)->first()->id;
         $batchid = $this->getPageTableQuery()->get()->first()->batch_id ?? $currentbatch;
+        $totalboxes = ZoneSummary::where('batch_id',$batchid)->count();
         
-        
+        $stats = [
+            Stat::make('Total Boxes', $totalboxes)
+                ->description('Overall total boxes')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success')
+                ->chart([7, 3, 4, 5, 6, 3, 5, 3]),
+        ];
         foreach ($zones as $zone) {
-            $stats[] = Stat::make('Total Boxes ', ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count())
+            $stats[] = Stat::make('Total Boxes ', 
+            ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count()
+            .' -> '. number_format(ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count() / $totalboxes * 100,0) .'%'
+            )
                 ->description($zone->description)
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('primary');
            
         }
        
-           return  $stats;
+           return $stats;
+            
             
     
     }

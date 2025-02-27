@@ -31,5 +31,17 @@ class ZoneSummary extends Model
     {
         return $this->belongsTo(Receiver::class);
     }
+    public function receiveraddresses() {
+        return $this->belongsTo(Receiveraddress::class, 'receiveraddress_id');
+    
+    }
+    public function provincephil()
+    {
+        return $this->belongsTo(Provincephil::class);
+    }
+    public function cityphil()
+    {
+        return $this->belongsTo(Cityphil::class);
+    }
 
 }
