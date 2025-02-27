@@ -55,6 +55,14 @@ class ZoneSummaryResource extends Resource
                 Tables\Columns\TextColumn::make('receiver.full_name')
                 ->searchable()
                 ->sortable(),
+                Tables\Columns\TextColumn::make('receiveraddress.provincephil.name')
+                ->label('Province')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('receiveraddress.cityphil.name')
+                ->label('City')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('boxtype.description')
                     ->numeric()
                     ->sortable(),
