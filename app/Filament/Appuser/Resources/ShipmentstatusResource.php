@@ -299,7 +299,7 @@ class ShipmentstatusResource extends Resource
 
                             $recipients = $data['recipient'];
                             foreach ($recipients as $recipient) {
-                                Mail::to($recipient)->send(new ShipmentMail($data,$record));
+                                Mail::to($recipient)->queue(new ShipmentMail($data,$record));
                             }
                             Notification::make()
                              ->title('Email Successfully Send')
