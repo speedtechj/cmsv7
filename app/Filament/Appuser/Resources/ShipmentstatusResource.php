@@ -206,7 +206,15 @@ class ShipmentstatusResource extends Resource
                         } else {
                             return 'Delivered';
                         }
-                    })
+                    }),
+                    Tables\Columns\TextColumn::make('cnt_followup')
+                    ->badge()
+                    ->color('success')
+                    ->label('Count')
+                    ->getStateUsing(function (Model $record) {
+                        return EmailStatus::where('booking_id', $record->id)->count();
+                    }),
+
             ])->paginationPageOptions([10, 25, 50])
             ->filters([
                 Filter::make('is_deliver')->label('Not Delivered')

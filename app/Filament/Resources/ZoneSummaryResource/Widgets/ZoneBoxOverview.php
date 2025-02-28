@@ -52,7 +52,7 @@ public function getColumns(): int
         foreach ($zones as $zone) {
             $stats[] = Stat::make('Total Boxes ', 
             ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count()
-            .' -> '. number_format(ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count() / $totalboxes * 100,0) .'%'
+            .' -> '. number_format(ZoneSummary::where('batch_id',$batchid)->where('zone_id',$zone->id)->count() / $totalboxes * 100,2) .'%'
             )
                 ->description($zone->description)
                 ->descriptionIcon('heroicon-m-arrow-trending-up')

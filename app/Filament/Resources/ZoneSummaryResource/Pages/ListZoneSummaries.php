@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ZoneSummaryResource\Pages;
 
+use App\Models\Zone;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Resources\ZoneSummaryResource;
@@ -26,4 +27,5 @@ class ListZoneSummaries extends ListRecords
            
         ];
     }
+   
 }
