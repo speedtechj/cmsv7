@@ -65,6 +65,7 @@ class Searchinv extends Page implements HasForms, HasTable
                             ->schema([
                                 Select::make('invoice_status')
                                     ->label('Invoice Status')
+                                    ->searchable()
                                     ->options(Trackstatus::all()->where('branch_id', auth()->user()->branch_id)->pluck('description', 'id'))
                                     ->required(),
                                 TextInput::make('invoice')
