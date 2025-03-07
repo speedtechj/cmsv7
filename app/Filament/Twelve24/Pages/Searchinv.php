@@ -47,15 +47,15 @@ class Searchinv extends Page implements HasForms, HasTable
 
 
     public ?array $data = [];
-    public $invoiceid = " ";
+    public $invoiceid = "";
     public $manualinvoice;
     public $generatedinvoice;
 
-    public function mount(): void
-    {
-        $this->form->fill();
+    // public function mount(): void
+    // {
+    //     $this->form->fill();
 
-    }
+    // }
     public function form(Form $form): Form
     {
         return $form
