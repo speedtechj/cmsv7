@@ -8,6 +8,7 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 use App\Filament\Pages\Auth\EditProfile;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
@@ -30,6 +31,8 @@ class Twelve24PanelProvider extends PanelProvider
             ->path('1224')
             ->databaseNotifications()
             ->brandName('12:24 Cargo Express')
+            ->sidebarCollapsibleOnDesktop()
+            ->maxContentWidth(MaxWidth::Full)
             ->spa()
             ->login()
             ->readOnlyRelationManagersOnResourceViewPagesByDefault(false)

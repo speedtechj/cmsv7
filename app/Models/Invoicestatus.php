@@ -42,6 +42,9 @@ class Invoicestatus extends Model
     {
         return $this->belongsTo(Cityphil::class);
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
 }
