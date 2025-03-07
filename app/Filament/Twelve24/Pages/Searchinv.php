@@ -48,10 +48,12 @@ class Searchinv extends Page implements HasForms, HasTable
 
 
     public ?array $data = [];
-    public $invoiceid= ' ';
+    public $invoiceid = ' ';
 
     public function mount(): void
     {
+        
+        dd($this->invoiceid);
         $this->form->fill();
 
     }
