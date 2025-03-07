@@ -40,6 +40,7 @@ class Searchinv extends Page implements HasForms, HasTable
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Search Invoice';
     protected static ?string $navigationGroup = 'Invoice Status';
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?string $title = 'Search Invoice';
 
 
