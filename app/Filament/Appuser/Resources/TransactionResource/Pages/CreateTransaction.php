@@ -21,7 +21,7 @@ class CreateTransaction extends CreateRecord
     protected function beforeFill(): void
     {
         Notification::make()
-        ->title('When booking an online drop-off, please make sure to uncheck the Box Received option.')
+        ->title('When booking advanced online drop-off, please make sure to uncheck the Box Received option.')
         ->danger()
         ->persistent()
         ->send();
