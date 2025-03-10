@@ -246,7 +246,7 @@ class Searchinv extends Page implements HasForms, HasTable
                     $data['waybill'] = $record->waybill;
                     return $data;
                 })
-                ->slideOver()
+                // ->slideOver()
                 ->form([
                     DatePicker::make('date_update')
                         ->label('Date Updated')
