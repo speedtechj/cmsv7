@@ -3,6 +3,7 @@
 namespace App\Filament\Twelve24\Pages;
 
 use App\Models\Booking;
+use Filament\Forms\Components\Concerns\CanBeAutofocused;
 use Livewire\Component;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
@@ -29,6 +30,8 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Forms\Set;
+use livewire;
 
 
 
@@ -54,8 +57,7 @@ class Searchinv extends Page implements HasForms, HasTable
 
     public function mount(): void
     {
-        
-        // dd( $this->form->fill());
+       
         $this->form->fill();
        
 
@@ -69,13 +71,15 @@ class Searchinv extends Page implements HasForms, HasTable
                         Section::make()
                             ->schema([
                                 Select::make('invoice_status')
+                                    ->live()
                                     ->label('Invoice Status')
                                     ->searchable()
                                     ->options(Trackstatus::all()->where('branch_id', auth()->user()->branch_id)->pluck('description', 'id'))
-                                    ->required(),
+                                    ->required()
+                                    ->afterStateUpdated(fn() => $this->dispatch('focusSecondField')),
                                 TextInput::make('invoice')
                                     ->label(' Search Invoice Number')
-                                    // ->autofocus()
+                                    ->autofocus()
                                     ->placeholder('Search Invoice Number')
                                     ->numeric()
                                     ->maxLength(7)
@@ -83,7 +87,6 @@ class Searchinv extends Page implements HasForms, HasTable
                                     ->prefixIcon('heroicon-o-magnifying-glass')
                                     ->columnSpan('full')
                                     ->prefixIconColor('success')
-                                    ->extraInputAttributes(['autoFocus' => true])
                                     ->suffixActions([
                                         Action::make('reset')
                                             ->label('Reset')
@@ -128,6 +131,7 @@ class Searchinv extends Page implements HasForms, HasTable
 
     public function search(): void
     {
+
         $this->validate();
         $book_result = Booking::where('manual_invoice', $this->data['invoice'])
             ->orWhere('booking_invoice', $this->data['invoice'])
