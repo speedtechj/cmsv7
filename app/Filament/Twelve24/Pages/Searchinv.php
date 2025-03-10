@@ -3,10 +3,11 @@
 namespace App\Filament\Twelve24\Pages;
 
 use App\Models\Booking;
+use Livewire\Component;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
-use Filament\Tables\Table;
 
+use Filament\Tables\Table;
 use App\Models\Trackstatus;
 use App\Models\Invoicestatus;
 use Filament\Forms\Components\Group;
@@ -40,7 +41,7 @@ class Searchinv extends Page implements HasForms, HasTable
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Search Invoice';
     protected static ?string $navigationGroup = 'Invoice Status';
-    protected static bool $shouldRegisterNavigation = false;
+    // protected static bool $shouldRegisterNavigation = false;
     protected static ?string $title = 'Search Invoice';
 
 
@@ -49,6 +50,7 @@ class Searchinv extends Page implements HasForms, HasTable
 
     public ?array $data = [];
     public $invoiceid = " ";
+    public $remarks;
 
     public function mount(): void
     {
@@ -73,21 +75,26 @@ class Searchinv extends Page implements HasForms, HasTable
                                     ->required(),
                                 TextInput::make('invoice')
                                     ->label(' Search Invoice Number')
-                                    ->autofocus()
+                                    // ->autofocus()
+                                    ->placeholder('Search Invoice Number')
                                     ->numeric()
                                     ->maxLength(7)
                                     ->required()
                                     ->prefixIcon('heroicon-o-magnifying-glass')
                                     ->columnSpan('full')
                                     ->prefixIconColor('success')
-                                    ->extraInputAttributes(['wire:keydown.enter' => 'search'])
+                                    ->extraInputAttributes(['autoFocus' => true])
                                     ->suffixActions([
                                         Action::make('reset')
                                             ->label('Reset')
                                             ->icon('heroicon-o-arrow-path')
-                                            ->action(function () {
-                                                $this->data['invoice'] = " ";
+                                            ->action(function ( Component $livewire) {
+                                                $this->invoiceid = " ";
                                                 $this->resetTable();
+                                                $this->data['invoice'] = " ";
+                                                $this->resetValidation();
+                                                
+
                                             })
 
                                     ])
@@ -134,6 +141,7 @@ class Searchinv extends Page implements HasForms, HasTable
         if ($book_result) {
             $this->invoiceid = $this->data['invoice'];
             if (!$invoice_result) {
+                
                 Invoicestatus::create([
                     'generated_invoice' => $book_result->booking_invoice,
                     'manual_invoice' => $book_result->manual_invoice,
@@ -157,26 +165,33 @@ class Searchinv extends Page implements HasForms, HasTable
                     ->title('Saved successfully')
                     ->success()
                     ->send();
+                 $this->data['invoice'] = " ";
             } else {
+                $this->data['invoice'] = " ";
                 Notification::make()
-                    ->title('Status already  exist')
+                    ->title('Status Already  Exist')
                     ->info()
                     ->send();
             }
 
         } else {
+            $this->data['invoice'] = " ";
+            $this->invoiceid = " ";
+            $this->resetTable();
             Notification::make()
                 ->title('Invoice is not  exist')
                 ->danger()
                 ->send();
         }
-        $this->data['invoice'] = " ";
+        // $this->data['invoice'] = " ";
         $this->resetTable();
+        
     }
     public function table(Table $table): Table
     {
         return $table
             ->query(Invoicestatus::query()->where('generated_invoice', $this->invoiceid)->orWhere('manual_invoice', $this->invoiceid))
+            ->deferLoading()
             ->columns([
                 TextColumn::make('invoice')
                     ->label('Invoice')
@@ -222,12 +237,20 @@ class Searchinv extends Page implements HasForms, HasTable
             ->actions([
                 DeleteAction::make(),
                 EditAction::make()
+                ->label('Edit')
+                
+                ->mutateRecordDataUsing(function (Model $record, array $data): array {
+                    $data['date_update'] = $record->date_update;
+                    $data['remarks'] = $record->remarks;
+                    $data['location'] = $record->location;
+                    $data['waybill'] = $record->waybill;
+                    return $data;
+                })
                 ->slideOver()
                 ->form([
                     DatePicker::make('date_update')
                         ->label('Date Updated')
                         ->native(false)
-                        ->default(now())
                         ->closeOnDateSelection()
                         ->required(),
                     TextInput::make('location'),
@@ -235,6 +258,7 @@ class Searchinv extends Page implements HasForms, HasTable
                     MarkdownEditor::make('remarks'),
                 ])
                 ->action(function (Model $record, array $data): void {
+                  
                     $record->update([
                         'date_update' => $data['date_update'],
                         'remarks' => $data['remarks'],

@@ -1,7 +1,6 @@
 <x-filament-panels::page>
-    <form wire:submit="search">
+    <form wire:submit="search" wire:keydown.enter="search">
         {{ $this->form }}
-        <button type="submit">Search</button>
     </form>
     <div>
         {{ $this->table }}
