@@ -182,6 +182,11 @@ class TransactionResource extends Resource
                             ->afterStateUpdated(function (PriceService $priceService, Get $get, Set $set, $state) {
                                 $priceService->Resetdiscount($set, $get);
                                 $priceService->calculatePrice($state, $get, $set);
+                                if($get('servicetype_id') == 2){
+                                    $set('is_pickup', true);
+                                } else {
+                                    $set('is_pickup', false);
+                                }
                             }),
                         Forms\Components\Select::make('agent_id')
                             ->live()
