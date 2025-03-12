@@ -57,7 +57,7 @@ class SenderResource extends Resource
                 //     ->stripCharacters(['(',')','-'])
                 //     ->required(),
                 PhoneInput::make('home_no')
-                ->unique()
+               
                 ->autoPlaceholder('aggressive')
                 ->initialCountry('ca')
                 ->defaultCountry('CA'),
