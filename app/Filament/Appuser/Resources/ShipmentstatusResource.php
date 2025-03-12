@@ -254,7 +254,13 @@ class ShipmentstatusResource extends Resource
                                 )
                             );
                         }
-                    })
+                    }),
+                    SelectFilter::make('zone_id')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('zone', 'description')
+                    ->label('Zone'),
+
 
             ])->persistFiltersInSession()
             ->actions([

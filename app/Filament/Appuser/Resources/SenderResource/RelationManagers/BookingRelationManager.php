@@ -160,36 +160,7 @@ class BookingRelationManager extends RelationManager
                     ->url(fn($livewire) => TransactionResource::getUrl('create', ['ownerRecord' => $livewire->ownerRecord->getKey()])),
 
             ])
-            // ->actions([
-            //     Tables\Actions\EditAction::make()
-            //         ->mutateFormDataUsing(function (array $data): array {
-                       
-            //             $data['user_id'] = auth()->id();
-            //             $data['payment_balance'] = $data['total_price'];
-            //             if ($data['total_price'] == 0) {
-            //                 $data['is_paid'] = true;
-            //                 $data['payment_date'] = $data['booking_date'];
-
-            //             }
-
-            //             if ($data['servicetype_id'] == 2) {
-            //                 $data['agent_id'] = null;
-            //                 $data['start_time'] = null;
-            //                 $data['end_time'] = null;
-            //             }
-            //             if ($data['boxtype_id'] != 4) {
-            //                 $data['irregular_length'] = null;
-            //                 $data['irregular_width'] = null;
-            //                 $data['irregular_height'] = null;
-            //             }
-            //             return $data;
-            //         }),
-
-
-            //     Tables\Actions\CreateAction::make()
-            //         ->url(fn($livewire) => TransactionResource::getUrl('create', ['ownerRecord' => $livewire->ownerRecord->getKey()])),
-
-            // ])
+            
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\ForceDeleteAction::make(),
