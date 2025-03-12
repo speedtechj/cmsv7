@@ -27,10 +27,10 @@ class StatusOverview extends BaseWidget
         $zonecnt = Zone::count();
         $currentbatch = Batch::where('is_current',1)->first()->id;
         $batchid = $this->getPageTableQuery()->get()->first()->batch_id ?? $currentbatch;
-        $totalboxes = ZoneSummary::where('batch_id',$batchid)->count();
+        $totalboxes = Booking::where('batch_id',$batchid)->where('is_deliver',false)->count();
         
         $stats = [
-            Stat::make('Total Boxes', $totalboxes)
+            Stat::make('Total Boxes Undelivered', $totalboxes)
                 ->description('Overall total boxes')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success')
