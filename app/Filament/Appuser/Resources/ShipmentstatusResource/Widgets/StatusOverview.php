@@ -25,7 +25,7 @@ class StatusOverview extends BaseWidget
     {
         $zones = Zone::all();
         $zonecnt = Zone::count();
-        $currentbatch = Batch::where('is_current',0)->first()->id;
+        $currentbatch = Batch::where('is_current',1)->first()->id;
         $batchid = $this->getPageTableQuery()->get()->first()->batch_id ?? $currentbatch;
         $totalboxes = ZoneSummary::where('batch_id',$batchid)->count();
         
@@ -39,7 +39,7 @@ class StatusOverview extends BaseWidget
         foreach ($zones as $zone) {
             $stats[] = Stat::make('Total Boxes Undelivered',
             Booking::where('batch_id',$batchid)
-            ->where('is_deliver',true)
+            ->where('is_deliver',false)
             ->where('zone_id',$zone->id)
             ->count())
                 ->description($zone->description)
