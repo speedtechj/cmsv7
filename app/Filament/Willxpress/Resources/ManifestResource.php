@@ -111,7 +111,6 @@ class ManifestResource extends Resource
                 SelectFilter::make('batch_id')
                 ->label('Container Number')
                 ->searchable()
-                ->preload()
                 ->options(function (Shippingcontainer $record) {
                     return $record->all()->where('is_active',1)->where('branch_id', Auth::user()->branch_id)->pluck('container_no', 'batch_id');
                 })
