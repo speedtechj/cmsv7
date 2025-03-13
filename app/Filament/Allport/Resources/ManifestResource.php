@@ -86,6 +86,7 @@ class ManifestResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('batch_id')
+                ->searchable()
                 // ->multiple()
                 ->label('Container Number')
                 ->options(function (Shippingcontainer $record) {
