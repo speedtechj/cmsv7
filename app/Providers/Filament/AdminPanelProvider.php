@@ -2,10 +2,10 @@
 
 namespace App\Providers\Filament;
 
-use App\Models\Companyinfo;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
+use App\Models\Companyinfo;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
@@ -13,6 +13,7 @@ use Filament\Support\Enums\MaxWidth;
 use App\Filament\Pages\Auth\EditProfile;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
+use Rmsramos\Activitylog\ActivitylogPlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -91,7 +92,11 @@ class AdminPanelProvider extends PanelProvider
                 
             ] )
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                ActivitylogPlugin::make()
+                ->label('AuditLog')
+                    ->pluralLabel(' Audit Logs'),
             ]);
+           
     }
 }

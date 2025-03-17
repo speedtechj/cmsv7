@@ -312,6 +312,9 @@ class ShipmentstatusResource extends Resource
                              ->success()
                              ->send();
 
+                             (new static)->logCustomEvent($record);
+                          
+    
                             
                         })
                         // ->url(fn (Model $record) => route('shipmentmail', $record))
@@ -351,5 +354,14 @@ class ShipmentstatusResource extends Resource
             // 'create' => Pages\CreateShipmentstatus::route('/create'),
             // 'edit' => Pages\EditShipmentstatus::route('/{record}/edit'),
         ];
+    }
+    protected function logCustomEvent(Model $record)
+    {
+        
+        activity()
+            ->event('Send Email')
+            ->performedOn($record)
+            ->log('Email has been sent');
+           
     }
 }

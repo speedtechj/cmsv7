@@ -5,18 +5,25 @@ namespace App\Models;
 use App\Casts\MoneyCast;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
     protected $guarded = [];
     protected $casts = [
         'total_price' => MoneyCast::class,
         'payment_balance' => MoneyCast::class,
         'extracharge_amount' => MoneyCast::class,
          ];
+         public function getActivitylogOptions(): LogOptions
+         {
+             return LogOptions::defaults()
+             ->logOnly(['*']);
+         }
     protected static function booted()
     {
         

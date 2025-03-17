@@ -21,6 +21,9 @@ use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
+use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
+
 
 class UserResource extends Resource
 {
@@ -192,6 +195,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                ActivityLogTimelineTableAction::make('Activities'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -203,7 +207,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ActivitylogRelationManager::class,
         ];
     }
 

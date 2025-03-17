@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use Filament\Pages;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Panel;
 use Filament\Widgets;
 use App\Models\Companyinfo;
@@ -14,8 +13,10 @@ use Filament\Support\Enums\MaxWidth;
 use App\Filament\Pages\Auth\EditProfile;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
+use Rmsramos\Activitylog\ActivitylogPlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -82,6 +83,7 @@ class AppuserPanelProvider extends PanelProvider {
             NavigationGroup::make( 'App Settings')->icon( 'heroicon-o-cog-6-tooth' )
             
         ] );
+       
 
     }
 }
