@@ -45,7 +45,7 @@ class SenderResource extends Resource
                     ->required()
                     ->maxLength(255),
                     PhoneInput::make('mobile_no')
-                    ->unique()
+                    ->unique(ignoreRecord: true)
                     ->required()
                     ->autoPlaceholder('aggressive')
                     ->initialCountry('ca')
