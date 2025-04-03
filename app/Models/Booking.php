@@ -12,20 +12,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes;
     protected $guarded = [];
     protected $casts = [
         'total_price' => MoneyCast::class,
         'payment_balance' => MoneyCast::class,
         'extracharge_amount' => MoneyCast::class,
          ];
-         protected static $recordEvents = ['deleted','updated'];
-         public function getActivitylogOptions(): LogOptions
-         {
-             return LogOptions::defaults()
-             ->logOnly(['*'])
-             ->setDescriptionForEvent(fn(string $eventName) => "This Invoice has been {$eventName}");;
-         }
+         
          
     protected static function booted()
     {
