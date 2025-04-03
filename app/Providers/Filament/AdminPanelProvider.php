@@ -95,10 +95,7 @@ class AdminPanelProvider extends PanelProvider
             ] )
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                ActivitylogPlugin::make()
-                ->label('AuditLog')
-                    ->pluralLabel(' Audit Logs')
-                   ->resource(LogResource::class)
+                
             ]);
            
     }
