@@ -13,7 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\LogResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Rmsramos\Activitylog\Resources\ActivityLogResource;
+// use Rmsramos\Activitylog\Resources\ActivityLogResource;
 use App\Filament\Resources\LogResource\RelationManagers;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
