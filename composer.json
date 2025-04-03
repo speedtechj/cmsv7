@@ -21,7 +21,7 @@
         "laravel/tinker": "^2.8",
         "maatwebsite/excel": "^3.1",
         "milon/barcode": "^11.0",
-        "rmsramos/activitylog": "^1.0",
+        "rmsramos/activitylog": "*",
         "ysfkaya/filament-phone-input": "^3.1"
     },
     "require-dev": {
