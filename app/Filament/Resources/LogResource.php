@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Rmsramos\Activitylog\Resources\ActivityLogResource;
 use App\Filament\Resources\LogResource\RelationManagers;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
-use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
+
 
 class LogResource extends ActivityLogResource implements HasShieldPermissions
 {
