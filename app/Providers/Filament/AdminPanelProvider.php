@@ -23,6 +23,8 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Resources\ActivityLogResource;
+use App\Filament\Resources\LogResource;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -95,7 +97,8 @@ class AdminPanelProvider extends PanelProvider
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 ActivitylogPlugin::make()
                 ->label('AuditLog')
-                    ->pluralLabel(' Audit Logs'),
+                    ->pluralLabel(' Audit Logs')
+                   ->resource(LogResource::class)
             ]);
            
     }

@@ -36,7 +36,7 @@ class User extends Authenticatable implements FilamentUser, HasName
         return LogOptions::defaults()
         ->logOnly(['*']);
     }
-
+   
     /**
      * The attributes that should be hidden for serialization.
      *

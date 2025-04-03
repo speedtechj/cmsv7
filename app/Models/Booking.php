@@ -19,11 +19,14 @@ class Booking extends Model
         'payment_balance' => MoneyCast::class,
         'extracharge_amount' => MoneyCast::class,
          ];
+         protected static $recordEvents = ['deleted','updated'];
          public function getActivitylogOptions(): LogOptions
          {
              return LogOptions::defaults()
-             ->logOnly(['*']);
+             ->logOnly(['*'])
+             ->setDescriptionForEvent(fn(string $eventName) => "This Invoice has been {$eventName}");;
          }
+         
     protected static function booted()
     {
         

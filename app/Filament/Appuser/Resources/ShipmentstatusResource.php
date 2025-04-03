@@ -312,7 +312,7 @@ class ShipmentstatusResource extends Resource
                              ->success()
                              ->send();
 
-                             (new static)->logCustomEvent($record);
+                            //  (new static)->logCustomEvent($record);
                           
     
                             
