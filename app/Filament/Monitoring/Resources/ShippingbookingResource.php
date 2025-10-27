@@ -187,6 +187,8 @@ class ShippingbookingResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make( 'shippingagent.company_name')
                 ->label('Shipping Agent'),
+                Tables\Columns\ToggleColumn::make('assign_to')
+                ->label('Assign To 1224'),
                 Tables\Columns\TextColumn::make( 'booking_date' )
                 ->toggleable( isToggledHiddenByDefault: true )
                 ->label( 'Booking Date' )

@@ -33,6 +33,7 @@ class ShippingbookingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('assign_to', true))
             ->columns([
                 Tables\Columns\TextColumn::make( 'booking_no' )
                 ->label( 'Booking Number' )
