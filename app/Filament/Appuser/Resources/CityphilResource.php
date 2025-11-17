@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\CityphilResource\Pages;
 use App\Filament\Appuser\Resources\CityphilResource\RelationManagers;
 use App\Filament\Appuser\Resources\CityphilResource\RelationManagers\BarangayphilRelationManager;
+use App\Models\Zoneroute;
+use Filament\Infolists\Components\Tabs;
 use Filament\Notifications\Notification;
 
 class CityphilResource extends Resource
@@ -40,7 +42,11 @@ class CityphilResource extends Resource
                     Select::make('zone_id')
                     ->label('Zone')
                     ->options(Zone::all()->pluck('description', 'id'))
-                    ->searchable()
+                    ->searchable(),
+                // Select::make('zoneroute_id')
+                //     ->label('Zone')
+                //     ->options(Zoneroute::all()->pluck('route_name', 'id'))
+                //     ->searchable()
             ]);
     }
 
@@ -71,14 +77,55 @@ class CityphilResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                SelectFilter::make('zone_id')->relationship('zone', 'description')->label('Location Zone')->searchable(),
-                SelectFilter::make('provincephil_id')->relationship('provincephil', 'name')->label('Province Name')->searchable(),
+                SelectFilter::make('zone_id')->relationship('zone', 'description')
+                ->preload()
+                ->label('Location Zone')
+                ->searchable(),
+                SelectFilter::make('provincephil_id')->relationship('provincephil', 'name')
+                ->label('Province Name')
+                ->preload()
+                ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
+
                 Tables\Actions\BulkActionGroup::make([
+                    //    Tables\Actions\BulkAction::make('Set Warehouse Route')
+                    // ->label('Warehouse Route')
+                    // ->icon('heroicon-o-map-pin')
+                    // ->color('primary')
+                   
+                    // ->form([
+                    //     Forms\Components\Select::make('zoneoute_id')
+                    //         ->label('Warehouse Route')
+                    //         ->options(Zoneroute::all()->pluck('route_name', 'id'))
+                    //         ->searchable()
+                    //         ->preload()
+                    //         ->required()
+                    // ])
+                    // ->action(function (Collection $records, array $data): void {
+
+                    //     foreach ($records as $record) {
+                    //         $record->update([
+
+                    //             'zoneroute_id' => $data['zoneoute_id'],
+                    //         ]);
+                       
+                    //     // foreach ($records as $record) {
+                    //     //     $record->update([
+    
+                    //     //         'no_days' => $data['no_days'],
+                    //     //     ]);
+                    //     }
+                    //     Notification::make()
+                    //     ->title('Saved successfully')
+                    //     ->success()
+                    //     ->send();
+                    // })
+                    //  ->requiresConfirmation(),
+                
                     // Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('Set days')
                     // ->slideOver()

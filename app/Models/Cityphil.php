@@ -18,6 +18,7 @@ class Cityphil extends Model
     public function zone(){
         return $this->belongsTo(Zone::class);
     }
+    
     public function scopeCitydisplay($query, $cityid){
         $city_id = Receiveraddress::where('id', $cityid)->first()->cityphil_id;
         return $query->where('id', $city_id)->first()->name;
