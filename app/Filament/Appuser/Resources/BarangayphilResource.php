@@ -44,19 +44,20 @@ class BarangayphilResource extends Resource
         return $table
             ->columns([
                   Tables\Columns\TextColumn::make('province.name')->label('Province Name')
-                ->searchable()
+                
                 ->toggleable()
                 ->sortable(),
                 Tables\Columns\TextColumn::make('cityphil.name')->label('City Name')
-                ->searchable()
+                
                 ->toggleable()
                 ->sortable(),
                 Tables\Columns\TextColumn::make('name')->label('Barangay Name')
-                ->searchable()
+                
                 ->toggleable()
+                 ->searchable(isIndividual: true)
                 ->sortable(),
                  Tables\Columns\TextColumn::make('zoneroute.route_name')->label('Warehouse Route')
-                ->searchable()
+                
                 ->toggleable()
                 ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
