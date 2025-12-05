@@ -55,14 +55,14 @@ class ManifestExporter extends Exporter
             ExportColumn::make('receiveraddress.cityphil.name')->label('City'),
             ExportColumn::make('receiver.mobile_no')->label('Mobile Number'),
             ExportColumn::make('receiver.home_no')->label('Home Number'),
-           ExportColumn::make('code')
-            ->label('Location code')
-             ->state(function ($state) {
-                $state = Locationcode::All()->first()->code;
-        return $state;
-    }),
-         ExportColumn::make('receiveraddress.barangayphil.zoneroute_id')
-            ->label('Route id'),
+    //        ExportColumn::make('code')
+    //         ->label('Location code')
+    //          ->state(function ($state) {
+    //             $state = Locationcode::All()->first()->code;
+    //     return $state;
+    // }),
+        ExportColumn::make('receiveraddress.barangayphil.zoneroute_id')
+           ->label('Route id'),
             
             
         ];
