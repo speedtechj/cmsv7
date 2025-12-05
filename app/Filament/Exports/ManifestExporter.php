@@ -57,9 +57,9 @@ class ManifestExporter extends Exporter
             ExportColumn::make('receiver.home_no')->label('Home Number'),
     ExportColumn::make('code')
             ->label('Location code')
-             ->state(function ($state) {
-                $state = Locationcode::get()->first()->code;
-        return $state;
+             ->state(function ( Locationcode $record) {
+                
+        return $record->code;
     }),
         ExportColumn::make('receiveraddress.barangayphil.zoneroute_id')
            ->label('Route id'),
