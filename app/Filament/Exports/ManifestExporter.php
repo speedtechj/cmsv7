@@ -59,7 +59,7 @@ class ManifestExporter extends Exporter
             ->label('Location code')
              ->state(function ( Locationcode $record) {
                 
-        return $record->code;
+        dd($record);
     }),
         ExportColumn::make('receiveraddress.barangayphil.zoneroute_id')
            ->label('Route id'),
