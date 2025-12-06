@@ -105,9 +105,9 @@ class BarangayphilResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                  //  Tables\Actions\DeleteBulkAction::make(),
                        Tables\Actions\BulkAction::make('Set Warehouse Route')
-                    ->label('Warehouse Route')
+                    ->label('Update Warehouse Route')
                     ->icon('heroicon-o-map-pin')
                     ->color('primary')
                    
