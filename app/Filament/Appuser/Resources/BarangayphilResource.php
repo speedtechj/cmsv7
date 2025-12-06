@@ -134,7 +134,7 @@ class BarangayphilResource extends Resource
                         //     ]);
                         }
                         Notification::make()
-                        ->title('Saved successfully')
+                        ->title('Update successfully')
                         ->success()
                         ->send();
                     })
