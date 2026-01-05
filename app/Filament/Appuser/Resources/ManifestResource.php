@@ -11,6 +11,7 @@ use App\Models\Booking;
 use App\Models\Manifest;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Provincephil;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
@@ -114,6 +115,29 @@ class ManifestResource extends Resource
                 ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                   SelectFilter::make('province')
+                ->label('Province')
+                ->options(
+                    function () {
+                        // could be more discerning here, and select a distinct list of aircraft id's
+                        // that actually appear in the Daily Logs, so we aren't presenting filter options
+                        // which don't exist in the table, but in my case we know they are all used
+                        return Provincephil::all()->pluck('name', 'id')->toArray();
+                    }
+                )
+                ->query(function (Builder $query, array $data) {
+                    if (!empty($data['value'])) {
+                        // if we have a value (the aircraft ID from our options() query), just query a nested
+                        // set of whereHas() clauses to reach our target, in this case two deep
+                        $query->whereHas(
+                            'receiveraddress',
+                            fn (Builder $query) => $query->whereHas(
+                                'provincephil',
+                                fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                            )
+                        );
+                    }
+                }),
                 SelectFilter::make('batch_id')
                 ->searchable()
                 ->preload()

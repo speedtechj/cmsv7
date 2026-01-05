@@ -29,5 +29,9 @@ class Receiveraddress extends Model
     public function scopeZoneid($query, $receiveraddressid){
         return $query->where('id', $receiveraddressid)->get()->first()->cityphil->zone_id;
     }
-   
+   public function bookings()
+{
+    return $this->hasMany(Booking::class, 'receiveraddress_id');
+}
+
 }
