@@ -94,7 +94,7 @@ class ProvinceboxResource extends Resource
                 ->getOptionLabelFromRecordUsing(function (Model $record) {
                     return "{$record->batchno} {$record->batch_year}";
                 })
-                ->preload()
+               // ->preload()
                 // 1. THIS IS THE FIX: stop Filament from adding "and batch = X" to the SQL
                 ->attribute(null) 
                 ->relationship('bookings.batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
