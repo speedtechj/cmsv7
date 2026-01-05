@@ -14,7 +14,7 @@ class Provincebox extends Model
     {
         return $this->hasManyThrough(
             Booking::class,
-            ReceiverAddress::class,
+            Receiveraddress::class,
             'provincephil_id',
             'receiveraddress_id',
             'id',
