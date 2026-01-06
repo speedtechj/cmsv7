@@ -15,8 +15,11 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Exports\ProvinceboxExporter;
+use Filament\Tables\Actions\ExportBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProvinceboxResource\Pages;
 use App\Filament\Resources\ProvinceboxResource\RelationManagers;
@@ -112,10 +115,28 @@ class ProvinceboxResource extends Resource
                 })
             ])
             ->actions([
-             //   Tables\Actions\EditAction::make(),
+             
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    ExportBulkAction::make()
+                ->label('Export')
+                ->exporter(ProvinceboxExporter::class)
+                ->modifyQueryUsing(function (Builder $query, $livewire) {
+            // Get the selected batch ID from the filter state
+            $batchId = $livewire->getTableFilterState('batch');
+        
+            // 1. If no batch is selected, show zero records
+        //    if (blank($batchId)) {
+        //        return $query->whereRaw('1 = 0');
+        //    }
+
+            // 2. Count ONLY the bookings for the selected batch
+            // This creates the 'bookings_count' attribute dynamically
+            return $query->withCount(['bookings' => function (Builder $q) use ($batchId) {
+                $q->where('batch_id', $batchId);
+            }]);
+        }),
             //        Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
