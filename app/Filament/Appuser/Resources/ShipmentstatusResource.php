@@ -181,32 +181,57 @@ class ShipmentstatusResource extends Resource
                     ->label('Sender Name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('Status')
+                   Tables\Columns\TextColumn::make('Status')
                     ->badge()
                     ->label('Status')
                     ->color(fn(string $state): string => match ($state) {
-                        'Follow Up' => 'danger',
-                        'Waiting for Delivery' => 'warning',
+                        
+                        'Not Delivered' => 'warning',
                         'Delivered' => 'success',
                     })
                     ->getStateUsing(function (Model $record) {
-                        $endpoint = Trackstatus::where('code', 'ed')->first()->id;
-                        $end_point_stat = $record->invoicestatuses->where('trackstatus_id', $endpoint)->first();
-                        if ($end_point_stat == null) {
-                            $origin = Trackstatus::where('code', 'op')->first()->id;
-                            $origin_date = Carbon::parse($record->invoicestatuses->where('trackstatus_id', $origin)->first()->date_update ?? now());
-                            $now = Carbon::now()->addDays(1);
-                            $diff_date = $origin_date->diffInDays($now, false);
-                            $agingdays = $record->receiveraddress->cityphil->no_days;
-                            if ($diff_date > $agingdays) {
-                                return 'Follow Up';
-                            } else {
-                                return 'Waiting for Delivery';
-                            }
-                        } else {
-                            return 'Delivered';
-                        }
+                        $statuscode = Trackstatus::where('code', 'ed')->first()->id;
+                     
+                    
+                        $status = Invoicestatus::where('generated_invoice',$record->booking_invoice)
+                        ->where('manual_invoice', $record->manual_invoice)
+                        ->where('trackstatus_id', $statuscode)->first();
+                       if($status == null){
+                        return 'Not Delivered';
+                       }else{
+                        return 'Delivered';
+                       }
+                        
+
                     }),
+                    
+                    
+                // Tables\Columns\TextColumn::make('Status')
+                //     ->badge()
+                //     ->label('Status')
+                //     ->color(fn(string $state): string => match ($state) {
+                //         'Follow Up' => 'danger',
+                //         'Waiting for Delivery' => 'warning',
+                //         'Delivered' => 'success',
+                //     })
+                //     ->getStateUsing(function (Model $record) {
+                //         $endpoint = Trackstatus::where('code', 'ed')->first()->id;
+                //         $end_point_stat = $record->invoicestatuses->where('trackstatus_id', $endpoint)->first();
+                //         if ($end_point_stat == null) {
+                //             $origin = Trackstatus::where('code', 'op')->first()->id;
+                //             $origin_date = Carbon::parse($record->invoicestatuses->where('trackstatus_id', $origin)->first()->date_update ?? now());
+                //             $now = Carbon::now()->addDays(1);
+                //             $diff_date = $origin_date->diffInDays($now, false);
+                //             $agingdays = $record->receiveraddress->cityphil->no_days;
+                //             if ($diff_date > $agingdays) {
+                //                 return 'Follow Up';
+                //             } else {
+                //                 return 'Waiting for Delivery';
+                //             }
+                //         } else {
+                //             return 'Delivered';
+                //         }
+                //     }),
                     Tables\Columns\TextColumn::make('cnt_followup')
                     ->badge()
                     ->color('success')
@@ -260,7 +285,7 @@ class ShipmentstatusResource extends Resource
                     ->preload()
                     ->relationship('zone', 'description')
                     ->label('Zone'),
-
+            
 
             ])->persistFiltersInSession()
             ->actions([

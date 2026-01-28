@@ -20,14 +20,14 @@ class ListShipmentstatuses extends ListRecords
             // Actions\CreateAction::make(),
         ];
     }
-    protected function paginateTableQuery(Builder $query): Paginator
-{
-    return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
-}
+//     protected function paginateTableQuery(Builder $query): Paginator
+// {
+//    // return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
+// }
     protected function getHeaderWidgets(): array
     {
         return [
-            StatusOverview::class,
+      //      StatusOverview::class,
             
         ];
     }
