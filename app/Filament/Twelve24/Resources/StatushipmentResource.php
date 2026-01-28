@@ -76,23 +76,7 @@ class StatushipmentResource extends Resource
                         
 
                     }
-                    )
-                    ->sortable(query: function ($query, string $direction) {
-        $statuscode = Trackstatus::where('code', 'ed')->value('id');
-
-        $query->orderByRaw(
-            "
-            EXISTS (
-                SELECT 1
-                FROM invoicestatuses
-                WHERE invoicestatuses.generated_invoice = bookings.booking_invoice
-                  AND invoicestatuses.manual_invoice = bookings.manual_invoice
-                  AND invoicestatuses.trackstatus_id = ?
-            ) {$direction}
-            ",
-            [$statuscode]
-        );
-    }),
+                    ),
                     
             Tables\Columns\TextColumn::make('boxtype.description')
                 ->label('Box Type')
