@@ -239,7 +239,15 @@ class Searchinv extends Page implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                DeleteAction::make(),
+                DeleteAction::make()
+                 ->requiresConfirmation()
+    ->action(function (Model $record): void{
+            $record->delete();
+            Notification::make()
+            ->title('Delete successfully')
+            ->success()
+            ->send();
+    }),
                 EditAction::make()
                 ->label('Edit')
                 
