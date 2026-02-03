@@ -8,11 +8,14 @@ use App\Models\Batch;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\BatchResource\Pages;
@@ -31,7 +34,7 @@ class BatchResource extends Resource
             ->schema([
                 Section::make('Batch Informaton')->schema([
                     Forms\Components\TextInput::make('batchno')
-                    ->numeric()
+                        ->numeric()
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('batch_year')
@@ -53,11 +56,11 @@ class BatchResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('batchno')
-                ->label('Batch No')
-                ->searchable(),
+                    ->label('Batch No')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('batch_year')
-                ->label('Year')
-                ->searchable(),
+                    ->label('Year')
+                    ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean()
                     ->label('Active')
@@ -80,7 +83,49 @@ class BatchResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                Filter::make('is_active')->label('Is Active')->query(fn (Builder $query): Builder => $query->where('is_active', true))->default(),
+                Filter::make('is_active')->label('Is Active')->query(fn(Builder $query): Builder => $query->where('is_active', true))->default(),
+            ])
+            ->headerActions([
+                Action::make('Create')
+                    ->label('Create Batch')
+                    ->icon('heroicon-o-plus')
+                    ->color('primary')
+                    ->form([
+                       TextInput::make('batchno')
+                            ->numeric()
+                            ->required()
+                            ->maxLength(255),
+                       TextInput::make('batch_year')
+                       ->default(now()->year)
+                       ->required(),
+                    ])
+                    ->action(function (array $data): void {
+                    $check_batch = Batch::where('batchno', $data['batchno'])
+                            ->where('batch_year', $data['batch_year'])
+                            ->exists();
+
+                    if(!$check_batch)
+                        {
+                    Batch::create([
+                                    'user_id' => auth()->id(),
+                                    'batchno' => $data['batchno'],
+                                    'batch_year' => $data['batch_year'],
+                                    'is_active' => true,
+                                    'is_lock' => false,
+                                    'is_current' => false,
+
+                                ]);
+                                Notification::make()
+                                    ->title('Batch Created')
+                                    ->success()
+                                    ->send();
+                        }else {
+                            Notification::make()
+                                    ->title('Batch Already Created')
+                                    ->success()
+                                    ->send();
+                        }
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
