@@ -93,7 +93,8 @@ class ProvinceboxResource extends Resource
             ->filters([
                Tables\Filters\SelectFilter::make('batch')
                 ->label('Filter by Batch')
-                ->searchable()
+               // ->searchable()
+               
                 ->getOptionLabelFromRecordUsing(function (Model $record) {
                     return "{$record->batchno} {$record->batch_year}";
                 })
