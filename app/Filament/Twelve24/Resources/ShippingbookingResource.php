@@ -53,6 +53,18 @@ class ShippingbookingResource extends Resource
                 ->label('Batch No')
                 ->listWithLineBreaks()
                 ->searchable(),
+                Tables\Columns\TextColumn::make('shippingcontainer.batch.batch_year')
+                ->label('Batch Year')
+                ->listWithLineBreaks()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('shippingcontainer.total_box')
+                ->label('Total Box')
+                ->listWithLineBreaks()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('shippingcontainer.equipment.code')
+                ->label('Container Type')
+                ->listWithLineBreaks()
+                ->searchable(), 
                 Tables\Columns\TextColumn::make('bill_of_lading'),
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),
