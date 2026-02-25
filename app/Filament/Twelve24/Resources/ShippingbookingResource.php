@@ -71,7 +71,7 @@ class ShippingbookingResource extends Resource
                 Tables\Columns\TextColumn::make('branch.business_name')
                 ->label('Broker')
 
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

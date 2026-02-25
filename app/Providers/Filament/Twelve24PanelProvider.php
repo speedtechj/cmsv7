@@ -30,7 +30,7 @@ class Twelve24PanelProvider extends PanelProvider
             ->id('twelve24')
             ->path('1224')
             ->databaseNotifications()
-            ->brandName('12:24 Cargo Express')
+            ->brandName('Icargoxpressphil')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->spa()
@@ -47,7 +47,7 @@ class Twelve24PanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Twelve24/Widgets'), for: 'App\\Filament\\Twelve24\\Widgets')
             ->widgets([
-                
+
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -74,9 +74,9 @@ class Twelve24PanelProvider extends PanelProvider
                 NavigationGroup::make( 'Invoice Status' )->icon( 'heroicon-o-circle-stack'),
                 // NavigationGroup::make( 'Philippines Location' )->icon( 'heroicon-o-map-pin' ),
                 // NavigationGroup::make( 'App Settings')->icon( 'heroicon-o-cog-6-tooth' )
-                
+
             ] );;
-            
-            
+
+
     }
 }
