@@ -33,7 +33,7 @@ class ShippingbookingResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->where('assign_to', true))
+      //      ->modifyQueryUsing(fn (Builder $query) => $query->where('assign_to', true))
             ->columns([
                 Tables\Columns\TextColumn::make( 'booking_no' )
                 ->label( 'Booking Number' )
@@ -64,23 +64,23 @@ class ShippingbookingResource extends Resource
                 Tables\Columns\TextColumn::make('shippingcontainer.equipment.code')
                 ->label('Container Type')
                 ->listWithLineBreaks()
-                ->searchable(), 
+                ->searchable(),
                 Tables\Columns\TextColumn::make('bill_of_lading'),
                 Tables\Columns\TextColumn::make('eta')
                 ->label('ETA'),
                 Tables\Columns\TextColumn::make('branch.business_name')
                 ->label('Broker')
-               
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-               
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    
+
                 ]),
             ]);
     }

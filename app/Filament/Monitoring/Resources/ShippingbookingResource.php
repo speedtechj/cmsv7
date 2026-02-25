@@ -81,7 +81,7 @@ class ShippingbookingResource extends Resource
                             }else {
                                 $set('is_complete', false);
                             }
-                            
+
                         }),
                         Forms\Components\Toggle::make('is_complete')
                         ->label('Is Complete'),
@@ -94,8 +94,8 @@ class ShippingbookingResource extends Resource
                             ->directory('blattachments')
                             ->visibility('private')
                             ->removeUploadedFileButtonPosition('right'),
-                           
-                    
+
+
                     Forms\Components\FileUpload::make('telex_attachments')
                             ->label('Telex Attachments')
                             ->uploadingMessage('Uploading attachment...')
@@ -106,12 +106,12 @@ class ShippingbookingResource extends Resource
                             ->visibility('private')
                             ->removeUploadedFileButtonPosition('right'),
 
-                
+
                         Forms\Components\MarkdownEditor::make( 'notes' )
                         ->label( 'Notes' )
                         ->columnSpanFull(),
                     ])->columns( 2 ),
-                    
+
                 ]) ->columnSpan(['lg' => 2]),
                 Forms\Components\Group::make()
                 ->schema([
@@ -130,7 +130,7 @@ class ShippingbookingResource extends Resource
 
                         ] )
                         ->required(),
-        
+
                         Forms\Components\Select::make( 'origin_terminal' )
                         ->native(false)
                         ->options( [
@@ -156,7 +156,7 @@ class ShippingbookingResource extends Resource
                         ->required()
                         ->options( [
                             'MANILA NORTH HARBOR' => 'MANILA NORTH HARBOR',
-                            'MANILA SOUTH HARBOR' => 'MANILA SOUTH HARBOR',
+                          //  'MANILA SOUTH HARBOR' => 'MANILA SOUTH HARBOR',
                         ] ),
                         Forms\Components\TextInput::make('place_of_receipt')
                         ->label('Place of Delivery')
@@ -175,7 +175,7 @@ class ShippingbookingResource extends Resource
                         ->native( false )
                         ->label( 'Estimated Time of Arrival' )
                         ->required(),
-                        
+
                     ] )
                 ]) ->columnSpan(['lg' => 1]),
             ])->columns( 3);;
@@ -187,8 +187,9 @@ class ShippingbookingResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make( 'shippingagent.company_name')
                 ->label('Shipping Agent'),
-                Tables\Columns\ToggleColumn::make('assign_to')
-                ->label('Assign To 1224'),
+               // Tables\Columns\ToggleColumn::make('assign_to')
+              //  ->default(false)
+              //  ->label('Assign To 1224'),
                 Tables\Columns\TextColumn::make( 'booking_date' )
                 ->toggleable( isToggledHiddenByDefault: true )
                 ->label( 'Booking Date' )
@@ -264,7 +265,7 @@ class ShippingbookingResource extends Resource
                         return 'Waiting for Bill of Lading';
                     }
                     };
-                    
+
                 }),
                 Tables\Columns\TextColumn::make('Telex Staus')
                 ->badge()
@@ -289,7 +290,7 @@ class ShippingbookingResource extends Resource
                         return 'Waiting for Telex';
                     }
                     };
-                    
+
                 }),
                 Tables\Columns\TextColumn::make('branch.business_name')
                 ->label('Broker')
