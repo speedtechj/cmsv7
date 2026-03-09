@@ -42,6 +42,8 @@ class ShippingcontainerRelationManager extends RelationManager
                                     ->required(),
                                 Forms\Components\Select::make('shippingbooking_id')
                                     ->relationship('shippingbooking', 'booking_no')
+                                    ->searchable()
+                                    ->preload()
                                     ->native(false)
                                     ->required()
                                     ->visibleOn('edit'),
@@ -89,18 +91,18 @@ class ShippingcontainerRelationManager extends RelationManager
                                             ->label('Recalculate weight')
                                             ->requiresConfirmation()
                                             ->action(function (Set $set, Get $get, $state, RelationManager $livewire) {
-                                              
+
                                                 $set('cargo_weight', $state + $get('cargo_weight'));
                                             })
                                     )
-                                   
+
                                     ->numeric()
                                     ->dehydrated(false),
                                 Forms\Components\TextInput::make('star_total_box')
                                 ->helperText('Please click the calculator icon to recalculate the total boxes')
                                     ->label('Star Total Box')
                                     ->prefix('boxes')
-                                   
+
                                     ->numeric()
                                     ->dehydrated(false)
                                     ->suffixAction(
@@ -116,7 +118,7 @@ class ShippingcontainerRelationManager extends RelationManager
                                     ->label('Star Total CBM')
                                     ->helperText('Please click the calculator icon to recalculate the total cbm')
                                     ->prefix('cbm')
-                                    
+
                                     ->numeric()
                                     ->dehydrated(false)
                                     ->suffixAction(
@@ -214,17 +216,17 @@ class ShippingcontainerRelationManager extends RelationManager
                     ->after(function (Model $record){
                     //   dd($this->getOwnerRecord()->branch_id);
                       $record->batch->update(['branch_id' => $this->getOwnerRecord()->branch_id]);
-                   
+
                     })
                     ->slideOver()
                     ->modalWidth(MaxWidth::SevenExtraLarge)
                     ->mutateFormDataUsing(function (array $data): array {
-                        
+
                         $data['user_id'] = auth()->id();
                         $data['branch_id'] = $this->getOwnerRecord()->branch_id;
 
                         return $data;
-                       
+
                     }),
             ])
             ->actions([
@@ -232,10 +234,10 @@ class ShippingcontainerRelationManager extends RelationManager
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
                     ->after(function (Model $record){
-                        
+
                         $record->update(['branch_id' => $this->getOwnerRecord()->branch_id]);
-                       
-                       
+
+
                         })
                         ->slideOver(),
                     Tables\Actions\DeleteAction::make(),
