@@ -130,6 +130,7 @@ class SenderResource extends Resource
                     ->sortable()
                     ->dateTime(),
             ])
+            ->searchDebounce('750ms')
             //->searchOnBlur()
             ->persistSearchInSession()
         ->persistColumnSearchesInSession()

@@ -36,10 +36,11 @@ class SearchinvoiceResource extends Resource
             ->schema([
             ]);
     }
-    
+
     public static function table(Table $table): Table
     {
         return $table
+            ->searchDebounce('750ms')
             ->columns([
                 Tables\Columns\TextColumn::make('booking_invoice')
                 ->label('Generated Invoice')
@@ -123,7 +124,7 @@ class SearchinvoiceResource extends Resource
                         TextEntry::make('receiver.mobile_no')
                         ->label('Mobile Number'),
                 ]),
-            
+
         ]);
 }
     public static function getRelations(): array
@@ -132,7 +133,7 @@ class SearchinvoiceResource extends Resource
            InvoicestatusRelationManager::class,
           RemarkstatusRelationManager::class,
           InvattachRelationManager::class,
-          
+
         ];
     }
 
@@ -149,5 +150,5 @@ class SearchinvoiceResource extends Resource
 // {
 //     return parent::getEloquentQuery()->where('is_deliver', false);
 // }
-    
+
 }

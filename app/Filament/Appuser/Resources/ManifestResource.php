@@ -43,6 +43,7 @@ class ManifestResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->searchDebounce('750ms')
             ->columns([
                 Tables\Columns\TextColumn::make('booking_invoice')
                 ->label('Invoice')
@@ -107,7 +108,7 @@ class ManifestResource extends Resource
                 ->searchable()
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            
+
                 Tables\Columns\TextColumn::make('sender.email')
                 ->label('Home No')
                 ->searchable()
@@ -181,7 +182,7 @@ class ManifestResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    
+
                         ExportBulkAction::make()
                         ->label('Export Manifest')
                         ->icon('heroicon-o-folder-arrow-down')
@@ -228,5 +229,5 @@ class ManifestResource extends Resource
             // 'edit' => Pages\EditManifest::route('/{record}/edit'),
         ];
     }
-    
+
 }
