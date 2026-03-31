@@ -60,7 +60,8 @@ class SearchinvoiceResource extends Resource
                 Tables\Columns\TextColumn::make('receiver.mobile_no')
                 ->label('Receiver Number')
                 ->searchable(isIndividual: true, isGlobal: false),
-            ])->searchOnBlur()
+            ])
+            //->searchOnBlur()
             ->persistSearchInSession()
         ->persistColumnSearchesInSession()
             ->filters([
