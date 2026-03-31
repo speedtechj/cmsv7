@@ -57,7 +57,7 @@ class SenderResource extends Resource
                 //     ->stripCharacters(['(',')','-'])
                 //     ->required(),
                 PhoneInput::make('home_no')
-               
+
                 ->autoPlaceholder('aggressive')
                 ->initialCountry('ca')
                 ->defaultCountry('CA'),
@@ -89,7 +89,7 @@ class SenderResource extends Resource
     {
         return $table
         ->paginated([10])
-            ->deferLoading()
+           // ->deferLoading()
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->label('Full Name')
@@ -154,9 +154,9 @@ class SenderResource extends Resource
             CustomerhistoryRelationManager::class,
             BookingpaymentRelationManager::class,
             PackinglistRelationManager::class,
-           
-           
-           
+
+
+
         ];
     }
 
@@ -168,5 +168,5 @@ class SenderResource extends Resource
             'edit' => Pages\EditSender::route('/{record}/edit'),
         ];
     }
-    
+
 }
