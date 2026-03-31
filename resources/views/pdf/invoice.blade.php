@@ -320,7 +320,7 @@
         @endif
     </table>
 
- 
+
     <table class="table-3" width="100%">
         <tr>
             <td align="center">
@@ -411,7 +411,7 @@
             </td>
         </tr>
     </table>
-    
+
     <table class="table-3">
         <tr>
             <td>
@@ -663,8 +663,15 @@
                         such expenses. In such event, the company is entitled to hold, retain or
                         impound the shipment as surely for payment until said refund or
                         reimbursement is fully satisfied.</li><br><br>
-                    <br><br><br><br><br><br><br><br><br><br><br><br>
-
+                    <br>
+                        MANILA CUSTOMER SERVICE<br>
+                        0917-3142634/ 0917-107-2259<br>
+                        inquiries@icargoxpress.com<br><br>
+                        MANILA WAREHOUSE<br>
+                        Icargoxpress Delivery Inc.<br>
+                        Unit D Diverside Tanza Luma VI Cavite City Cavite 4103<br>
+                        046 -8510819  / 09173142634<br>
+                        inquiries@icargoxpress.com<br>
                     </p>
                 </ol>
                 </ol>
