@@ -664,13 +664,12 @@
                         impound the shipment as surely for payment until said refund or
                         reimbursement is fully satisfied.</li><br><br>
                     <br>
-                        MANILA CUSTOMER SERVICE<br>
-                        0917-3142634/ 0917-107-2259<br>
-                        inquiries@icargoxpress.com<br><br>
-                        MANILA WAREHOUSE<br>
+
+                        <b>PHILIPPINES MANILA WAREHOUSE</b><br>
                         Icargoxpress Delivery Inc.<br>
-                        Unit D Diverside Tanza Luma VI Cavite City Cavite 4103<br>
-                        046 -8510819  / 09173142634<br>
+                        Unit D Diverside Tanza Luma VI <br>
+                        Imus City Cavite 4103<br>
+                        046-851-0819/0917-314-2634/0917-107-2259<br>
                         inquiries@icargoxpress.com<br>
                     </p>
                 </ol>
