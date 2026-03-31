@@ -89,7 +89,7 @@ class SenderResource extends Resource
     {
         return $table
         ->paginated([10])
-           // ->deferLoading()
+         ->deferLoading()
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->label('Full Name')
@@ -129,7 +129,8 @@ class SenderResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()
                     ->dateTime(),
-            ])->searchOnBlur()
+            ])
+            //->searchOnBlur()
             ->persistSearchInSession()
         ->persistColumnSearchesInSession()
             ->filters([
