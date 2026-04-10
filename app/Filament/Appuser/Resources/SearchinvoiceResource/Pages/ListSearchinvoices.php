@@ -26,7 +26,7 @@ class ListSearchinvoices extends ListRecords
 
         Notification::make()
             ->title('Instructions for Searching')
-            ->body(Str::markdown('<div style="color:#F5BA07;font-weight:bold;font-size:15px;">After typing, press Tab Key to begin the search not Enter Key.</div>'))
+            ->body(Str::markdown('<div style="color:#F5BA07;font-weight:bold;font-size:15px;">After typing, press Tab Key or Click Search icon to begin the search</div>'))
             ->persistent()
             ->info()
             ->send();
