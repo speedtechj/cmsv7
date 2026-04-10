@@ -88,8 +88,8 @@ class SenderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->paginated([10])
-         ->deferLoading()
+      ->paginated([10])
+      ->deferLoading()
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->label('Full Name')
@@ -130,8 +130,7 @@ class SenderResource extends Resource
                     ->sortable()
                     ->dateTime(),
             ])
-            ->searchDebounce('750ms')
-            //->searchOnBlur()
+            ->searchOnBlur()
             ->persistSearchInSession()
         ->persistColumnSearchesInSession()
             ->filters([

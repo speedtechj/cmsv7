@@ -32,6 +32,7 @@ class AppuserPanelProvider extends PanelProvider {
         ->id('appuser')
         ->path( '/' )
         ->spa()
+        ->globalSearch(false)
         ->sidebarFullyCollapsibleOnDesktop()
         ->maxContentWidth(MaxWidth::Full)
         ->databaseNotifications()
@@ -53,7 +54,7 @@ class AppuserPanelProvider extends PanelProvider {
         ] )
         ->discoverWidgets( in: app_path( 'Filament/Appuser/Widgets' ), for: 'App\\Filament\\Appuser\\Widgets' )
         ->widgets( [
-           
+
         ] )
         ->middleware( [
             EncryptCookies::class,
@@ -81,9 +82,9 @@ class AppuserPanelProvider extends PanelProvider {
             NavigationGroup::make( 'Canada Location' )->icon( 'heroicon-o-map-pin' ),
             NavigationGroup::make( 'Philippines Location' )->icon( 'heroicon-o-map-pin' ),
             NavigationGroup::make( 'App Settings')->icon( 'heroicon-o-cog-6-tooth' )
-            
+
         ] );
-       
+
 
     }
 }

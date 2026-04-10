@@ -2,11 +2,12 @@
 
 namespace App\Filament\Appuser\Resources\SearchinvoiceResource\Pages;
 
-use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Contracts\Pagination\Paginator;
 use App\Filament\Appuser\Resources\SearchinvoiceResource;
+use Filament\Actions;
+use Filament\Notifications\Notification;
+use Filament\Resources\Pages\ListRecords;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListSearchinvoices extends ListRecords
 {
@@ -17,6 +18,17 @@ class ListSearchinvoices extends ListRecords
         return [
             // Actions\CreateAction::make(),
         ];
+    }
+    public function mount(): void
+    {
+        parent::mount();
+
+        Notification::make()
+            ->title('Instructions for Searching')
+            ->body('After typing, press Tab Key to begin the search not Enter Key.')
+            ->persistent()
+            ->success()
+            ->send();
     }
     protected function paginateTableQuery(Builder $query): Paginator
 {

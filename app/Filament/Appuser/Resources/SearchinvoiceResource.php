@@ -40,7 +40,7 @@ class SearchinvoiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->searchDebounce('750ms')
+
             ->columns([
                 Tables\Columns\TextColumn::make('booking_invoice')
                 ->label('Generated Invoice')
@@ -61,7 +61,7 @@ class SearchinvoiceResource extends Resource
                 ->label('Receiver Number')
                 ->searchable(isIndividual: true, isGlobal: false),
             ])
-            //->searchOnBlur()
+            ->searchOnBlur()
             ->persistSearchInSession()
         ->persistColumnSearchesInSession()
             ->filters([
