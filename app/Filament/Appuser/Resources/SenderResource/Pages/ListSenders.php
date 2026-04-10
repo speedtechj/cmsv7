@@ -8,6 +8,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class ListSenders extends ListRecords
 {
@@ -25,7 +26,7 @@ class ListSenders extends ListRecords
 
         Notification::make()
             ->title('Instructions for Searching')
-            ->body('After typing, press Tab Key to begin the search not Enter Key.')
+             ->body(Str::markdown('<div style="color:#F5BA07;font-weight:bold;font-size:15px;">After typing, press Tab Key to begin the search not Enter Key.</div>'))
             ->persistent()
             ->success()
             ->send();
