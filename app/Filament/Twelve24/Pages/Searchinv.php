@@ -57,9 +57,9 @@ class Searchinv extends Page implements HasForms, HasTable
 
     public function mount(): void
     {
-       
+
         $this->form->fill();
-       
+
 
     }
     public function form(Form $form): Form
@@ -74,7 +74,9 @@ class Searchinv extends Page implements HasForms, HasTable
                                     ->live()
                                     ->label('Invoice Status')
                                     ->searchable()
-                                    ->options(Trackstatus::all()->where('branch_id', auth()->user()->branch_id)->pluck('description', 'id'))
+                                    ->options(Trackstatus::all()->where('branch_id', auth()->user()->branch_id)
+                                    ->where('is_active', true)
+                                    ->pluck('description', 'id'))
                                     ->required()
                                     ->afterStateUpdated(fn() => $this->dispatch('focusSecondField')),
                                 TextInput::make('invoice')
@@ -96,7 +98,7 @@ class Searchinv extends Page implements HasForms, HasTable
                                                 $this->resetTable();
                                                 $this->data['invoice'] = " ";
                                                 $this->resetValidation();
-                                                
+
 
                                             })
 
@@ -136,7 +138,7 @@ class Searchinv extends Page implements HasForms, HasTable
         $book_result = Booking::where('manual_invoice', $this->data['invoice'])
             ->orWhere('booking_invoice', $this->data['invoice'])
             ->first();
-       
+
         $invoicestatus = Invoicestatus::where('generated_invoice', $this->data['invoice'])
             ->orWhere('manual_invoice', $this->data['invoice'])->get();
         // $invoice_result = $invoicestatus->where('trackstatus_id', $this->data['invoice_status'])->first();
@@ -145,7 +147,7 @@ class Searchinv extends Page implements HasForms, HasTable
         if ($book_result) {
             $this->invoiceid = $this->data['invoice'];
             if (!$invoice_result) {
-                
+
                 Invoicestatus::create([
                     'generated_invoice' => $book_result->booking_invoice,
                     'manual_invoice' => $book_result->manual_invoice,
@@ -189,7 +191,7 @@ class Searchinv extends Page implements HasForms, HasTable
         }
         // $this->data['invoice'] = " ";
         $this->resetTable();
-        
+
     }
     public function table(Table $table): Table
     {
@@ -233,7 +235,7 @@ class Searchinv extends Page implements HasForms, HasTable
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')->label('Updated At')
                 ->toggleable(isToggledHiddenByDefault: true),
-                
+
             ])->defaultSort('date_update', 'desc')
             ->filters([
                 // ...
@@ -250,7 +252,7 @@ class Searchinv extends Page implements HasForms, HasTable
     }),
                 EditAction::make()
                 ->label('Edit')
-                
+
                 ->mutateRecordDataUsing(function (Model $record, array $data): array {
                     $data['date_update'] = $record->date_update;
                     $data['remarks'] = $record->remarks;
@@ -270,7 +272,7 @@ class Searchinv extends Page implements HasForms, HasTable
                     MarkdownEditor::make('remarks'),
                 ])
                 ->action(function (Model $record, array $data): void {
-                  
+
                     $record->update([
                         'date_update' => $data['date_update'],
                         'remarks' => $data['remarks'],
@@ -282,10 +284,10 @@ class Searchinv extends Page implements HasForms, HasTable
                     ->success()
                     ->send();
                 }),
-                
+
             ])
             ->bulkActions([
-               
+
                 // ...
             ]);
     }
