@@ -32,7 +32,8 @@ class RemarkstatusRelationManager extends RelationManager
                             ->schema([
                                 Forms\Components\Select::make('statuscategory_id')
                                     ->label('Title')
-                                    ->options(Statuscategory::all()->where('branch_id', auth()->user()->branch_id)->pluck('description', 'id'))
+                                    ->options(Statuscategory::all()->where('branch_id', auth()->user()->branch_id)
+                                    ->pluck('description', 'id'))
                                     ->required()
                                     ->visibleOn(['create', 'view']),
                                 Forms\Components\TextInput::make('statuscat')
@@ -42,7 +43,9 @@ class RemarkstatusRelationManager extends RelationManager
                                 Forms\Components\Select::make('assign_to')
                                     ->label('Assign To')
                                     ->multiple()
-                                    ->options(User::where('branch_id', '!=', auth()->user()->branch_id)->pluck('full_name', 'id'))
+                                    ->options(User::where('branch_id', '!=', auth()->user()->branch_id)
+                                    ->where('is_active', true)
+                                    ->pluck('full_name', 'id'))
                                     ->required()
                                     ->hiddenOn('edit'),
                                 Forms\Components\MarkdownEditor::make('sender_comment')
