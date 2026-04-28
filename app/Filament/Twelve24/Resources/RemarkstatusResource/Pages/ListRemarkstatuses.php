@@ -5,6 +5,7 @@ namespace App\Filament\Twelve24\Resources\RemarkstatusResource\Pages;
 use App\Filament\Twelve24\Resources\RemarkstatusResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\MaxWidth;
 
 class ListRemarkstatuses extends ListRecords
 {
@@ -13,7 +14,9 @@ class ListRemarkstatuses extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+            //->slideOver()
+            //    ->modalWidth(MaxWidth::Screen),
         ];
     }
 }

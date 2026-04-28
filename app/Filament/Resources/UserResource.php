@@ -2,25 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
+use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\Provincecan;
-use Filament\Resources\Resource;
-use Illuminate\Support\HtmlString;
-use Illuminate\Support\Facades\Hash;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Section;
+use App\Models\User;
+use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\UserResource\Pages;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\UserResource\RelationManagers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\HtmlString;
 use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
 use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
 
@@ -188,10 +191,18 @@ class UserResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
-               
+
             ])
             ->filters([
-                //
+                Filter::make('is_active')
+                    ->label('Active Status')
+                    ->query(fn (Builder $query): Builder => $query->where('is_active', true))
+                    ->default(true),
+                SelectFilter::make('branch_id')
+                    ->label('Branch')
+                    ->relationship('branch', 'business_name'),
+
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -200,6 +211,14 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Deactivate')
+                        ->label('Deactivate')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('info')
+                        ->action(function (Collection $records) {
+                            $records->each->update(['is_active' => false]);
+                        })
+                        ->requiresConfirmation(),
                 ]),
             ]);
     }

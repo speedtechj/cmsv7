@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Observers\Statusobserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+#[ObservedBy(Statusobserver::class)]
 class Remarkstatus extends Model
 {
     use HasFactory;
     protected $guarded = [];
     protected $casts = [
         'invoicedoc' => 'array',
-        'assign_to' => 'array', 
+        'assign_to' => 'array',
     ];
     const STATUS = [
         'Open' => 'Open',

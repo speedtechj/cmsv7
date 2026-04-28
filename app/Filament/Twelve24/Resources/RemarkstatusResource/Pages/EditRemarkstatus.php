@@ -21,7 +21,8 @@ class EditRemarkstatus extends EditRecord
     }
     protected function beforeFill(): void
     {
-        
+
+          $this->form->getRecord()->booking_id = $this->record->booking->id;
         $this->form->getRecord()->sender = $this->record->booking->sender->full_name;
         $this->form->getRecord()->senderaddress = $this->record->booking->senderaddress->address;
         $this->form->getRecord()->receiver = $this->record->booking->receiver->full_name;
@@ -43,7 +44,13 @@ class EditRemarkstatus extends EditRecord
                 ->iconColor('success')
                 ->actions([
                     Action::make('View Reply')
-                        ->url($this->getResource()::getUrl('edit', ['record' => $this->record]))
+                      ->url(RemarkstatusResource::getUrl(
+                            'edit',
+                            [
+                                'record' => $this->record->id,
+                            ],
+                            panel: 'appuser'
+                        ))
                 ])
                 ->sendToDatabase(User::where('id', $recipients)->first());
         }
