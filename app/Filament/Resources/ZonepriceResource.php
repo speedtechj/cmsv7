@@ -2,21 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\Zone;
-use Filament\Tables;
-use App\Models\Branch;
-use Filament\Forms\Form;
-use App\Models\Zoneprice;
-use Filament\Tables\Table;
-use App\Models\Servicetype;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Select;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ZonepriceResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ZonepriceResource\RelationManagers;
+use App\Models\Boxtype;
+use App\Models\Branch;
+use App\Models\Servicetype;
+use App\Models\Zone;
+use App\Models\Zoneprice;
+use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ZonepriceResource extends Resource
 {
@@ -67,7 +69,8 @@ class ZonepriceResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('zone.description')
                     ->label('Area'),
-                Tables\Columns\TextColumn::make('price')->money('USD')
+                Tables\Columns\TextInputColumn::make('price')
+                    ->rules(['required', 'numeric'])
                     ->label('Price'),
                 Tables\Columns\TextColumn::make('boxtype.total_box')
                     ->label('Total Number Box'),
@@ -79,7 +82,19 @@ class ZonepriceResource extends Resource
                 //     ->dateTime(),
             ])
             ->filters([
-                //
+                SelectFilter::make('servicetype_id')
+                    ->label('Service')
+                    ->options(Servicetype::all()->pluck('description', 'id'))
+                    ->searchable(),
+                SelectFilter::make('zone_id')
+                    ->label('Zone')
+                    ->options(Zone::all()->pluck('description', 'id'))
+                    ->searchable(),
+                SelectFilter::make('boxtype_id')
+                    ->label('Box')
+                    ->options(Boxtype::all()->pluck('description', 'id'))
+                    ->searchable(),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
