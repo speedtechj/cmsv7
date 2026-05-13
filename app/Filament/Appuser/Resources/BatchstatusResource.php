@@ -37,6 +37,9 @@ class BatchstatusResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+         ->paginated([10, 25, 50])
+          ->defaultPaginationPageOption(10)
+     ->poll('5s')
            // ->modifyQueryUsing(fn(Builder $query) => $query->distinct('booking_id'))
             // ->modifyQueryUsing(fn(Builder $query) => $query->groupBy('booking_id'))
             ->modifyQueryUsing(function (Builder $query) {
@@ -127,7 +130,7 @@ class BatchstatusResource extends Resource
                     ->relationship('batch', 'id', fn(Builder $query) => $query->where('is_active', '1'))
                     ->getOptionLabelFromRecordUsing(function (Model $record) {
                         return "{$record->batchno} {$record->batch_year} ";
-                    }),
+                    })->default('select batch'),
                TernaryFilter::make('delivery_status')
     ->label('Delivery Status')
     ->nullable()
