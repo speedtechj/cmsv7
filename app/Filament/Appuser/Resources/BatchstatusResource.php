@@ -39,7 +39,7 @@ class BatchstatusResource extends Resource
         return $table
          ->paginated([10, 25, 50])
           ->defaultPaginationPageOption(10)
-     ->poll('5s')
+
            // ->modifyQueryUsing(fn(Builder $query) => $query->distinct('booking_id'))
             // ->modifyQueryUsing(fn(Builder $query) => $query->groupBy('booking_id'))
             ->modifyQueryUsing(function (Builder $query) {
