@@ -1,0 +1,151 @@
+<?php
+
+namespace App\Filament\Appuser\Resources;
+
+use App\Filament\Appuser\Resources\BatchstatusResource\Pages;
+use App\Filament\Appuser\Resources\BatchstatusResource\RelationManagers;
+use App\Models\Batchstatus;
+use App\Models\Invoicestatus;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class BatchstatusResource extends Resource
+{
+    protected static ?string $model = Batchstatus::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                //
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->distinct('booking_id'))
+            ->columns([
+                Tables\Columns\TextColumn::make('invoice')
+                    ->label('Invoice')
+                    ->searchable(['manual_invoice', 'booking_invoice'])
+                    ->getStateUsing(function (Model $record) {
+                        if ($record->manual_invoice != null) {
+                            return $record->manual_invoice;
+                        } else {
+                            return $record->generated_invoice;
+                        }
+                    }),
+                Tables\Columns\TextColumn::make('batch')
+                    ->getStateUsing(function (Model $record) {
+                        if ($record->batch) {
+                            return $record->batch->batchno . ' ' . $record->batch->batch_year;
+                        } else {
+                            return 'N/A';
+                        }
+                    }),
+                    Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->separator(',')
+                    ->color('primary')
+                    ->listWithLineBreaks()
+                    ->limitList(20)
+                    //  ->expandableLimitedList()
+                    ->getStateUsing(function ($record) {
+                        $status = Invoicestatus::where('booking_id', $record->booking_id)
+                            ->with('trackstatus')
+                            ->latest() // latest by created_at
+                            ->first();
+
+                        return $status?->trackstatus->description;
+                    }),
+                      Tables\Columns\TextColumn::make('StatusDate')
+                    ->label('Status Date')
+                    ->separator(',')
+                    ->color('primary')
+                    ->listWithLineBreaks()
+                    ->limitList(20)
+                    //  ->expandableLimitedList()
+                    ->getStateUsing(function ($record) {
+                        $status = Invoicestatus::where('booking_id', $record->booking_id)
+                            ->with('trackstatus')
+                            ->latest() // latest by created_at
+                            ->first();
+
+                        return $status?->date_update;
+                    }),
+                Tables\Columns\TextColumn::make('sender.full_name')
+                    ->label('Sender')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('receiver.full_name')
+                    ->label('Receiver')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('booking.receiveraddress.address')
+                    ->label('Receiver Address')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('barangayphil.name')
+                    ->label('Sender Barangay'),
+                Tables\Columns\TextColumn::make('cityphil.name')
+                    ->label('Sender City'),
+                Tables\Columns\TextColumn::make('provincephil.name')
+                    ->label('Sender Province'),
+                Tables\Columns\TextColumn::make('boxtype.description')
+            ])
+            ->filters([
+                SelectFilter::make('batch_id')
+                    ->label('Batch')
+                    ->relationship('batch', 'id', fn(Builder $query) => $query->where('is_active', '1'))
+                    ->getOptionLabelFromRecordUsing(function (Model $record) {
+                        return "{$record->batchno} {$record->batch_year} ";
+                    }),
+               TernaryFilter::make('delivery_status')
+    ->label('Delivery Status')
+    ->nullable()
+    ->trueLabel('Delivered')
+    ->falseLabel('Undelivered')
+    ->queries(
+        true: fn ($query) => $query->whereHas('invoicestatuses', function ($q) {
+            $q->whereHas('trackstatus', function ($q2) {
+                $q2->where('code', 'ed');
+            });
+        }),
+
+        false: fn ($query) => $query->whereDoesntHave('invoicestatuses', function ($q) {
+            $q->whereHas('trackstatus', function ($q2) {
+                $q2->where('code', 'ed');
+            });
+        }),
+    )
+
+            ])
+            ->actions([
+                // Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    //   Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ManageBatchstatuses::route('/'),
+        ];
+    }
+}
