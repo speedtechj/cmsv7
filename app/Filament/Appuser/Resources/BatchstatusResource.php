@@ -21,6 +21,9 @@ class BatchstatusResource extends Resource
 {
     protected static ?string $model = Batchstatus::class;
 
+    protected static ?string $navigationLabel = 'Invoice Status';
+    public static ?string $label = 'Invoice Status';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -34,7 +37,15 @@ class BatchstatusResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => $query->distinct('booking_id'))
+           // ->modifyQueryUsing(fn(Builder $query) => $query->distinct('booking_id'))
+            // ->modifyQueryUsing(fn(Builder $query) => $query->groupBy('booking_id'))
+            ->modifyQueryUsing(function (Builder $query) {
+    $query->whereIn('id', function ($sub) {
+        $sub->selectRaw('MAX(id)')
+            ->from('invoicestatuses')
+            ->groupBy('booking_id');
+    });
+})
             ->columns([
                 Tables\Columns\TextColumn::make('invoice')
                     ->label('Invoice')
