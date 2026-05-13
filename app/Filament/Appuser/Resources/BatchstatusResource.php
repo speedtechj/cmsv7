@@ -45,7 +45,13 @@ class BatchstatusResource extends Resource
                         } else {
                             return $record->generated_invoice;
                         }
-                    }),
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+        return $query->where(function ($q) use ($search) {
+            $q->where('manual_invoice', 'like', "%{$search}%")
+              ->orWhere('generated_invoice', 'like', "%{$search}%");
+        });
+    }),
                 Tables\Columns\TextColumn::make('batch')
                     ->getStateUsing(function (Model $record) {
                         if ($record->batch) {
