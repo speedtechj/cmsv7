@@ -21,8 +21,8 @@ class BatchstatusResource extends Resource
 {
     protected static ?string $model = Batchstatus::class;
 
-    protected static ?string $navigationLabel = 'Invoice Status';
-    public static ?string $label = 'Invoice Status';
+    protected static ?string $navigationLabel = 'Delivery Status';
+    public static ?string $label = 'Delivery Status';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
