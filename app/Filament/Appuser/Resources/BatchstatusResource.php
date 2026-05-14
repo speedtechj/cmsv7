@@ -87,7 +87,8 @@ public static function getNavigationBadge(): ?string
                     ->getStateUsing(function ($record) {
                         $status = Invoicestatus::where('booking_id', $record->booking_id)
                             ->with('trackstatus')
-                            ->latest('date_update') // latest by date_update
+                          //  ->latest('date_update') // latest by date_update
+                          ->orderBy('date_update', 'desc')
                             ->first();
 
                         return $status?->trackstatus->description;
