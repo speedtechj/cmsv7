@@ -4,12 +4,15 @@ namespace App\Filament\Appuser\Resources;
 
 use App\Filament\Appuser\Resources\BatchstatusResource\Pages;
 use App\Filament\Appuser\Resources\BatchstatusResource\RelationManagers;
+use App\Filament\Exports\BatchstatusExporter;
 use App\Models\Batchstatus;
 use App\Models\Invoicestatus;
+use Filament\Actions\Exports\Models\Export;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
@@ -149,6 +152,14 @@ class BatchstatusResource extends Resource
                     )
 
             ])
+            ->headerActions([
+            ExportAction::make()
+                ->label('Export')
+                ->exporter(BatchstatusExporter::class)
+                ->color('info')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->fileName(fn (Export $export): string => "Delivery_Status_Export"),
+        ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
