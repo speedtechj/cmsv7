@@ -28,7 +28,10 @@ class BatchstatusResource extends Resource
     public static ?string $label = 'Delivery Status';
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
-
+public static function getNavigationBadge(): ?string
+{
+    return "New";
+}
     public static function form(Form $form): Form
     {
         return $form
