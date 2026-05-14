@@ -15,7 +15,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class BatchstatusResource extends Resource
 {
@@ -37,22 +37,19 @@ class BatchstatusResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-         ->paginated([10, 25, 50])
-          ->defaultPaginationPageOption(10)
-
-           // ->modifyQueryUsing(fn(Builder $query) => $query->distinct('booking_id'))
-            // ->modifyQueryUsing(fn(Builder $query) => $query->groupBy('booking_id'))
+            ->paginated([10, 25, 50])
+            ->defaultPaginationPageOption(10)
             ->modifyQueryUsing(function (Builder $query) {
-    $query->whereIn('id', function ($sub) {
-        $sub->selectRaw('MAX(id)')
-            ->from('invoicestatuses')
-            ->groupBy('booking_id');
-    });
-})
+                $query->whereIn('id', function ($sub) {
+                    $sub->selectRaw('MAX(id)')
+                        ->from('invoicestatuses')
+                        ->groupBy('booking_id');
+                });
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('invoice')
                     ->label('Invoice')
-                    ->searchable(['manual_invoice', 'booking_invoice'])
+                    ->searchable(['manual_invoice', 'generated_invoice'])
                     ->getStateUsing(function (Model $record) {
                         if ($record->manual_invoice != null) {
                             return $record->manual_invoice;
@@ -61,11 +58,11 @@ class BatchstatusResource extends Resource
                         }
                     })
                     ->searchable(query: function (Builder $query, string $search): Builder {
-        return $query->where(function ($q) use ($search) {
-            $q->where('manual_invoice', 'like', "%{$search}%")
-              ->orWhere('generated_invoice', 'like', "%{$search}%");
-        });
-    }),
+                        return $query->where(function ($q) use ($search) {
+                            $q->where('manual_invoice', 'like', "%{$search}%")
+                                ->orWhere('generated_invoice', 'like', "%{$search}%");
+                        });
+                    }),
                 Tables\Columns\TextColumn::make('batch')
                     ->getStateUsing(function (Model $record) {
                         if ($record->batch) {
@@ -74,7 +71,7 @@ class BatchstatusResource extends Resource
                             return 'N/A';
                         }
                     }),
-                    Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('Latest Status')
                     ->label('Status')
                     ->separator(',')
                     ->color('primary')
@@ -89,7 +86,7 @@ class BatchstatusResource extends Resource
 
                         return $status?->trackstatus->description;
                     }),
-                      Tables\Columns\TextColumn::make('StatusDate')
+                Tables\Columns\TextColumn::make('StatusDate')
                     ->label('Status Date')
                     ->separator(',')
                     ->color('primary')
@@ -104,6 +101,7 @@ class BatchstatusResource extends Resource
 
                         return $status?->date_update;
                     }),
+                Tables\Columns\TextColumn::make('boxtype.description'),
                 Tables\Columns\TextColumn::make('sender.full_name')
                     ->label('Sender')
                     ->searchable()
@@ -117,38 +115,38 @@ class BatchstatusResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('barangayphil.name')
-                    ->label('Sender Barangay'),
+                    ->label('Receiver Barangay'),
                 Tables\Columns\TextColumn::make('cityphil.name')
-                    ->label('Sender City'),
+                    ->label('Receiver City'),
                 Tables\Columns\TextColumn::make('provincephil.name')
-                    ->label('Sender Province'),
-                Tables\Columns\TextColumn::make('boxtype.description')
+                    ->label('Receiver Province'),
+
             ])
             ->filters([
-                SelectFilter::make('batch_id')
+                SelectFilter::make('batchno')
                     ->label('Batch')
-                    ->relationship('batch', 'id', fn(Builder $query) => $query->where('is_active', '1'))
+                    ->relationship('batch', 'batchno', fn(Builder $query) => $query->where('is_active', '1'))
                     ->getOptionLabelFromRecordUsing(function (Model $record) {
                         return "{$record->batchno} {$record->batch_year} ";
                     })->default('select batch'),
-               TernaryFilter::make('delivery_status')
-    ->label('Delivery Status')
-    ->nullable()
-    ->trueLabel('Delivered')
-    ->falseLabel('Undelivered')
-    ->queries(
-        true: fn ($query) => $query->whereHas('invoicestatuses', function ($q) {
-            $q->whereHas('trackstatus', function ($q2) {
-                $q2->where('code', 'ed');
-            });
-        }),
+                TernaryFilter::make('delivery_status')
+                    ->label('Delivery Status')
+                    ->nullable()
+                    ->trueLabel('Delivered')
+                    ->falseLabel('Undelivered')
+                    ->queries(
+                        true: fn($query) => $query->whereHas('invoicestatuses', function ($q) {
+                            $q->whereHas('trackstatus', function ($q2) {
+                                $q2->where('code', 'ed');
+                            });
+                        }),
 
-        false: fn ($query) => $query->whereDoesntHave('invoicestatuses', function ($q) {
-            $q->whereHas('trackstatus', function ($q2) {
-                $q2->where('code', 'ed');
-            });
-        }),
-    )
+                        false: fn($query) => $query->whereDoesntHave('invoicestatuses', function ($q) {
+                            $q->whereHas('trackstatus', function ($q2) {
+                                $q2->where('code', 'ed');
+                            });
+                        }),
+                    )
 
             ])
             ->actions([
