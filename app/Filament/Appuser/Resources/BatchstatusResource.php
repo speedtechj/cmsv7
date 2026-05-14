@@ -89,6 +89,7 @@ public static function getNavigationBadge(): ?string
                             ->with('trackstatus')
                           //  ->latest('date_update') // latest by date_update
                           ->orderBy('date_update', 'desc')
+                          ->orderBy('id', 'desc')
                             ->first();
 
                         return $status?->trackstatus->description;
