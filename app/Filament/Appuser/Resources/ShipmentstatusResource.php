@@ -52,10 +52,7 @@ class ShipmentstatusResource extends Resource
     protected static ?string $navigationLabel = 'Shipment Status';
     public static ?string $label = 'Shipment Status';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    public static function getNavigationBadge(): ?string
-{
-    return "New";
-}
+
     public static function form(Form $form): Form
     {
         return $form
@@ -139,7 +136,7 @@ class ShipmentstatusResource extends Resource
                     }else{
                         return 0;
                     }
-                    // return $unloaded->date_update ?? 0; 
+                    // return $unloaded->date_update ?? 0;
                 }),
                 Tables\Columns\TextColumn::make('Day')
                 ->label('Day(s) Due')
@@ -162,7 +159,7 @@ class ShipmentstatusResource extends Resource
                         }else {
                             return 0;
                         }
-                    
+
                 }),
                 Tables\Columns\TextColumn::make('invoice')
                     ->label('Invoice')
@@ -176,7 +173,7 @@ class ShipmentstatusResource extends Resource
                             return $record->booking_invoice;
                         }
                     }),
-                
+
                 Tables\Columns\TextColumn::make('sender.full_name')
                     ->label('Sender Name')
                     ->searchable()
@@ -185,14 +182,14 @@ class ShipmentstatusResource extends Resource
                     ->badge()
                     ->label('Status')
                     ->color(fn(string $state): string => match ($state) {
-                        
+
                         'Not Delivered' => 'warning',
                         'Delivered' => 'success',
                     })
                     ->getStateUsing(function (Model $record) {
                         $statuscode = Trackstatus::where('code', 'ed')->first()->id;
-                     
-                    
+
+
                         $status = Invoicestatus::where('generated_invoice',$record->booking_invoice)
                         ->where('manual_invoice', $record->manual_invoice)
                         ->where('trackstatus_id', $statuscode)->first();
@@ -201,11 +198,11 @@ class ShipmentstatusResource extends Resource
                        }else{
                         return 'Delivered';
                        }
-                        
+
 
                     }),
-                    
-                    
+
+
                 // Tables\Columns\TextColumn::make('Status')
                 //     ->badge()
                 //     ->label('Status')
@@ -255,7 +252,7 @@ class ShipmentstatusResource extends Resource
                 ->default('Select Batch Number'),
                     // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
                     // ->default(array('Select Batch Number')),
-                    
+
                 SelectFilter::make('provincephil_id')
                     ->searchable()
                     ->label('Province')
@@ -266,7 +263,7 @@ class ShipmentstatusResource extends Resource
                         return Provincephil::all()->pluck('name', 'id')->toArray();
                     })
                     ->query(function (Builder $query, array $data) {
-                        
+
                         if (!empty($data['value']))
                         {
                             // if we have a value (the aircraft ID from our options() query), just query a nested
@@ -285,7 +282,7 @@ class ShipmentstatusResource extends Resource
                     ->preload()
                     ->relationship('zone', 'description')
                     ->label('Zone'),
-            
+
 
             ])->persistFiltersInSession()
             ->actions([
@@ -320,7 +317,7 @@ class ShipmentstatusResource extends Resource
                                 ->required()
                         ])
                         ->action(function (Model $record, array $data): void {
-                            
+
                             EmailStatus::create([
                                 'subject' => $data['subject'],
                                 'message' => $data['message'],
@@ -338,17 +335,17 @@ class ShipmentstatusResource extends Resource
                              ->send();
 
                             //  (new static)->logCustomEvent($record);
-                          
-    
-                            
+
+
+
                         })
                         // ->url(fn (Model $record) => route('shipmentmail', $record))
                         // ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    
-                    
+
+
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -367,10 +364,10 @@ class ShipmentstatusResource extends Resource
         return [
             InvoicestatusesRelationManager::class,
             EmailstatusRelationManager::class,
-            
+
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -382,11 +379,11 @@ class ShipmentstatusResource extends Resource
     }
     protected function logCustomEvent(Model $record)
     {
-        
+
         activity()
             ->event('Send Email')
             ->performedOn($record)
             ->log('Email has been sent');
-           
+
     }
 }
