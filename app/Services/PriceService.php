@@ -37,11 +37,11 @@ class PriceService
                 $this->serviceid != null && $this->zoneid != null && $this->boxtypeid != null
                 && $this->quantity != null
             ) {
-                
+
                 $this->price = Zoneprice::Officeprice($this->serviceid, $this->zoneid, $this->boxtypeid, $this->quantity);
-                $this->totalprice = ($this->price * $this->quantity * $this->irregularprice) 
-                + $this->extracharge 
-                + $this->totalinch 
+                $this->totalprice = ($this->price * $this->quantity * $this->irregularprice)
+                + $this->extracharge
+                + $this->totalinch
                 - $this->discount_amount;
             } else {
                 // } else {
@@ -58,11 +58,11 @@ class PriceService
                 ) {
 
                     $this->price = Zoneprice::Officeprice($this->serviceid, $this->zoneid, $this->boxtypeid, $this->quantity);
-                    $this->totalprice = ($this->price * $this->quantity * $this->irregularprice) 
-                + $this->extracharge 
-                + $this->totalinch 
+                    $this->totalprice = ($this->price * $this->quantity * $this->irregularprice)
+                + $this->extracharge
+                + $this->totalinch
                 - $this->discount_amount;
-                       
+
                     // return $price->price * $this->quantity + $this->totalinch + $this->extracharge - $this->discount_amount;
 
                 } else {
@@ -70,9 +70,9 @@ class PriceService
                 }
             } else {
                 $this->price = Agentprice::Agentprice($this->serviceid, $this->zoneid, $this->boxtypeid, $this->quantity, $this->agentid);
-                $this->totalprice = ($this->price * $this->quantity * $this->irregularprice) 
-                + $this->extracharge 
-                + $this->totalinch 
+                $this->totalprice = ($this->price * $this->quantity * $this->irregularprice)
+                + $this->extracharge
+                + $this->totalinch
                 - $this->discount_amount;
 
                 // return $price->price * $this->quantity + $this->totalinch + $this->extracharge - $this->discount_amount;
@@ -83,14 +83,14 @@ class PriceService
 
     public function calculatePrice($state, $get, $set)
     {
-       
+
 
         if ($get('boxtype_id') != null) {
             $this->quantity = Boxtype::Totalbox($get('boxtype_id'));
         } else {
             $totalbox = 0;
         }
-       
+
         $this->extracharge = floatval($get('extracharge_amount'));
         $this->receiveraddressid = $get('receiveraddress_id');
         $this->zoneid = Receiveraddress::Zoneid($this->receiveraddressid);
@@ -104,7 +104,8 @@ class PriceService
         $this->Computeirregular($set, $get);
         $this->computePrice();
         $set('zone_id', $this->zoneid);
-        $set('total_price', round(floatval($this->totalprice), precision: 2));
+         $set('total_price', Number::format(round($this->totalprice ?? 0)));
+     //   $set('total_price', round(floatval($this->totalprice), precision: 2));
         // $result = collect([$servicetypeid, $zone, $boxtypeid, $totalbox, $agentid, $extracharge, $amount_discount, $totalinches]);
         // return $result;
 
@@ -169,6 +170,7 @@ class PriceService
 
     public function Computeirregular($set, $get)
     {
+
         if ($get('boxtype_id') == '4') {
             if (
                 $get('irregular_length') != null
@@ -176,7 +178,9 @@ class PriceService
                 && $get('irregular_height') != null
             ) {
                 $irregtotal = $get('irregular_length') * $get('irregular_width') * $get('irregular_height') / 9720;
-                $this->irregularprice = $irregtotal;
+              //  $this->irregularprice = Number::format($irregtotal, precision:0);
+              $this->irregularprice = $irregtotal;
+              //  dd($this->irregularprice);
             }
         } else {
             $this->irregularprice = 1;
@@ -184,7 +188,7 @@ class PriceService
             $set('irregular_width', null);
             $set('irregular_height', null);
         }
-       
+
     }
     public function Discountreset($set, $get) :void
     {
@@ -205,11 +209,11 @@ class PriceService
         if ($get('servicetype_id') == 2) {
             $set('discount_flag', 1);
             $set('agent_id', null);
-           
+
 
         }
     }
 
-    
+
 
 }

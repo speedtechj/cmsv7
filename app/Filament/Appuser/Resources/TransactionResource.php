@@ -42,7 +42,7 @@ class TransactionResource extends Resource
     protected static ?string $model = Transaction::class;
     protected static bool $shouldRegisterNavigation = false;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -112,7 +112,7 @@ class TransactionResource extends Resource
                 Forms\Components\TextInput::make('quadrant')
                 ->label('Quadrant')
                 ->dehydrated(false)
-                
+
         ];
     }
     public static function getItemsRepeater(): Repeater
@@ -223,9 +223,9 @@ class TransactionResource extends Resource
                         ->datalist([
                             '07:00','08:00','09:00','10:00','11:00','12:00',
                             '13:00','14:00', '15:00','16:00','17:00','18:00',
-                            '19:00','20:00','21:00','22:00'              
+                            '19:00','20:00','21:00','22:00'
                         ])
-                        
+
                             ->required(function(Get $get): bool {
                                 $typeagent = Agent::Agenttype($get('agent_id'));
                                return $typeagent == 1;
@@ -239,7 +239,7 @@ class TransactionResource extends Resource
                             ->datalist([
                                 '07:00','08:00','09:00','10:00','11:00','12:00',
                                 '13:00','14:00', '15:00','16:00','17:00','18:00',
-                                '19:00','20:00','21:00','22:00'              
+                                '19:00','20:00','21:00','22:00'
                             ])
                             ->required(function(Get $get): bool {
                                 $typeagent = Agent::Agenttype($get('agent_id'));
@@ -303,7 +303,7 @@ class TransactionResource extends Resource
                             ->afterStateUpdated(function (PriceService $priceService, Get $get, Set $set, $state) {
                                 $priceService->calculatePrice($state, $get, $set);
                             }),
-                        
+
                         Forms\Components\TextInput::make(
                             'total_price'
                         )->prefix('$')
@@ -338,6 +338,7 @@ class TransactionResource extends Resource
                             ->afterStateUpdated(function (PriceService $priceService, Get $get, Set $set, $state) {
                                 $priceService->Computeirregular($set, $get);
                                 $priceService->calculatePrice($state, $get, $set);
+                             
                             }),
                     ])->columns(3)
                     ->hidden(fn(Get $get): bool => $get('boxtype_id') != '4'),
@@ -383,8 +384,8 @@ class TransactionResource extends Resource
                 }
                 return $data;
             });
-            
+
     }
-    
-    
+
+
 }
