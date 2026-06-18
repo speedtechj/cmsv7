@@ -64,6 +64,7 @@ class AgentpriceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+             ->poll('2s')
             ->columns([
                 Tables\Columns\TextColumn::make('agent.full_name')
                 ->label('Agent Name')
