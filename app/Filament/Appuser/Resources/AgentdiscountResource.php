@@ -69,6 +69,7 @@ class AgentdiscountResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->poll('2s')
             ->columns([
                 Tables\Columns\TextColumn::make('agent.full_name')
                 ->searchable()
@@ -100,7 +101,7 @@ class AgentdiscountResource extends Resource
                 ->searchable()
                 ->sortable()
                 ->toggleable(),
-                
+
                 Tables\Columns\TextColumn::make('branch.business_name')
                 ->searchable()
                 ->sortable()
