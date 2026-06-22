@@ -125,42 +125,42 @@ class ShipmentstatusResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('Unloaded')
-                ->label('Unloaded')
-                ->getStateUsing(function (Model $record){
-                    $unloadedid = Trackstatus::where('code', 'op')->first()->id;
-                    $unloaded = Invoicestatus::where('generated_invoice',$record->booking_invoice)
-                    ->where('trackstatus_id', $unloadedid)->first();
-                    if ($unloaded != null) {
-                        return $unloaded->date_update;
-                    }else{
-                        return 0;
-                    }
-                    // return $unloaded->date_update ?? 0;
-                }),
-                Tables\Columns\TextColumn::make('Day')
-                ->label('Day(s) Due')
-                ->getStateUsing(function (Model $record) {
-                    $endpoint = Trackstatus::where('code', 'ed')->first()->id;
-                        $end_point_stat = $record->invoicestatuses->where('trackstatus_id', $endpoint)->first();
-                        if ($end_point_stat == null) {
-                            $origin = Trackstatus::where('code', 'op')->first()->id;
-                            $origin_date = Carbon::parse($record->invoicestatuses->where('trackstatus_id', $origin)->first()->date_update ?? now());
-                            $now = Carbon::now()->addDays(1);
-                            $diff_date = $origin_date->diffInDays($now, false);
-                            $agingdays = $record->receiveraddress->cityphil->no_days;
-                        //    dd($agingdays, $diff_date);
-                            if ($diff_date > $agingdays) {
-                                $days_due = $diff_date - $agingdays;
-                           return $days_due;
-                            } else {
-                                return 0;
-                            }
-                        }else {
-                            return 0;
-                        }
+                // Tables\Columns\TextColumn::make('Unloaded')
+                // ->label('Unloaded')
+                // ->getStateUsing(function (Model $record){
+                //     $unloadedid = Trackstatus::where('code', 'op')->first()->id;
+                //     $unloaded = Invoicestatus::where('generated_invoice',$record->booking_invoice)
+                //     ->where('trackstatus_id', $unloadedid)->first();
+                //     if ($unloaded != null) {
+                //         return $unloaded->date_update;
+                //     }else{
+                //         return 0;
+                //     }
+                //     // return $unloaded->date_update ?? 0;
+                // }),
+                // Tables\Columns\TextColumn::make('Day')
+                // ->label('Day(s) Due')
+                // ->getStateUsing(function (Model $record) {
+                //     $endpoint = Trackstatus::where('code', 'ed')->first()->id;
+                //         $end_point_stat = $record->invoicestatuses->where('trackstatus_id', $endpoint)->first();
+                //         if ($end_point_stat == null) {
+                //             $origin = Trackstatus::where('code', 'op')->first()->id;
+                //             $origin_date = Carbon::parse($record->invoicestatuses->where('trackstatus_id', $origin)->first()->date_update ?? now());
+                //             $now = Carbon::now()->addDays(1);
+                //             $diff_date = $origin_date->diffInDays($now, false);
+                //             $agingdays = $record->receiveraddress->cityphil->no_days;
+                //         //    dd($agingdays, $diff_date);
+                //             if ($diff_date > $agingdays) {
+                //                 $days_due = $diff_date - $agingdays;
+                //            return $days_due;
+                //             } else {
+                //                 return 0;
+                //             }
+                //         }else {
+                //             return 0;
+                //         }
 
-                }),
+                // }),
                 Tables\Columns\TextColumn::make('invoice')
                     ->label('Invoice')
                     ->tooltip('Combined invoice number from manual or booking invoice')
@@ -178,29 +178,29 @@ class ShipmentstatusResource extends Resource
                     ->label('Sender Name')
                     ->searchable()
                     ->sortable(),
-                   Tables\Columns\TextColumn::make('Status')
-                    ->badge()
-                    ->label('Status')
-                    ->color(fn(string $state): string => match ($state) {
+                //    Tables\Columns\TextColumn::make('Status')
+                //     ->badge()
+                //     ->label('Status')
+                //     ->color(fn(string $state): string => match ($state) {
 
-                        'Not Delivered' => 'warning',
-                        'Delivered' => 'success',
-                    })
-                    ->getStateUsing(function (Model $record) {
-                        $statuscode = Trackstatus::where('code', 'ed')->first()->id;
-
-
-                        $status = Invoicestatus::where('generated_invoice',$record->booking_invoice)
-                        ->where('manual_invoice', $record->manual_invoice)
-                        ->where('trackstatus_id', $statuscode)->first();
-                       if($status == null){
-                        return 'Not Delivered';
-                       }else{
-                        return 'Delivered';
-                       }
+                //         'Not Delivered' => 'warning',
+                //         'Delivered' => 'success',
+                //     })
+                //     ->getStateUsing(function (Model $record) {
+                //         $statuscode = Trackstatus::where('code', 'ed')->first()->id;
 
 
-                    }),
+                //         $status = Invoicestatus::where('generated_invoice',$record->booking_invoice)
+                //         ->where('manual_invoice', $record->manual_invoice)
+                //         ->where('trackstatus_id', $statuscode)->first();
+                //        if($status == null){
+                //         return 'Not Delivered';
+                //        }else{
+                //         return 'Delivered';
+                //        }
+
+
+                //     }),
 
 
                 // Tables\Columns\TextColumn::make('Status')
@@ -229,116 +229,117 @@ class ShipmentstatusResource extends Resource
                 //             return 'Delivered';
                 //         }
                 //     }),
-                    Tables\Columns\TextColumn::make('cnt_followup')
-                    ->badge()
-                    ->color('success')
-                    ->label('Count')
-                    ->getStateUsing(function (Model $record) {
-                        return EmailStatus::where('booking_id', $record->id)->count();
-                    }),
+                    // Tables\Columns\TextColumn::make('cnt_followup')
+                    // ->badge()
+                    // ->color('success')
+                    // ->label('Count')
+                    // ->getStateUsing(function (Model $record) {
+                    //     return EmailStatus::where('booking_id', $record->id)->count();
+                    // }),
 
             ])->paginationPageOptions([10, 25, 50])
             ->filters([
-                Filter::make('is_deliver')->label('Not Delivered')
-    ->query(fn (Builder $query): Builder => $query->where('is_deliver', false))->default(true),
-                SelectFilter::make('batch_id')
-                   ->searchable()
-                   ->preload()
-                    ->label('Batch Number')
-                    ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
-                ->getOptionLabelFromRecordUsing(function (Model $record) {
-                    return "{$record->batchno} {$record->batch_year}";
-                })
-                ->default('Select Batch Number'),
+    //             Filter::make('is_deliver')->label('Not Delivered')
+    // ->query(fn (Builder $query): Builder => $query->where('is_deliver', false))->default(true),
+    //             SelectFilter::make('batch_id')
+    //                ->searchable()
+    //                ->preload()
+    //                 ->label('Batch Number')
+    //                 ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
+    //             ->getOptionLabelFromRecordUsing(function (Model $record) {
+    //                 return "{$record->batchno} {$record->batch_year}";
+    //             })
+    //             ->default('Select Batch Number'),
                     // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
                     // ->default(array('Select Batch Number')),
 
-                SelectFilter::make('provincephil_id')
-                    ->searchable()
-                    ->label('Province')
-                    ->options(function () {
-                        // could be more discerning here, and select a distinct list of aircraft id's
-                        // that actually appear in the Daily Logs, so we aren't presenting filter options
-                        // which don't exist in the table, but in my case we know they are all used
-                        return Provincephil::all()->pluck('name', 'id')->toArray();
-                    })
-                    ->query(function (Builder $query, array $data) {
+                // SelectFilter::make('provincephil_id')
+                //     ->searchable()
+                //     ->multiple()
+                //     ->label('Province')
+                //     ->options(function () {
+                //         // could be more discerning here, and select a distinct list of aircraft id's
+                //         // that actually appear in the Daily Logs, so we aren't presenting filter options
+                //         // which don't exist in the table, but in my case we know they are all used
+                //         return Provincephil::all()->pluck('name', 'id')->toArray();
+                //     })
+                //     ->query(function (Builder $query, array $data) {
 
-                        if (!empty($data['value']))
-                        {
-                            // if we have a value (the aircraft ID from our options() query), just query a nested
-                            // set of whereHas() clauses to reach our target, in this case two deep
-                            $query->whereHas(
-                                'receiveraddress',
-                                fn (Builder $query) => $query->whereHas(
-                                    'provincephil',
-                                    fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
-                                )
-                            );
-                        }
-                    }),
-                    SelectFilter::make('zone_id')
-                    ->searchable()
-                    ->preload()
-                    ->relationship('zone', 'description')
-                    ->label('Zone'),
+                //         if (!empty($data['value']))
+                //         {
+                //             // if we have a value (the aircraft ID from our options() query), just query a nested
+                //             // set of whereHas() clauses to reach our target, in this case two deep
+                //             $query->whereHas(
+                //                 'receiveraddress',
+                //                 fn (Builder $query) => $query->whereHas(
+                //                     'provincephil',
+                //                     fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                //                 )
+                //             );
+                //         }
+                //     }),
+                    // SelectFilter::make('zone_id')
+                    // ->searchable()
+                    // ->preload()
+                    // ->relationship('zone', 'description')
+                    // ->label('Zone'),
 
 
             ])->persistFiltersInSession()
             ->actions([
-                Tables\Actions\ViewAction::make()
-                // ->disabled(function (Model $record){
-                //     return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
-                // })
-                ->color('primary')
-                ->label('History'),
-                Tables\Actions\Action::make('sendmail')
-                        ->disabled(function (Model $record){
-                            return $record->is_deliver == true ? true : false;
-                        })
-                        ->label('Email')
-                        ->color('info')
-                        ->icon('heroicon-o-envelope')
-                        ->form([
-                            Select::make('recipient')
-                                ->multiple()
-                                ->searchable()
-                                ->preload()
-                                ->native(false)
-                                ->label('Email')
-                                ->options(EmailSetting::all()->pluck('email', 'email'))
-                                ->required(),
-                            TextInput::make('subject')
-                                ->label('Subject')
-                                ->required()
-                                ->maxLength(255),
-                            MarkdownEditor::make('message')
-                                ->label('Message')
-                                ->required()
-                        ])
-                        ->action(function (Model $record, array $data): void {
+                // Tables\Actions\ViewAction::make()
+                // // ->disabled(function (Model $record){
+                // //     return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
+                // // })
+                // ->color('primary')
+                // ->label('History'),
+                // Tables\Actions\Action::make('sendmail')
+                //         ->disabled(function (Model $record){
+                //             return $record->is_deliver == true ? true : false;
+                //         })
+                //         ->label('Email')
+                //         ->color('info')
+                //         ->icon('heroicon-o-envelope')
+                //         ->form([
+                //             Select::make('recipient')
+                //                 ->multiple()
+                //                 ->searchable()
+                //                 ->preload()
+                //                 ->native(false)
+                //                 ->label('Email')
+                //                 ->options(EmailSetting::all()->pluck('email', 'email'))
+                //                 ->required(),
+                //             TextInput::make('subject')
+                //                 ->label('Subject')
+                //                 ->required()
+                //                 ->maxLength(255),
+                //             MarkdownEditor::make('message')
+                //                 ->label('Message')
+                //                 ->required()
+                //         ])
+                //         ->action(function (Model $record, array $data): void {
 
-                            EmailStatus::create([
-                                'subject' => $data['subject'],
-                                'message' => $data['message'],
-                                'booking_id' => $record->id,
-                                'user_id' => auth()->user()->id,
-                            ]);
+                //             EmailStatus::create([
+                //                 'subject' => $data['subject'],
+                //                 'message' => $data['message'],
+                //                 'booking_id' => $record->id,
+                //                 'user_id' => auth()->user()->id,
+                //             ]);
 
-                            $recipients = $data['recipient'];
-                            foreach ($recipients as $recipient) {
-                                Mail::to($recipient)->queue(new ShipmentMail($data,$record));
-                            }
-                            Notification::make()
-                             ->title('Email Successfully Send')
-                             ->success()
-                             ->send();
+                //             $recipients = $data['recipient'];
+                //             foreach ($recipients as $recipient) {
+                //                 Mail::to($recipient)->queue(new ShipmentMail($data,$record));
+                //             }
+                //             Notification::make()
+                //              ->title('Email Successfully Send')
+                //              ->success()
+                //              ->send();
 
-                            //  (new static)->logCustomEvent($record);
+                //             //  (new static)->logCustomEvent($record);
 
 
 
-                        })
+                //         })
                         // ->url(fn (Model $record) => route('shipmentmail', $record))
                         // ->openUrlInNewTab(),
             ])
