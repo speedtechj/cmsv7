@@ -241,17 +241,17 @@ class ShipmentstatusResource extends Resource
             ->filters([
     //             Filter::make('is_deliver')->label('Not Delivered')
     // ->query(fn (Builder $query): Builder => $query->where('is_deliver', false))->default(true),
-    //             SelectFilter::make('batch_id')
-    //                ->searchable()
-    //                ->preload()
-    //                 ->label('Batch Number')
-    //                 ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
-    //             ->getOptionLabelFromRecordUsing(function (Model $record) {
-    //                 return "{$record->batchno} {$record->batch_year}";
-    //             })
-    //             ->default('Select Batch Number'),
-                    // ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
-                    // ->default(array('Select Batch Number')),
+                SelectFilter::make('batch_id')
+                   ->searchable()
+                   ->preload()
+                    ->label('Batch Number')
+                    ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
+                ->getOptionLabelFromRecordUsing(function (Model $record) {
+                    return "{$record->batchno} {$record->batch_year}";
+                })
+                ->default('Select Batch Number'),
+                    ->relationship('batch', 'batchno', fn (Builder $query) => $query->where('is_active', '1'))
+                    ->default(array('Select Batch Number')),
 
                 // SelectFilter::make('provincephil_id')
                 //     ->searchable()
