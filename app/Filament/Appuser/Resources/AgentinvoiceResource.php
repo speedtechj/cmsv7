@@ -2,24 +2,23 @@
 
 namespace App\Filament\Appuser\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use App\Models\Agentinvoice;
-
-
-
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
-use Filament\Tables\Actions\CreateAction;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\AgentinvoiceResource\Pages;
 use App\Filament\Appuser\Resources\AgentinvoiceResource\RelationManagers;
+use App\Models\Agentinvoice;
+use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AgentinvoiceResource extends Resource
 {
@@ -121,9 +120,31 @@ class AgentinvoiceResource extends Resource
                 SelectFilter::make('agent_id')
                     ->label('Agent')
                     ->relationship('agent', 'full_name')
-                    ->searchable()
+                    ->searchable(),
+                Filter::make('date_issued')->label('Date Issued')
+                    ->form([
+                        Section::make('Date Issued')
+                            ->schema([
+                                Forms\Components\DatePicker::make('issue_from')->default(now())
+                                ->closeOnDateSelection(),
+                                Forms\Components\DatePicker::make('issue_until')->default(now())
+                                ->closeOnDateSelection(),
+                            ])->collapsed(),
+
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['issue_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('date_issued', '>=', $date),
+                            )
+                            ->when(
+                                $data['issue_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('date_issued', '<=', $date),
+                            );
+                    }),
     ])
-            
+
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
