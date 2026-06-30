@@ -39,7 +39,7 @@ class AgentinvoiceResource extends Resource
     {
         return $table
             ->defaultGroup('agent.full_name')
-             ->paginated([10, 25, 50, 200, 500])
+             ->paginated([10, 25, 50, 250])
             ->columns([
                 Tables\Columns\TextColumn::make('agent.full_name')
                     ->sortable(),
