@@ -88,6 +88,7 @@ class ZoneSummaryResource extends Resource
                     ->relationship('zone', 'description')
                     ->label('Zone'),
                     SelectFilter::make('boxtype_id')
+                    ->multiple()
                     ->searchable()
                     ->preload()
                     ->relationship('boxtype', 'description')
