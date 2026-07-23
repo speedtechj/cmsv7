@@ -23,7 +23,7 @@ class ZoneSummaryResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Zone Box Summary';
     public static ?string $label = 'Zone Box Summary';
-   
+
     public static function getNavigationBadge(): ?string
 {
     return "New";
@@ -32,7 +32,7 @@ class ZoneSummaryResource extends Resource
     {
         return $form
             ->schema([
-                
+
             ]);
     }
 
@@ -70,7 +70,7 @@ class ZoneSummaryResource extends Resource
                     ->searchable()
                     ->label('Zone')
                     ->sortable(),
-               
+
             ])
             ->filters([
                 SelectFilter::make('batch_id')
@@ -87,14 +87,19 @@ class ZoneSummaryResource extends Resource
                     ->preload()
                     ->relationship('zone', 'description')
                     ->label('Zone'),
-                    
+                    SelectFilter::make('boxtype_id')
+                    ->searchable()
+                    ->preload()
+                    ->relationship('boxtype', 'description')
+                    ->label('Box Type'),
+
             ])
             ->actions([
-               
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                   
+
                 ]),
             ]);
     }
