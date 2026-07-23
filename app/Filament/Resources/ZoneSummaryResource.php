@@ -84,11 +84,11 @@ class ZoneSummaryResource extends Resource
                     ->default(Batch::where('is_current',1)->first()->id),
                     SelectFilter::make('zone_id')
                     ->searchable()
+                     ->multiple()
                     ->preload()
                     ->relationship('zone', 'description')
                     ->label('Zone'),
                     SelectFilter::make('boxtype_id')
-                    ->multiple()
                     ->searchable()
                     ->preload()
                     ->relationship('boxtype', 'description')
