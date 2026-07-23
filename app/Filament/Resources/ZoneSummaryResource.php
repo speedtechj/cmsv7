@@ -70,7 +70,6 @@ class ZoneSummaryResource extends Resource
                     ->searchable()
                     ->label('Zone')
                     ->sortable(),
-
             ])
             ->filters([
                 SelectFilter::make('batch_id')
