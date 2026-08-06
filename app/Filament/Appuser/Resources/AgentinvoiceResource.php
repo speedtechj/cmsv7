@@ -126,9 +126,9 @@ class AgentinvoiceResource extends Resource
                     ->form([
                         Section::make('Date Issued')
                             ->schema([
-                                Forms\Components\DatePicker::make('issue_from')->default(now())
+                                Forms\Components\DatePicker::make('issue_from')
                                 ->closeOnDateSelection(),
-                                Forms\Components\DatePicker::make('issue_until')->default(now())
+                                Forms\Components\DatePicker::make('issue_until')
                                 ->closeOnDateSelection(),
                             ])->collapsed(),
 
