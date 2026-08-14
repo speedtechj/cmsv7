@@ -172,7 +172,8 @@ class TransactionResource extends Resource
                             ->required()
                             ->selectablePlaceholder(false)
                             ->afterStateUpdated(function (PriceService $priceService, Get $get, Set $set, $state) {
-                                $priceService->calculatePrice($state, $get, $set);
+                            $priceService->Resetdiscount($set, $get);
+                            $priceService->calculatePrice($state, $get, $set);
                             }),
                         Forms\Components\Select::make('servicetype_id')
                             ->live()
@@ -338,7 +339,7 @@ class TransactionResource extends Resource
                             ->afterStateUpdated(function (PriceService $priceService, Get $get, Set $set, $state) {
                                 $priceService->Computeirregular($set, $get);
                                 $priceService->calculatePrice($state, $get, $set);
-                             
+
                             }),
                     ])->columns(3)
                     ->hidden(fn(Get $get): bool => $get('boxtype_id') != '4'),

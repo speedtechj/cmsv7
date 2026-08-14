@@ -412,6 +412,7 @@ class BookingRelationManager extends RelationManager
                         $set('irregular_width', null);
                         $set('irregular_height', null);
                     }
+                    $priceService->Resetdiscount($set, $get);
                     $priceService->calculatePrice($state, $get, $set);
                 }),
             Forms\Components\Select::make('servicetype_id')

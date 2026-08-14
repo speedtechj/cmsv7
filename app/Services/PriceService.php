@@ -84,7 +84,7 @@ class PriceService
     public function calculatePrice($state, $get, $set)
     {
 
-
+    
         if ($get('boxtype_id') != null) {
             $this->quantity = Boxtype::Totalbox($get('boxtype_id'));
         } else {
