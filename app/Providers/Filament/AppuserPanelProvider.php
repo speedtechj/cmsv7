@@ -36,11 +36,9 @@ class AppuserPanelProvider extends PanelProvider {
         ->sidebarFullyCollapsibleOnDesktop()
         ->maxContentWidth(MaxWidth::Full)
         ->databaseNotifications()
-        ->brandName('Forex CMSv4')
-        // ->brandName(function(){
-        //     $company_name = Companyinfo::all()->first();
-        //     return $company_name->company_name;
-        // })
+      ->brandName(function () {
+    return Companyinfo::first()?->company_name ?? 'Forex CMSv4';
+})
         ->profile(EditProfile::class )
         ->login()
         ->readOnlyRelationManagersOnResourceViewPagesByDefault(false)
