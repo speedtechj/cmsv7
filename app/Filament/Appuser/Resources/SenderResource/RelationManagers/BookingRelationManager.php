@@ -75,6 +75,15 @@ class BookingRelationManager extends RelationManager
                     ->searchable()
                     ->color('primary')
                     ->url(fn (Model $record) => SearchinvoiceResource::getUrl('view', ['record' => $record->id])),
+                Tables\Columns\TextInputColumn::make('bookinginvoice')
+    ->label('Invoice')
+    ->getStateUsing(fn (Model $record) => $record->booking_invoice)
+    ->updateStateUsing(function (Model $record, $state) {
+        $record->booking_invoice = $state;
+        $record->save();
+
+        return $state;
+    }),
                 Tables\Columns\TextColumn::make('manual_invoice')
                     ->label('Manual Invoice')
                     ->sortable()
@@ -144,7 +153,7 @@ class BookingRelationManager extends RelationManager
                     ->getStateUsing(function (Model $record) {
                         return $record->user->first_name . " " . $record->user->last_name;
                     })
-                    
+
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->defaultSort('created_at', 'desc')
             ->searchOnBlur()
@@ -160,7 +169,7 @@ class BookingRelationManager extends RelationManager
                     ->url(fn($livewire) => TransactionResource::getUrl('create', ['ownerRecord' => $livewire->ownerRecord->getKey()])),
 
             ])
-            
+
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\ForceDeleteAction::make(),
@@ -199,7 +208,7 @@ class BookingRelationManager extends RelationManager
                 ->visible(function (Model $record): bool {
                     return $record->batch_id == 23;
                  }),
-              
+
                     Tables\Actions\Action::make('Payment')
                         ->hidden(fn(Booking $record): bool => $record['payment_balance'] == 0)
                         ->model(Bookingpayment::class)
@@ -212,7 +221,7 @@ class BookingRelationManager extends RelationManager
                         ])
                         ->action(function (Booking $record, array $data): void {
                             if ($record['payment_balance'] != 0) {
-                             
+
                                 Bookingpayment::create([
                                     'booking_id' => $record->id,
                                     'paymenttype_id' => $data['type_of_payment'],
@@ -260,24 +269,24 @@ class BookingRelationManager extends RelationManager
                         ->form([
                             Section::make()->schema(static::getPacklistform())->columns(3)
                         ])->action(function (Booking $record, array $data, $action) {
-                            
+
                             Packinglist::create([
                                 'booking_id' => $record->id,
                                 'sender_id' => $record->sender_id,
                                 'packlistitem' => $data['packinglist'],
                                 'packlistdoc' => $data['packlist_doc'],
                                 'waiverdoc' => $data['waiver_doc'],
-                               
+
                             ]);
-                           
+
                             Notification::make()
                             ->title('Record Successfully save')
                             ->success()
                             ->send();
-                            
+
                         }),
                     ])
-                        
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -341,7 +350,7 @@ class BookingRelationManager extends RelationManager
                                 ->title('Successfully Update')
                                 ->send();
                     }),
-                         
+
                 ]),
             ]);
     }
@@ -687,7 +696,7 @@ class BookingRelationManager extends RelationManager
                                 ])->columns(3)
                                 ->defaultItems(0)
                                 ->maxItems(4),
-                                
+
                                 ]),
 
         ];
