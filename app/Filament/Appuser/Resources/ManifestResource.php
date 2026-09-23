@@ -57,6 +57,7 @@ class ManifestResource extends Resource
               });
         });
     })
+
                 ->sortable(),
             Tables\Columns\TextColumn::make('manual_invoice')
                 ->label('Manual Invoice')
