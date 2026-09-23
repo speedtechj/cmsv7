@@ -76,7 +76,7 @@ class AppuserPanelProvider extends PanelProvider {
             ->visible( fn (): bool => auth()->user()->isAdmin() )
         ] )
         ->navigationGroups( [
-            
+
             NavigationGroup::make( 'Call Log')->icon( 'heroicon-o-phone-arrow-up-right'),
             NavigationGroup::make( 'Canada Location' )->icon( 'heroicon-o-map-pin' ),
             NavigationGroup::make( 'Philippines Location' )->icon( 'heroicon-o-map-pin' ),

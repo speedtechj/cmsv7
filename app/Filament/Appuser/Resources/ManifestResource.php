@@ -47,7 +47,16 @@ class ManifestResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('booking_invoice')
                 ->label('Invoice')
-                ->searchable()
+                ->searchable(query: function (Builder $query, string $search): Builder {
+        return $query->where(function (Builder $q) use ($search) {
+            $q->where('booking_invoice', 'like', "%{$search}%")
+              ->orWhereIn('sender_id', function ($sub) use ($search) {
+                  $sub->select('sender_id')
+                      ->from('bookings') // change to your table name
+                      ->where('booking_invoice', 'like', "%{$search}%");
+              });
+        });
+    })
                 ->sortable(),
             Tables\Columns\TextColumn::make('manual_invoice')
                 ->label('Manual Invoice')
