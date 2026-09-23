@@ -43,7 +43,7 @@ class ManifestResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-         //   ->searchDebounce('750ms')
+            ->searchDebounce('750ms')
             ->columns([
                 Tables\Columns\TextColumn::make('booking_invoice')
                 ->label('Invoice')
