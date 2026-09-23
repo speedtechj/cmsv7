@@ -56,8 +56,7 @@ class ManifestResource extends Resource
                       ->where('booking_invoice', 'like', "%{$search}%");
               });
         });
-    })
-                ->sortable(),
+    })        ->sortable(),
             Tables\Columns\TextColumn::make('manual_invoice')
                 ->label('Manual Invoice')
                 ->searchable()
