@@ -2,29 +2,30 @@
 
 namespace App\Filament\Appuser\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
-use App\Models\Batch;
-use App\Models\Sender;
-use App\Models\Booking;
-use App\Models\Manifest;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use App\Models\Provincephil;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Select;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Tables\Enums\FiltersLayout;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Exports\ManifestExporter;
-use Filament\Actions\Exports\Models\Export;
-use Illuminate\Database\Eloquent\Collection;
-use Filament\Tables\Actions\ExportBulkAction;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Appuser\Resources\ManifestResource\Pages;
 use App\Filament\Appuser\Resources\ManifestResource\RelationManagers;
+use App\Filament\Exports\ManifestExporter;
+use App\Models\Batch;
+use App\Models\Booking;
+use App\Models\Manifest;
+use App\Models\Provincephil;
+use App\Models\Sender;
+use App\Models\User;
+use Filament\Actions\Exports\Models\Export;
+use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class ManifestResource extends Resource
 {
@@ -43,7 +44,7 @@ class ManifestResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->searchDebounce('750ms')
+        //    ->searchDebounce('750ms')
             ->columns([
                 Tables\Columns\TextColumn::make('booking_invoice')
                 ->label('Invoice')
@@ -56,7 +57,8 @@ class ManifestResource extends Resource
                 Tables\Columns\TextColumn::make('booking_date')
                 ->label('Booking Date')
                 ->toggleable(isToggledHiddenByDefault: true)
-                ->searchable()->sortable(),
+                ->searchable()
+                ->sortable(),
             Tables\Columns\TextColumn::make('Quantity')
                 ->label('Quantity')
                 ->default('1'),
