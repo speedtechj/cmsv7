@@ -287,60 +287,60 @@ class ShipmentstatusResource extends Resource
 
             ])->persistFiltersInSession()
             ->actions([
-                // Tables\Actions\ViewAction::make()
-                // // ->disabled(function (Model $record){
-                // //     return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
-                // // })
-                // ->color('primary')
-                // ->label('History'),
-                // Tables\Actions\Action::make('sendmail')
-                //         ->disabled(function (Model $record){
-                //             return $record->is_deliver == true ? true : false;
-                //         })
-                //         ->label('Email')
-                //         ->color('info')
-                //         ->icon('heroicon-o-envelope')
-                //         ->form([
-                //             Select::make('recipient')
-                //                 ->multiple()
-                //                 ->searchable()
-                //                 ->preload()
-                //                 ->native(false)
-                //                 ->label('Email')
-                //                 ->options(EmailSetting::all()->pluck('email', 'email'))
-                //                 ->required(),
-                //             TextInput::make('subject')
-                //                 ->label('Subject')
-                //                 ->required()
-                //                 ->maxLength(255),
-                //             MarkdownEditor::make('message')
-                //                 ->label('Message')
-                //                 ->required()
-                //         ])
-                //         ->action(function (Model $record, array $data): void {
+                Tables\Actions\ViewAction::make()
+                // ->disabled(function (Model $record){
+                //     return EmailStatus::where('booking_id', $record->id)->count() == 0 ? true : false;
+                // })
+                ->color('primary')
+                ->label('History'),
+                Tables\Actions\Action::make('sendmail')
+                        ->disabled(function (Model $record){
+                            return $record->is_deliver == true ? true : false;
+                        })
+                        ->label('Email')
+                        ->color('info')
+                        ->icon('heroicon-o-envelope')
+                        ->form([
+                            Select::make('recipient')
+                                ->multiple()
+                                ->searchable()
+                                ->preload()
+                                ->native(false)
+                                ->label('Email')
+                                ->options(EmailSetting::all()->pluck('email', 'email'))
+                                ->required(),
+                            TextInput::make('subject')
+                                ->label('Subject')
+                                ->required()
+                                ->maxLength(255),
+                            MarkdownEditor::make('message')
+                                ->label('Message')
+                                ->required()
+                        ])
+                        ->action(function (Model $record, array $data): void {
+                        //    dd('fsfsdfdsf');
+                            EmailStatus::create([
+                                'subject' => $data['subject'],
+                                'message' => $data['message'],
+                                'booking_id' => $record->id,
+                                'user_id' => auth()->user()->id,
+                            ]);
 
-                //             EmailStatus::create([
-                //                 'subject' => $data['subject'],
-                //                 'message' => $data['message'],
-                //                 'booking_id' => $record->id,
-                //                 'user_id' => auth()->user()->id,
-                //             ]);
+                            $recipients = $data['recipient'];
+                            foreach ($recipients as $recipient) {
+                                Mail::to($recipient)->queue(new ShipmentMail($data,$record));
+                            }
+                            Notification::make()
+                             ->title('Email Successfully Send')
+                             ->success()
+                             ->send();
 
-                //             $recipients = $data['recipient'];
-                //             foreach ($recipients as $recipient) {
-                //                 Mail::to($recipient)->queue(new ShipmentMail($data,$record));
-                //             }
-                //             Notification::make()
-                //              ->title('Email Successfully Send')
-                //              ->success()
-                //              ->send();
-
-                //             //  (new static)->logCustomEvent($record);
+                            //  (new static)->logCustomEvent($record);
 
 
 
-                //         })
-                        // ->url(fn (Model $record) => route('shipmentmail', $record))
+                        })
+                    // ->url(fn (Model $record) => route('shipmentmail', $record))
                         // ->openUrlInNewTab(),
             ])
             ->bulkActions([

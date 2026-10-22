@@ -12,16 +12,17 @@ class ShipmentstatController extends Controller
 {
         public function statmail(Booking $record): void
     {
-        
+
+
             $recipients = ['arbiasjr@gmail.com', 'rosemariegaje2019@gmail.com'];
-            
+
             foreach ($recipients as $recipient) {
                 Mail::to($recipient)->send(new ShipmentMail($record));
             }
-        
-        
-       
+
+
+
     }
 
-   
+
 }

@@ -75,15 +75,15 @@ class BookingRelationManager extends RelationManager
                     ->searchable()
                     ->color('primary')
                     ->url(fn (Model $record) => SearchinvoiceResource::getUrl('view', ['record' => $record->id])),
-                Tables\Columns\TextInputColumn::make('bookinginvoice')
-    ->label('Invoice')
-    ->getStateUsing(fn (Model $record) => $record->booking_invoice)
-    ->updateStateUsing(function (Model $record, $state) {
-        $record->booking_invoice = $state;
-        $record->save();
+    //             Tables\Columns\TextInputColumn::make('bookinginvoice')
+    // ->label('Invoice')
+    // ->getStateUsing(fn (Model $record) => $record->booking_invoice)
+    // ->updateStateUsing(function (Model $record, $state) {
+    //     $record->booking_invoice = $state;
+    //     $record->save();
 
-        return $state;
-    }),
+    //     return $state;
+    // }),
                 Tables\Columns\TextColumn::make('manual_invoice')
                     ->label('Manual Invoice')
                     ->sortable()

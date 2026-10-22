@@ -71,7 +71,7 @@ class CollectionreportResource extends Resource
                                 Forms\Components\DatePicker::make('book_until')->default(now())
                                 ->closeOnDateSelection(),
                             ])->collapsed(),
-                        
+
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -83,9 +83,9 @@ class CollectionreportResource extends Resource
                                 $data['book_until'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('booking_date', '<=', $date),
                             );
-                    }),   
+                    }),
                     SelectFilter::make('servicetype_id')->relationship('servicetype', 'description')->label('Service Type')->default('2'),
-                    SelectFilter::make('agent_id')->relationship('agent', 'full_name')->label('Agent')->searchable(), 
+                    SelectFilter::make('agent_id')->relationship('agent', 'full_name')->label('Agent')->searchable(),
                     Filter::make('payment_date')->label('Payment Date')
                     ->form([
                         Section::make('Payment Date')
@@ -97,7 +97,7 @@ class CollectionreportResource extends Resource
                                 ->native(false)
                                 ->closeOnDateSelection(),
                             ])->collapsed(),
-                        
+
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -111,7 +111,7 @@ class CollectionreportResource extends Resource
                             );
                     }),
                     Filter::make('is_paid')->label('Is Paid')->query(fn (Builder $query): Builder => $query->where('is_paid', true))->default(false),
-                     
+
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
